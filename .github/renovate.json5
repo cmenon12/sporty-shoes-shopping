@@ -1,8 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "github>cmenon12/config(advanced-java-development)"
+    "github>cmenon12/config(sporty-shoes-shopping)"
   ],
-  "enabledManagers": ["maven", "maven-wrapper"],
+  "enabledManagers": ["maven", "maven-wrapper", "github-actions"],
   "schedule": "before 6am",
 }
