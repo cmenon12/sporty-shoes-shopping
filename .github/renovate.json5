@@ -3,6 +3,7 @@
   "extends": [
     "github>cmenon12/config(sporty-shoes-shopping)"
   ],
+  "ignoreTests": false,
   "enabledManagers": ["maven", "maven-wrapper", "github-actions"],
   "schedule": "before 6am",
 }
