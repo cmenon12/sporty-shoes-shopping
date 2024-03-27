@@ -26,7 +26,7 @@ public class Product {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   @EqualsAndHashCode.Include
-  private LocalDateTime created = LocalDateTime.now();
+  private final LocalDateTime created = LocalDateTime.now();
   private String name;
   private String description;
   private Float price;

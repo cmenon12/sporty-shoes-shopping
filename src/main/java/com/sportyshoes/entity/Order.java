@@ -26,7 +26,7 @@ public class Order {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   @EqualsAndHashCode.Include
-  private LocalDateTime ldt = LocalDateTime.now();
+  private final LocalDateTime created = LocalDateTime.now();
   private String address;
 
   @ManyToOne
