@@ -1,10 +1,12 @@
 package com.sportyshoes.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
@@ -29,6 +31,8 @@ public class Product {
   @EqualsAndHashCode.Include
   private final LocalDateTime created = LocalDateTime.now();
   private String name;
+  @Lob
+  @Column
   private String description;
   private Float price;
   private Integer stock = 0;
