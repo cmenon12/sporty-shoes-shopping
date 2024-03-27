@@ -24,7 +24,7 @@ public class User {
   private String password;
   private Boolean isAdmin = false;
 
-  @OneToMany(mappedBy = "orders")
+  @OneToMany(mappedBy = "user")
   private List<Order> orders;
 
 }

@@ -22,7 +22,7 @@ public class ProductCategory {
   @EqualsAndHashCode.Include
   private String name;
 
-  @OneToMany(mappedBy = "product_category")
+  @OneToMany(mappedBy = "category")
   private List<Product> products;
 
 }
