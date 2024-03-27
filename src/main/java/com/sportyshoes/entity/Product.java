@@ -1,6 +1,7 @@
 package com.sportyshoes.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,7 +37,7 @@ public class Product {
   @ManyToOne
   private ProductCategory category;
 
-  @ManyToMany(mappedBy = "products")
+  @ManyToMany(fetch = FetchType.EAGER)
   private List<Order> orders;
 
 }
