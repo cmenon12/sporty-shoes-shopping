@@ -21,6 +21,7 @@ public class UserController {
     if (session.getAttribute("user") != null) {
       return "redirect:/";
     }
+    model.addAttribute("navbar", false);
     String result = userService.createAdmin();
     if (result.contains("created") && userService.getAdmin()
         .isPresent()) {
