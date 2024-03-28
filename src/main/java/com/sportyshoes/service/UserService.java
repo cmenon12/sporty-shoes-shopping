@@ -21,6 +21,17 @@ public class UserService {
     return userRepository.findById(email);
   }
 
+  public String authenticate(User user) {
+    Optional<User> userFound = getByEmail(user.getEmail());
+    if (userFound.isEmpty()) {
+      return "User not found";
+    } else if (!userFound.get().getPassword().equals(user.getPassword())) {
+      return "Incorrect password for user " + user.getEmail();
+    } else {
+      return "Welcome " + user.getEmail() + "!";
+    }
+  }
+
   public String create(User user) {
     if (validate(user) != null) {
       return validate(user);
@@ -30,6 +41,21 @@ public class UserService {
     }
     userRepository.save(user);
     return "User created successfully";
+  }
+
+  public int createAdmin() {
+    if (getByEmail("admin@sportyshoes.com").isPresent()) {
+      return 0;
+    }
+    User user = new User();
+    user.setEmail("admin@sportyshoes.com");
+    user.setPassword("admin");
+    user.setIsAdmin(true);
+    userRepository.save(user);
+    System.out.println("Admin user created successfully");
+    System.out.println("Email: admin@sportyshoes.com");
+    System.out.println("Password: admin");
+    return 1;
   }
 
   public String update(User user) {
@@ -55,6 +81,9 @@ public class UserService {
     }
     if (user.getPassword() == null || user.getPassword().isEmpty()) {
       return "User password is required";
+    }
+    if (user.getIsAdmin() == null) {
+      return "User role is required";
     }
     return null;
   }
