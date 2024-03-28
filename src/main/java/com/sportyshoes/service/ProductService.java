@@ -32,6 +32,12 @@ public class ProductService {
     return "Product created successfully";
   }
 
+  /**
+   * Update product by copying it and soft-deleting the old one.
+   *
+   * @param product Product the new product
+   * @return String the result message
+   */
   public String update(Product product) {
     if (validate(product) != null) {
       return validate(product);
@@ -42,8 +48,16 @@ public class ProductService {
     if (getById(product.getId()).isEmpty()) {
       return "Product not found";
     }
+    Product newProduct = new Product();
+    newProduct.setName(product.getName());
+    newProduct.setDescription(product.getDescription());
+    newProduct.setPrice(product.getPrice());
+    newProduct.setStock(product.getStock());
+    newProduct.setCategory(product.getCategory());
+    productRepository.save(newProduct);
+    product.setIsDeleted(true);
     productRepository.save(product);
-    return "Product " + product.getName() + " updated successfully";
+    return "Product " + newProduct.getName() + " updated successfully";
   }
 
   public String decreaseStock(Product product, int quantity) {
