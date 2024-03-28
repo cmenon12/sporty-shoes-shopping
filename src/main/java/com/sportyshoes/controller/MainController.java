@@ -67,4 +67,10 @@ public class MainController {
     }
   }
 
+  @GetMapping(value = "/logout")
+  public String logout(HttpSession session) {
+    session.removeAttribute("user");
+    return "redirect:/login";
+  }
+
 }
