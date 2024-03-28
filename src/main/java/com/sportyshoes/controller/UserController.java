@@ -11,24 +11,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-public class MainController {
+public class UserController {
 
   @Autowired
   UserService userService;
-
-  @GetMapping(value = "/")
-  public String index(HttpSession session) {
-    if (session.getAttribute("user") == null) {
-      return "redirect:/login";
-    }
-    return "index";
-  }
 
   @GetMapping(value = "/login")
   public String login(Model model, HttpSession session) {
     if (session.getAttribute("user") != null) {
       return "redirect:/";
     }
+    model.addAttribute("navbar", false);
     String result = userService.createAdmin();
     if (result.contains("created") && userService.getAdmin()
         .isPresent()) {

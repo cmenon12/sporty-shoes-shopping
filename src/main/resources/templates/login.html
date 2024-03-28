@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en-GB">
-<head th:replace="fragments/base :: head('Sporty Shoes Shop - Login')"></head>
+<head th:replace="~{fragments/base :: head('Sporty Shoes Shop - Login')}"></head>
 <body class="text-bg-light">
 <!--/*@thymesVar id="resultDanger" type="java.lang.String"*/-->
-<div class="container ">
-  <header th:replace="fragments/base :: header('Sporty Shoes Shop - Login')"></header>
+
+<header th:replace="~{fragments/base :: header('Sporty Shoes Shop - Login')}"></header>
 
   <main>
+    <div class="container ">
     <div
-        th:replace="fragments/base :: alerts(${resultSuccess}, ${resultDanger}, ${resultInfo})"></div>
+        th:replace="~{fragments/base :: alerts(${resultSuccess}, ${resultDanger}, ${resultInfo})}"></div>
     <hr>
     <div class="row">
       <div class="col-sm"></div>
@@ -37,9 +38,9 @@
       </div>
       <div class="col-sm"></div>
     </div>
+    </div>
   </main>
 
-  <footer th:replace="fragments/base :: footer"></footer>
-</div>
+<footer th:replace="~{fragments/base :: footer}"></footer>
 </body>
 </html>

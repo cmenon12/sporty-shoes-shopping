@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en-GB">
+<head th:replace="~{fragments/base :: head('Sporty Shoes Shop')}"></head>
+<body class="text-bg-light">
+<header th:replace="~{fragments/base :: header('Sporty Shoes Shop')}"></header>
+
+  <main>
+    <div class="container ">
+    <div
+        th:replace="~{fragments/base :: alerts(${resultSuccess}, ${resultDanger}, ${resultInfo})}"></div>
+    <div class="alert alert-primary" role="alert" th:if="${allProducts.isEmpty()}">
+      There are no products.
+    </div>
+    <hr th:unless="${allProducts.isEmpty()}">
+    <form th:action="@{order}" th:method="post">
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+
+        <div class="col" th:each="p:${allProducts}">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title" th:text="${p.getName()}"></h5>
+              <h6 class="card-subtitle mb-2 text-body-secondary"
+                  th:text="${#numbers.formatCurrency(p.getPrice())}"></h6>
+              <p class="card-text" th:text="${p.getDescription()}"></p>
+            </div>
+            <div class="card-footer">
+              <div class="input-group" th:if="${p.getStock() > 0}">
+                <span class="input-group-text"
+                      th:id="'product-input-label-' + ${p.getId()}">Buy</span>
+                <input type="number" class="form-control" min="0" step="1" value="0"
+                       th:name="'product-input-' + ${p.getId()}" th:max="${p.getStock()}"
+                       aria-label="Buy" th:aria-describedby="'product-input-label-' + ${p.getId()}">
+              </div>
+              <span th:unless="${p.getStock() > 0}">Out of stock</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="input-group mt-4 mb-2">
+        <span class="input-group-text" id="address-label">Address</span>
+        <input type="text" name="address" class="form-control" placeholder="Full delivery address"
+               aria-label="Full delivery address" aria-describedby="address-label" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg mt-3">Order</button>
+    </form>
+    </div>
+  </main>
+
+<footer th:replace="~{fragments/base :: footer}"></footer>
+</body>
+</html>

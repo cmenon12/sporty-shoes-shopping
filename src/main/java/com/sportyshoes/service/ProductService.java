@@ -46,6 +46,21 @@ public class ProductService {
     return "Product " + product.getName() + " updated successfully";
   }
 
+  public String decreaseStock(Product product, int quantity) {
+    if (validate(product) != null) {
+      return validate(product);
+    }
+    if (product.getId() == null) {
+      return "Product ID is null";
+    }
+    if (product.getStock() < quantity) {
+      return "Product stock is not enough";
+    }
+    product.setStock(product.getStock() - quantity);
+    productRepository.save(product);
+    return "Product " + product.getName() + " stock decreased successfully";
+  }
+
   public String delete(long id) {
     Optional<Product> product = getById(id);
     if (product.isPresent()) {
