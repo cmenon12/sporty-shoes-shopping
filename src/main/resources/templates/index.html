@@ -1,41 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en-GB">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sporty Shoes Shop</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-        crossorigin="anonymous">
-</head>
+<head th:replace="fragments/base :: head('Sporty Shoes Shop')"></head>
 <body class="text-bg-light">
 <div class="container ">
-  <header class="m-3">
-    <div class="row">
-      <div class="col text-center">
-        <h1>Sporty Shoes Shop</h1>
-      </div>
-    </div>
-  </header>
+  <header th:replace="fragments/base :: header('Sporty Shoes Shop')"></header>
+
   <main>
-    <div class="alert alert-success alert-dismissible m-1" role="alert"
-         th:if="${resultSuccess != null}"
-    >
-      <span th:text="${resultSuccess}"></span>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+    <div
+        th:replace="fragments/base :: alerts(${resultSuccess}, ${resultDanger}, ${resultInfo})"></div>
     <hr>
     <div class="row">
     </div>
-
-    <br><br>
   </main>
-  <footer></footer>
+
+  <footer th:replace="fragments/base :: footer"></footer>
 
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
 </body>
 </html>
