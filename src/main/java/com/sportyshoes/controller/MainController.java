@@ -29,10 +29,10 @@ public class MainController {
     if (session.getAttribute("user") != null) {
       return "redirect:/";
     }
-    int adminCreated = userService.createAdmin();
-    model.addAttribute("adminCreated", adminCreated);
-    if (adminCreated == 1 && userService.getAdmin()
+    String result = userService.createAdmin();
+    if (result.contains("created") && userService.getAdmin()
         .isPresent()) {
+      model.addAttribute("resultSuccess", result);
       model.addAttribute("user", userService.getAdmin()
           .get());
     } else if (model.getAttribute("user") == null) {

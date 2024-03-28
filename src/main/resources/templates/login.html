@@ -7,11 +7,6 @@
   <header th:replace="fragments/base :: header('Sporty Shoes Shop - Login')"></header>
 
   <main>
-    <div class="alert alert-primary alert-dismissible m-1" role="alert"
-         th:if="${adminCreated == 1}"
-         th:text="'Admin user created! Login with email: `' + ${user.getEmail()} + '` and password: `' + ${user.getPassword()} + '`.'">
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
     <div
         th:replace="fragments/base :: alerts(${resultSuccess}, ${resultDanger}, ${resultInfo})"></div>
     <hr>

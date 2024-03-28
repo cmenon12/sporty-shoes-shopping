@@ -50,9 +50,9 @@ public class UserService {
     return "User created successfully";
   }
 
-  public int createAdmin() {
+  public String createAdmin() {
     if (getByEmail(ADMIN_EMAIL).isPresent()) {
-      return 0;
+      return "Admin user already exists";
     }
     User user = new User();
     user.setEmail(ADMIN_EMAIL);
@@ -62,7 +62,8 @@ public class UserService {
     System.out.println("Admin user created successfully");
     System.out.println("Email: " + ADMIN_EMAIL);
     System.out.println("Password: " + ADMIN_PASSWORD);
-    return 1;
+    return "Admin user created successfully! Login with email: `" + ADMIN_EMAIL
+        + "` and password: `" + ADMIN_PASSWORD + "`";
   }
 
   public String update(User user) {
