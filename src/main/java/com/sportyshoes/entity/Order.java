@@ -47,4 +47,15 @@ public class Order {
       inverseJoinColumns = @JoinColumn(name = "products_id"))
   private List<Product> products;
 
+  public Float getTotalCost() {
+    Float totalCost = 0.0f;
+    for (int i = 0; i < this.getProducts()
+        .size(); i++) {
+      totalCost += this.getProducts()
+          .get(i)
+          .getPrice();
+    }
+    return totalCost;
+  }
+
 }

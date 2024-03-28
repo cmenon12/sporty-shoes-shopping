@@ -19,33 +19,32 @@
                   class="accordion-button" type="button" data-bs-toggle="collapse"
                   th:data-bs-target="'#collapse' + ${o.getId()}" aria-expanded="true"
                   th:aria-controls="'collapse' + ${o.getId()}"
-                  th:text="'Order on ' + ${o.getCreated()} + ' to ' + ${o.getAddress()}">
+                  th:text="'Order #' + ${o.getId()} + ' on ' + ${#temporals.format(o.getCreated(), 'dd MMM yyyy HH:MM:SS')} + ' to ' + ${o.getAddress()}">
           </button>
           <button th:unless="${oStat.index == 0}"
                   class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                   th:data-bs-target="'#collapse' + ${o.getId()}" aria-expanded="false"
                   th:aria-controls="'collapse' + ${o.getId()}"
-                  th:text="'Order on ' + ${o.getCreated()} + ' to ' + ${o.getAddress()}">
+                  th:text="'Order #' + ${o.getId()} + ' on ' + ${#temporals.format(o.getCreated(), 'dd MMM yyyy HH:MM:SS')} + ' to ' + ${o.getAddress()}">
           </button>
         </h2>
         <div th:id="'collapse' + ${o.getId()}"
              th:class="'accordion-collapse collapse' + ${oStat.index == 0 ? ' show' : ''}"
              data-bs-parent="#ordersAccordion">
           <div class="accordion-body">
-
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-
+            <div class="row row-cols-1 row-cols-md-5 g-4">
               <div class="col" th:each="p:${o.getProducts()}">
                 <div class="card h-100">
                   <div class="card-body">
                     <h5 class="card-title" th:text="${p.getName()}"></h5>
                     <h6 class="card-subtitle mb-2 text-body-secondary"
                         th:text="${#numbers.formatCurrency(p.getPrice())}"></h6>
-                    <p class="card-text" th:text="${p.getDescription()}"></p>
                   </div>
                 </div>
               </div>
             </div>
+            <p class="mt-3"
+               th:text="'Total cost: ' + ${#numbers.formatCurrency(o.getTotalCost())}"></p>
           </div>
         </div>
       </div>
