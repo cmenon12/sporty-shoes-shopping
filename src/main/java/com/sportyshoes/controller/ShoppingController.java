@@ -120,5 +120,15 @@ public class ShoppingController {
     }
   }
 
+  @GetMapping(value = "/orders")
+  public String orders(Model model, HttpSession session) {
+    if (session.getAttribute("user") == null) {
+      return "redirect:/login";
+    }
+    List<Order> allOrders = orderService.getAllByUser((User) session.getAttribute("user"), -1);
+    model.addAttribute("allOrders", allOrders);
+    return "orders";
+  }
+
 
 }
