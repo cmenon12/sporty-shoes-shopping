@@ -31,9 +31,9 @@ public class MainController {
     }
     int adminCreated = userService.createAdmin();
     model.addAttribute("adminCreated", adminCreated);
-    if (adminCreated == 1 && userService.getByEmail("admin@sportyshoes.com")
+    if (adminCreated == 1 && userService.getAdmin()
         .isPresent()) {
-      model.addAttribute("user", userService.getByEmail("admin@sportyshoes.com")
+      model.addAttribute("user", userService.getAdmin()
           .get());
     } else if (model.getAttribute("user") == null) {
       model.addAttribute("user", new User());

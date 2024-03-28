@@ -8,8 +8,8 @@
 
   <main>
     <div class="alert alert-primary alert-dismissible m-1" role="alert"
-         th:if="${adminCreated == 1}">
-      Admin user created! Login with email: `admin@sportyshoes.com` and password: `admin`.
+         th:if="${adminCreated == 1}"
+         th:text="'Admin user created! Login with email: `' + ${user.getEmail()} + '` and password: `' + ${user.getPassword()} + '`.'">
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     <div

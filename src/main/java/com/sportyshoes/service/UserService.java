@@ -13,12 +13,19 @@ public class UserService {
   @Autowired
   UserRepository userRepository;
 
+  private static final String ADMIN_EMAIL = "admin@sportyshoes.com";
+  private static final String ADMIN_PASSWORD = "admin";
+
   public List<User> getAll() {
     return userRepository.findAll();
   }
 
   public Optional<User> getByEmail(String email) {
     return userRepository.findById(email);
+  }
+
+  public Optional<User> getAdmin() {
+    return getByEmail(ADMIN_EMAIL);
   }
 
   public String authenticate(User user) {
@@ -44,17 +51,17 @@ public class UserService {
   }
 
   public int createAdmin() {
-    if (getByEmail("admin@sportyshoes.com").isPresent()) {
+    if (getByEmail(ADMIN_EMAIL).isPresent()) {
       return 0;
     }
     User user = new User();
-    user.setEmail("admin@sportyshoes.com");
-    user.setPassword("admin");
+    user.setEmail(ADMIN_EMAIL);
+    user.setPassword(ADMIN_PASSWORD);
     user.setIsAdmin(true);
     userRepository.save(user);
     System.out.println("Admin user created successfully");
-    System.out.println("Email: admin@sportyshoes.com");
-    System.out.println("Password: admin");
+    System.out.println("Email: " + ADMIN_EMAIL);
+    System.out.println("Password: " + ADMIN_PASSWORD);
     return 1;
   }
 
@@ -84,6 +91,10 @@ public class UserService {
     }
     if (user.getIsAdmin() == null) {
       return "User role is required";
+    }
+    if (user.getIsAdmin() && !user.getEmail()
+        .equals(ADMIN_EMAIL)) {
+      return "Only " + ADMIN_EMAIL + " can be an admin";
     }
     return null;
   }
