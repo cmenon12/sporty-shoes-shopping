@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en-GB">
+<head th:replace="fragments/base :: head('Sporty Shoes Shop - Login')"></head>
+<body class="text-bg-light">
+<!--/*@thymesVar id="resultDanger" type="java.lang.String"*/-->
+<div class="container ">
+  <header th:replace="fragments/base :: header('Sporty Shoes Shop - Login')"></header>
+
+  <main>
+    <div
+        th:replace="fragments/base :: alerts(${resultSuccess}, ${resultDanger}, ${resultInfo})"></div>
+    <hr>
+    <div class="row">
+      <div class="col-sm"></div>
+      <div class="col-lg-6">
+        <p>Enter your email and password to login. If you don't have an account, we'll create one
+          for you automatically!</p>
+        <form th:method="post" th:action="@{/login}" th:object="${user}">
+          <div class="mb-3">
+            <label for="inputEmail" class="form-label">Email address</label>
+            <input type="email" class="form-control"
+                   th:if="${resultDanger == null || resultDanger != 'User email is required'}"
+                   id="inputEmail" th:field="*{email}" required>
+            <input type="email" class="form-control is-invalid"
+                   th:if="${resultDanger != null && resultDanger == 'User email is required'}"
+                   id="inputEmail" th:field="*{email}" required>
+          </div>
+          <div class="mb-3">
+            <label for="inputPassword" class="form-label">Password</label>
+            <input type="password" class="form-control" th:if="${resultDanger == null}"
+                   id="inputPassword" th:field="*{password}" required>
+            <input type="password" class="form-control is-invalid" th:if="${resultDanger != null}"
+                   id="inputPassword" th:field="*{password}" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      <div class="col-sm"></div>
+    </div>
+  </main>
+
+  <footer th:replace="fragments/base :: footer"></footer>
+</div>
+</body>
+</html>
