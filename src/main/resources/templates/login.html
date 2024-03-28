@@ -20,11 +20,16 @@
     </div>
   </header>
   <main>
-    <div class="alert alert-primary m-1" role="alert" th:if="${adminCreated == 1}">
+    <div class="alert alert-primary alert-dismissible m-1" role="alert"
+         th:if="${adminCreated == 1}">
       Admin user created! Login with email: `admin@sportyshoes.com` and password: `admin`.
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <div class="alert alert-danger m-1" role="alert" th:if="${resultDanger != null}"
-         th:text="${resultDanger}">
+    <div class="alert alert-danger alert-dismissible m-1" role="alert"
+         th:if="${resultDanger != null}"
+    >
+      <span th:text="${resultDanger}"></span>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     <hr>
     <div class="row">
