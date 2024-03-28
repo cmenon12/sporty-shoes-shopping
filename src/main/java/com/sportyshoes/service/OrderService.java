@@ -1,6 +1,7 @@
 package com.sportyshoes.service;
 
 import com.sportyshoes.entity.Order;
+import com.sportyshoes.entity.User;
 import com.sportyshoes.repository.OrderRepository;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +16,20 @@ public class OrderService {
 
   public List<Order> getAll() {
     return orderRepository.findAll();
+  }
+
+  public List<Order> getAllByUser(User user, Integer sortChronologically) {
+    if (user == null) {
+      return getAll();
+    }
+    if (sortChronologically != null) {
+      if (sortChronologically == 1) {
+        return orderRepository.findAllByUserSortChronologicallyAscending(user);
+      } else if (sortChronologically == -1) {
+        return orderRepository.findAllByUserSortChronologicallyDescending(user);
+      }
+    }
+    return orderRepository.findAllByUser(user);
   }
 
   public Optional<Order> getById(long id) {
