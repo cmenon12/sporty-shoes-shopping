@@ -46,6 +46,7 @@ public class UserService {
     if (user.getEmail() != null && getByEmail(user.getEmail()).isPresent()) {
       return "User already exists";
     }
+    user.setIsAdmin(false);
     userRepository.save(user);
     return "User created successfully";
   }
