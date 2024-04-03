@@ -10,12 +10,10 @@
         th:replace="~{fragments/base :: alerts(${resultSuccess}, ${resultDanger}, ${resultInfo})}"></div>
     <hr th:unless="${allProducts.isEmpty()}">
     <div class="row">
-      <div class="col mb-3">
-        <a th:href="@{/admin/products/new}" class="btn btn-lg btn-primary">New Product</a>
-      </div>
-    </div>
-    <div class="row">
       <div class="col">
+        <div class="mb-3">
+          <a th:href="@{/admin/products/new}" class="btn btn-lg btn-primary">New Product</a>
+        </div>
         <div class="table-responsive">
 
           <table class="table table-hover">
@@ -41,7 +39,7 @@
                   th:class="${p.getStock() < 1 ? 'text-danger' : ''}"></td>
               <td>
                 <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                  <a th:href="'/admin/products/' + ${p.getId()}"
+                  <a th:href="'/admin/product/' + ${p.getId()}"
                      class="btn btn-primary">Edit</a>
                   <a th:href="'/admin/products/' + ${p.getId()} + '/delete'" class="btn btn-danger">Delete</a>
                 </div>

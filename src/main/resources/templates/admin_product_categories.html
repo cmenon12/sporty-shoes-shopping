@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en-GB">
+<head
+    th:replace="~{fragments/base :: head('Sporty Shoes Shop - Admin - Product Categories')}"></head>
+<body class="text-bg-light">
+<header
+    th:replace="~{fragments/base :: header('Sporty Shoes Shop - Admin - Product Categories')}"></header>
+
+<main>
+  <div class="container ">
+    <div
+        th:replace="~{fragments/base :: alerts(${resultSuccess}, ${resultDanger}, ${resultInfo})}"></div>
+    <hr th:unless="${allCategories.isEmpty()}">
+    <div class="row">
+      <div class="col-sm"></div>
+      <div class="col-lg-8">
+        <div class="mb-3">
+          <a th:href="@{/admin/product-categories/new}" class="btn btn-lg btn-primary">New Product
+            Category</a>
+        </div>
+        <div class="table-responsive">
+
+          <table class="table table-hover">
+            <caption
+                th:text="${allCategories.size() == 1 ? '1 category' : allCategories.size() + ' categories'}"></caption>
+            <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">No. of Products</th>
+              <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            <tr th:each="c:${allCategories}">
+              <th th:text="${c.getId()}" scope="row"></th>
+              <th th:text="${c.getName()}" scope="row"></th>
+              <td th:text="${c.getProducts().size()}"></td>
+              <td>
+                <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                  <a th:href="'/admin/product-categories/' + ${c.getId()}"
+                     class="btn btn-primary">Edit</a>
+                  <a th:href="'/admin/product-categories/' + ${c.getId()} + '/delete'"
+                     class="btn btn-danger">Delete</a>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-sm"></div>
+    </div>
+  </div>
+</main>
+
+<footer th:replace="~{fragments/base :: footer}"></footer>
+</body>
+</html>
