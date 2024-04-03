@@ -1,5 +1,6 @@
 package com.sportyshoes.service;
 
+import com.sportyshoes.entity.Product;
 import com.sportyshoes.entity.ProductCategory;
 import com.sportyshoes.repository.ProductCategoryRepository;
 import java.util.List;
@@ -13,6 +14,9 @@ public class ProductCategoryService {
 
   @Autowired
   ProductCategoryRepository productCategoryRepository;
+
+  @Autowired
+  ProductService productService;
 
   public List<ProductCategory> getAll() {
     return productCategoryRepository.findAll();
@@ -60,6 +64,30 @@ public class ProductCategoryService {
     }
     productCategoryRepository.save(productCategory);
     return "ProductCategory " + productCategory.getName() + " updated successfully";
+  }
+
+  public String delete(long id) {
+    Optional<ProductCategory> productCategory = getById(id);
+    if (productCategory.isPresent()) {
+      return delete(productCategory.get());
+    }
+    return "ProductCategory with ID=" + id + " not found";
+  }
+
+  public String delete(ProductCategory productCategory) {
+    if (productCategory == null) {
+      return "ProductCategory is null";
+    }
+    if (getById(productCategory.getId()).isEmpty()) {
+      return "ProductCategory not found";
+    }
+    List<Product> products = productService.getByProductCategory(productCategory);
+    for (Product product : products) {
+      product.setCategory(null);
+      productService.update(product);
+    }
+    productCategoryRepository.delete(productCategory);
+    return "ProductCategory " + productCategory.getName() + " deleted successfully";
   }
 
   private String validate(ProductCategory productCategory) {

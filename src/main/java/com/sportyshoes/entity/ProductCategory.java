@@ -5,7 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import java.util.List;
+import java.util.Set;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +27,6 @@ public class ProductCategory {
   private String name;
 
   @OneToMany(mappedBy = "category")
-  private List<Product> products;
+  private Set<Product> products;
 
 }
