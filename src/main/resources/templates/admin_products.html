@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en-GB">
-<head th:replace="~{fragments/base :: head('Sporty Shoes Shop - Products Admin')}"></head>
+<head th:replace="~{fragments/base :: head('Sporty Shoes Shop - Admin - Products')}"></head>
 <body class="text-bg-light">
-<header th:replace="~{fragments/base :: header('Sporty Shoes Shop - Products Admin')}"></header>
+<header th:replace="~{fragments/base :: header('Sporty Shoes Shop - Admin - Products')}"></header>
 
 <main>
   <div class="container ">
@@ -44,7 +44,7 @@
                   th:class="${p.getStock() < 1 ? 'text-danger' : ''}"></td>
               <td>
                 <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                  <a th:href="'/admin/products/' + ${p.getId()} + '/'"
+                  <a th:href="'/admin/products/' + ${p.getId()}"
                      class="btn btn-primary">Edit</a>
                   <a th:href="'/admin/products/' + ${p.getId()} + '/delete'" class="btn btn-danger">Delete</a>
                 </div>
