@@ -65,14 +65,12 @@ public class Order {
         .size(); i++) {
       Product product = this.getProducts()
           .get(i);
-      System.out.println(product);
       if (productsMap.containsKey(product)) {
         productsMap.put(product, productsMap.get(product) + 1);
       } else {
         productsMap.put(product, 1);
       }
     }
-    System.out.println(productsMap);
     return productsMap;
   }
 
