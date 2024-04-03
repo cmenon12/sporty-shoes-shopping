@@ -26,6 +26,7 @@ public class Product {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @EqualsAndHashCode.Include
   private Long id;
   @EqualsAndHashCode.Include
   private final LocalDateTime created = LocalDateTime.now();

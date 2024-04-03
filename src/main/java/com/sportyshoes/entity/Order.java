@@ -13,6 +13,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -56,6 +57,23 @@ public class Order {
           .getPrice();
     }
     return totalCost;
+  }
+
+  public Map<Product, Integer> getProductsMap() {
+    Map<Product, Integer> productsMap = new java.util.HashMap<>();
+    for (int i = 0; i < this.getProducts()
+        .size(); i++) {
+      Product product = this.getProducts()
+          .get(i);
+      System.out.println(product);
+      if (productsMap.containsKey(product)) {
+        productsMap.put(product, productsMap.get(product) + 1);
+      } else {
+        productsMap.put(product, 1);
+      }
+    }
+    System.out.println(productsMap);
+    return productsMap;
   }
 
 }
