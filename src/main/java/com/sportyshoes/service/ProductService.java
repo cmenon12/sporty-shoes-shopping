@@ -81,9 +81,7 @@ public class ProductService {
   public String delete(long id) {
     Optional<Product> product = getById(id);
     if (product.isPresent()) {
-      product.get().setIsDeleted(true);
-      productRepository.save(product.get());
-      return "Product with ID=" + id + " deleted successfully";
+      return delete(product.get());
     }
     return "Product with ID=" + id + " not found";
   }

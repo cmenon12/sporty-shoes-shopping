@@ -128,4 +128,28 @@ public class AdminController {
     return "redirect:/admin/products";
   }
 
+  @GetMapping(value = "/products/{id}/delete")
+  public String deleteProduct(@PathVariable("id") Integer id, Model model,
+      HttpSession session, RedirectAttributes redirectAttrs) {
+    User user = (User) session.getAttribute("user");
+    if (user == null) {
+      return "redirect:/login";
+    }
+    if (!user.getIsAdmin()) {
+      return "redirect:/";
+    }
+    Optional<Product> existingProduct = productService.getById(id);
+    if (existingProduct.isEmpty()) {
+      redirectAttrs.addFlashAttribute("resultDanger", "Product with ID=" + id + " not found.");
+      return "redirect:/admin/products";
+    }
+    String result = productService.delete(id);
+    if (result.contains("deleted successfully")) {
+      redirectAttrs.addFlashAttribute("resultSuccess", result);
+    } else {
+      redirectAttrs.addFlashAttribute("resultDanger", result);
+    }
+    return "redirect:/admin/products";
+  }
+
 }
