@@ -3,6 +3,7 @@ package com.sportyshoes.service;
 import com.sportyshoes.entity.Product;
 import com.sportyshoes.repository.ProductRepository;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,9 +55,11 @@ public class ProductService {
     newProduct.setPrice(product.getPrice());
     newProduct.setStock(product.getStock());
     newProduct.setCategory(product.getCategory());
-    productRepository.save(newProduct);
-    product.setIsDeleted(true);
-    productRepository.save(product);
+    if (!equivalent(product, newProduct)) {
+      productRepository.save(newProduct);
+      product.setIsDeleted(true);
+      productRepository.save(product);
+    }
     return "Product " + newProduct.getName() + " updated successfully";
   }
 
@@ -114,6 +117,14 @@ public class ProductService {
       return "Product has been deleted";
     }
     return null;
+  }
+
+  private boolean equivalent(Product product1, Product product2) {
+    return Objects.equals(product1.getName(), product2.getName())
+        && Objects.equals(product1.getDescription(), product2.getDescription())
+        && Objects.equals(product1.getPrice(), product2.getPrice())
+        && Objects.equals(product1.getStock(), product2.getStock())
+        && Objects.equals(product1.getCategory(), product2.getCategory());
   }
 
 }
