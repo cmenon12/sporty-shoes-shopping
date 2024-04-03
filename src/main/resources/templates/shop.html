@@ -8,9 +8,6 @@
     <div class="container ">
     <div
         th:replace="~{fragments/base :: alerts(${resultSuccess}, ${resultDanger}, ${resultInfo})}"></div>
-    <div class="alert alert-primary" role="alert" th:if="${allProducts.isEmpty()}">
-      There are no products.
-    </div>
     <hr th:unless="${allProducts.isEmpty()}">
     <form th:action="@{order}" th:method="post">
       <div class="row row-cols-1 row-cols-md-3 g-4">
