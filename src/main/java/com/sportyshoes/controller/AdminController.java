@@ -1,7 +1,9 @@
 package com.sportyshoes.controller;
 
+import com.sportyshoes.entity.Order;
 import com.sportyshoes.entity.Product;
 import com.sportyshoes.entity.User;
+import com.sportyshoes.service.OrderService;
 import com.sportyshoes.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
@@ -18,6 +20,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+
+  @Autowired
+  OrderService orderService;
 
   @Autowired
   ProductService productService;
@@ -150,6 +155,22 @@ public class AdminController {
       redirectAttrs.addFlashAttribute("resultDanger", result);
     }
     return "redirect:/admin/products";
+  }
+
+  @GetMapping(value = "/orders")
+  public String orders(Model model, HttpSession session) {
+    User user = (User) session.getAttribute("user");
+    if (user == null) {
+      return "redirect:/login";
+    }
+    if (!user.getIsAdmin()) {
+      return "redirect:/";
+    }
+    model.addAttribute("user", user);
+    List<Order> allOrders = orderService.getAll(-1);
+    model.addAttribute("allOrders", allOrders);
+    model.addAttribute("showUser", true);
+    return "orders";
   }
 
 }
