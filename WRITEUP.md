@@ -89,4 +89,8 @@ The project is structured as follows:
 
 ### Object Entities
 
+The application has four entities: `User`, `Product`, `ProductCategory`, and `Order`.
+
+![./screenshots/entity_diagram.png](./screenshots/entity_diagram.png)
+
 ## Development 
