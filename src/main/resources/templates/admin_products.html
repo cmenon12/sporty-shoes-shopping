@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en-GB">
+<head th:replace="~{fragments/base :: head('Sporty Shoes Shop - Admin - Products')}"></head>
+<body class="text-bg-light">
+<header th:replace="~{fragments/base :: header('Sporty Shoes Shop - Admin - Products')}"></header>
+
+<main>
+  <div class="container ">
+    <div
+        th:replace="~{fragments/base :: alerts(${resultSuccess}, ${resultDanger}, ${resultInfo})}"></div>
+    <div class="alert alert-primary" role="alert" th:if="${allProducts.isEmpty()}">
+      There are no products.
+    </div>
+    <hr th:unless="${allProducts.isEmpty()}">
+    <div class="row">
+      <div class="col mb-3">
+        <a th:href="@{/admin/products/new}" class="btn btn-lg btn-primary">New Product</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="table-responsive">
+
+          <table class="table table-hover">
+            <caption
+                th:text="${allProducts.size() == 1 ? '1 product' : allProducts.size() + ' products'}"></caption>
+            <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Price</th>
+              <th scope="col">Stock</th>
+              <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            <tr th:each="p:${allProducts}">
+              <th th:text="${p.getId()}" scope="row"></th>
+              <th th:text="${p.getName()}" scope="row"></th>
+              <td th:text="${p.getDescription()}" class="text-break"></td>
+              <td th:text="${#numbers.formatCurrency(p.getPrice())}"></td>
+              <td th:text="${p.getStock()}"
+                  th:class="${p.getStock() < 1 ? 'text-danger' : ''}"></td>
+              <td>
+                <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                  <a th:href="'/admin/products/' + ${p.getId()}"
+                     class="btn btn-primary">Edit</a>
+                  <a th:href="'/admin/products/' + ${p.getId()} + '/delete'" class="btn btn-danger">Delete</a>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer th:replace="~{fragments/base :: footer}"></footer>
+</body>
+</html>

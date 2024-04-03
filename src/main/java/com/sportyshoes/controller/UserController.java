@@ -39,7 +39,8 @@ public class UserController {
 
     String result = userService.authenticate(user);
     if (result.contains("Welcome")) {
-      session.setAttribute("user", user);
+      session.setAttribute("user", userService.getByEmail(user.getEmail())
+          .get());
       redirectAttrs.addFlashAttribute("resultSuccess", result);
       return "redirect:/";
     } else if (result.contains("Incorrect")) {
@@ -49,7 +50,8 @@ public class UserController {
     } else {
       result = userService.create(user);
       if (result.contains("created")) {
-        session.setAttribute("user", user);
+        session.setAttribute("user", userService.getByEmail(user.getEmail())
+            .get());
         redirectAttrs.addFlashAttribute("resultSuccess", result);
         return "redirect:/";
       } else {

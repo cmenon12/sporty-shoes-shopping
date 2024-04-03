@@ -33,7 +33,7 @@ public class Order {
   @EqualsAndHashCode.Include
   private final LocalDateTime created = LocalDateTime.now();
   @Lob
-  @Column
+  @Column(length = 1000)
   private String address;
 
   @ManyToOne

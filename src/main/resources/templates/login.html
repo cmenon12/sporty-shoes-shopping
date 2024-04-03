@@ -17,21 +17,21 @@
         <p>Enter your email and password to login. If you don't have an account, we'll create one
           for you automatically!</p>
         <form th:method="post" th:action="@{/login}" th:object="${user}">
-          <div class="mb-3">
-            <label for="inputEmail" class="form-label">Email address</label>
+          <div class="mb-3 form-floating">
             <input type="email" class="form-control"
                    th:if="${resultDanger == null || resultDanger != 'User email is required'}"
-                   id="inputEmail" th:field="*{email}" required>
+                   id="inputEmail" th:field="*{email}" placeholder="name@example.com" required>
             <input type="email" class="form-control is-invalid"
                    th:if="${resultDanger != null && resultDanger == 'User email is required'}"
-                   id="inputEmail" th:field="*{email}" required>
+                   id="inputEmail" th:field="*{email}" placeholder="name@example.com" required>
+            <label for="inputEmail" class="form-label">Email address</label>
           </div>
-          <div class="mb-3">
-            <label for="inputPassword" class="form-label">Password</label>
+          <div class="mb-3 form-floating">
             <input type="password" class="form-control" th:if="${resultDanger == null}"
-                   id="inputPassword" th:field="*{password}" required>
+                   id="inputPassword" th:field="*{password}" placeholder="Password" required>
             <input type="password" class="form-control is-invalid" th:if="${resultDanger != null}"
-                   id="inputPassword" th:field="*{password}" required>
+                   id="inputPassword" th:field="*{password}" placeholder="Password" required>
+            <label for="inputPassword" class="form-label">Password</label>
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>

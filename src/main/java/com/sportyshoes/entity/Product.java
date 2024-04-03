@@ -31,7 +31,7 @@ public class Product {
   private final LocalDateTime created = LocalDateTime.now();
   private String name;
   @Lob
-  @Column
+  @Column(length = 1000)
   private String description;
   private Float price;
   private Integer stock = 0;

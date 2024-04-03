@@ -33,6 +33,7 @@ public class ShoppingController {
     if (session.getAttribute("user") == null) {
       return "redirect:/login";
     }
+    model.addAttribute("user", session.getAttribute("user"));
     List<Product> allProducts = productService.getAll();
     if (allProducts.isEmpty()) {
       model.addAttribute("resultInfo", "There are no products.");
@@ -125,6 +126,7 @@ public class ShoppingController {
     if (session.getAttribute("user") == null) {
       return "redirect:/login";
     }
+    model.addAttribute("user", session.getAttribute("user"));
     List<Order> allOrders = orderService.getAllByUser((User) session.getAttribute("user"), -1);
     model.addAttribute("allOrders", allOrders);
     return "orders";

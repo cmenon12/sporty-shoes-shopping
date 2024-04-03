@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en-GB">
+<head
+    th:replace="~{fragments/base :: head('Sporty Shoes Shop - Admin - ' + ${product.getId() != null ? 'Edit' : 'Create'} + ' Product')}"></head>
+<body class="text-bg-light">
+<header
+    th:replace="~{fragments/base :: header('Sporty Shoes Shop - Admin - ' + ${product.getId() != null ? 'Edit' : 'Create'} + ' Product')}"></header>
+
+<main>
+  <div class="container ">
+    <div
+        th:replace="~{fragments/base :: alerts(${resultSuccess}, ${resultDanger}, ${resultInfo})}"></div>
+    <div class="row">
+      <div class="col-sm"></div>
+      <div class="col-lg-6">
+        <form th:method="post"
+              th:action="@{/admin/products/{id}(id=${product.getId() != null ? product.getId() : 'new'})}"
+              th:object="${product}">
+          <div class="row m-3">
+            <div class="col input-group">
+              <span class="input-group-text" id="productIdLabel">ID</span>
+              <input type="text" class="form-control" placeholder="will be generated automatically"
+                     th:field="*{id}"
+                     aria-label="ID" aria-describedby="productIdLabel" readonly>
+            </div>
+          </div>
+          <div class="row m-3">
+            <div class="col">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="productNameLabel" placeholder="Name"
+                       th:field="*{name}" maxlength="250"
+                       required>
+                <label for="productNameLabel" class="form-label">Name</label>
+              </div>
+            </div>
+          </div>
+          <div class="row m-3">
+            <div class="col">
+              <div class="form-floating">
+                <textarea style="height: 120px" class="form-control" id="productDescriptionLabel"
+                          placeholder="Description"
+                          th:field="*{description}"
+                          maxlength="990"></textarea>
+                <label for="productDescriptionLabel" class="form-label">Description</label>
+              </div>
+            </div>
+          </div>
+          <div class="row m-3">
+            <div class="col">
+              <div class="form-floating">
+                <input type="number" class="form-control" id="productPriceLabel"
+                       placeholder="Price £"
+                       th:field="*{price}" min="0" step="0.01" required>
+                <label for="productPriceLabel" class="form-label">Price £</label>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-floating">
+                <input type="number" class="form-control" id="productStockLabel" placeholder="Stock"
+                       th:field="*{stock}" min="0" step="1">
+                <label for="productStockLabel" class="form-label">Stock</label>
+              </div>
+            </div>
+          </div>
+          <div class="row m-3">
+            <div class="col">
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-sm"></div>
+    </div>
+  </div>
+</main>
+
+<footer th:replace="~{fragments/base :: footer}"></footer>
+</body>
+</html>
