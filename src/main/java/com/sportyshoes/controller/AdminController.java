@@ -108,4 +108,24 @@ public class AdminController {
     return "redirect:/admin/products";
   }
 
+  @PostMapping(value = "/products/new")
+  public String updateProduct(Product product, Model model,
+      HttpSession session, RedirectAttributes redirectAttrs) {
+    User user = (User) session.getAttribute("user");
+    if (user == null) {
+      return "redirect:/login";
+    }
+    if (!user.getIsAdmin()) {
+      return "redirect:/";
+    }
+    model.addAttribute("user", user);
+    String result = productService.create(product);
+    if (result.contains("created successfully")) {
+      redirectAttrs.addFlashAttribute("resultSuccess", result);
+    } else {
+      redirectAttrs.addFlashAttribute("resultDanger", result);
+    }
+    return "redirect:/admin/products";
+  }
+
 }
