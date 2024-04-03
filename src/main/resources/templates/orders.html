@@ -12,40 +12,48 @@
       There are no orders.
     </div>
     <hr th:unless="${allOrders.isEmpty()}">
-    <div class="accordion" id="ordersAccordion">
-      <div class="accordion-item" th:each="o:${allOrders}">
-        <h2 class="accordion-header">
-          <button th:if="${oStat.index == 0}"
-                  class="accordion-button" type="button" data-bs-toggle="collapse"
-                  th:data-bs-target="'#collapse' + ${o.getId()}" aria-expanded="true"
-                  th:aria-controls="'collapse' + ${o.getId()}"
-                  th:text="'Order #' + ${o.getId()} + ' on ' + ${#temporals.format(o.getCreated(), 'dd MMM yyyy HH:MM:SS')} + ' to ' + ${o.getAddress()}">
-          </button>
-          <button th:unless="${oStat.index == 0}"
-                  class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                  th:data-bs-target="'#collapse' + ${o.getId()}" aria-expanded="false"
-                  th:aria-controls="'collapse' + ${o.getId()}"
-                  th:text="'Order #' + ${o.getId()} + ' on ' + ${#temporals.format(o.getCreated(), 'dd MMM yyyy HH:MM:SS')} + ' to ' + ${o.getAddress()}">
-          </button>
-        </h2>
-        <div th:id="'collapse' + ${o.getId()}"
-             th:class="'accordion-collapse collapse' + ${oStat.index == 0 ? ' show' : ''}"
-             data-bs-parent="#ordersAccordion">
-          <div class="accordion-body">
-            <div class="row row-cols-1 row-cols-md-5 g-4">
-              <div class="col" th:each="p:${o.getProducts()}">
-                <div class="card h-100">
-                  <div class="card-body">
-                    <h5 class="card-title" th:text="${p.getName()}"></h5>
-                    <h6 class="card-subtitle mb-2 text-body-secondary"
-                        th:text="${#numbers.formatCurrency(p.getPrice())}"></h6>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <p class="mt-3"
-               th:text="'Total cost: ' + ${#numbers.formatCurrency(o.getTotalCost())}"></p>
-          </div>
+    <div class="row" th:unless="${allOrders.isEmpty()}">
+      <div class="col">
+        <div class="table-responsive">
+          <table class="table">
+            <caption
+                th:text="${allOrders.size() == 1 ? '1 order' : allOrders.size() + ' orders'}"></caption>
+            <thead>
+            <tr>
+              <th scope="col" rowspan="2">ID</th>
+              <th scope="col" rowspan="2"
+                  th:text="'Datetime' + ${showUser != null ? ' and User' : ''}"></th>
+              <th scope="col" colspan="4">Products</th>
+            </tr>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Total cost</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            <th:block th:each="o:${allOrders}">
+              <tr th:each="p:${o.getProductsMap()}" class="border-white">
+                <th scope="row" th:if="${pStat.first}" th:rowspan="${pStat.size}"
+                    th:text="${o.getId()}"></th>
+                <th scope="row" th:if="${pStat.first}" th:rowspan="${pStat.size}"
+                    th:text="${#temporals.format(o.getCreated(), 'dd MMM yyyy HH:MM:SS')} + ${showUser != null ? ' by ' + o.getUser().getEmail() : ''}"></th>
+                <td class="border-top border-bottom" th:text="${p.getKey().getName()}"></td>
+                <td class="border-top border-bottom"
+                    th:text="${#numbers.formatCurrency(p.getKey().getPrice())}"></td>
+                <td class="border-top border-bottom" th:text="${p.getValue()}"></td>
+                <td class="border-top border-bottom"
+                    th:text="${#numbers.formatCurrency(p.getKey().getPrice() * p.getValue())}"></td>
+              </tr>
+              <tr class="border-dark-subtle">
+                <td></td>
+                <td colspan="4" th:text="'Address: ' + ${o.getAddress()}"></td>
+                <th scope="row" th:text="${#numbers.formatCurrency(o.getTotalCost())}"></th>
+              </tr>
+            </th:block>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

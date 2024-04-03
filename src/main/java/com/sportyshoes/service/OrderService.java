@@ -18,18 +18,30 @@ public class OrderService {
     return orderRepository.findAll();
   }
 
-  public List<Order> getAllByUser(User user, Integer sortChronologically) {
+  public List<Order> getAll(int sortChronologically) {
+    if (sortChronologically > 0) {
+      return orderRepository.findAllSortChronologicallyAscending();
+    } else {
+      return orderRepository.findAllSortChronologicallyDescending();
+    }
+  }
+
+  public List<Order> getAllByUser(User user) {
     if (user == null) {
       return getAll();
     }
-    if (sortChronologically != null) {
-      if (sortChronologically == 1) {
-        return orderRepository.findAllByUserSortChronologicallyAscending(user);
-      } else if (sortChronologically == -1) {
-        return orderRepository.findAllByUserSortChronologicallyDescending(user);
-      }
-    }
     return orderRepository.findAllByUser(user);
+  }
+
+  public List<Order> getAllByUser(User user, int sortChronologically) {
+    if (user == null) {
+      return getAll(sortChronologically);
+    }
+    if (sortChronologically > 0) {
+      return orderRepository.findAllByUserSortChronologicallyAscending(user);
+    } else {
+      return orderRepository.findAllByUserSortChronologicallyDescending(user);
+    }
   }
 
   public Optional<Order> getById(long id) {
