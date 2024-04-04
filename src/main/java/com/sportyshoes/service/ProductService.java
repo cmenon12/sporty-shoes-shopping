@@ -77,7 +77,8 @@ public class ProductService {
       return "Product ID is null";
     }
     if (product.getStock() < quantity) {
-      return "Product stock cannot be" + product.getStock() + "; must be at least 0";
+      return "Product quantity of " + product.getName() + " cannot be " + quantity
+          + "; must be at most " + product.getStock();
     }
     product.setStock(product.getStock() - quantity);
     productRepository.save(product);
@@ -115,13 +116,13 @@ public class ProductService {
       return "Product price is required";
     }
     if (product.getPrice() < 0) {
-      return "Product price cannot be" + product.getPrice() + "; must be at least 0";
+      return "Product price cannot be " + product.getPrice() + "; must be at least 0";
     }
     if (product.getStock() == null) {
       return "Product stock is required";
     }
     if (product.getStock() < 0) {
-      return "Product stock cannot be" + product.getStock() + "; must be at least 0";
+      return "Product stock cannot be " + product.getStock() + "; must be at least 0";
     }
     if (product.getIsDeleted()) {
       return "Product has been deleted";
