@@ -73,8 +73,7 @@ public class ShoppingController {
         }
         int quantity = Integer.parseInt(
             Objects.requireNonNull(userFormData.getFirst(key)));
-        if (quantity > 0 && quantity <= product.get()
-            .getStock()) {
+        if (quantity > 0) {
           for (int i = 0; i < quantity; i++) {
             basket.add(product.get());
           }

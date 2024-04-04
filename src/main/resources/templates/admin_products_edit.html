@@ -15,7 +15,7 @@
       <div class="col-lg-6">
         <form th:method="post"
               th:action="@{/admin/products/{id}(id=${product.getId() != null ? product.getId() : 'new'})}"
-              th:object="${product}">
+              th:object="${product}" autocomplete="off">
           <div class="row m-3">
             <div class="col input-group">
               <span class="input-group-text" id="productIdLabel">ID</span>
@@ -29,7 +29,7 @@
               <div class="form-floating">
                 <input type="text" class="form-control" id="productNameLabel" placeholder="Name"
                        th:field="*{name}" maxlength="250"
-                       required>
+                       required autofocus>
                 <label for="productNameLabel" class="form-label">Name</label>
               </div>
             </div>
