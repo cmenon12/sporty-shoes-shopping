@@ -19,6 +19,9 @@ public class AdminController {
   @GetMapping(value = "/orders")
   public String orders(Model model) {
     List<Order> allOrders = orderService.getAll(-1);
+    if (allOrders.isEmpty()) {
+      model.addAttribute("resultInfo", "There are no orders.");
+    }
     model.addAttribute("allOrders", allOrders);
     model.addAttribute("showUser", true);
     return "orders";

@@ -10,9 +10,6 @@
   <div class="container ">
     <div
         th:replace="~{fragments/base :: alerts(${resultSuccess}, ${resultDanger}, ${resultInfo})}"></div>
-    <div class="alert alert-primary" role="alert" th:if="${allOrders.isEmpty()}">
-      There are no orders.
-    </div>
     <hr th:unless="${allOrders.isEmpty()}">
     <div class="row" th:unless="${allOrders.isEmpty()}">
       <div class="col">

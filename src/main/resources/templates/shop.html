@@ -9,7 +9,7 @@
     <div
         th:replace="~{fragments/base :: alerts(${resultSuccess}, ${resultDanger}, ${resultInfo})}"></div>
     <hr th:unless="${allProducts.isEmpty()}">
-    <form th:action="@{order}" th:method="post">
+      <form th:action="@{order}" th:method="post" th:unless="${allProducts.isEmpty()}">
       <div class="row row-cols-1 row-cols-lg-3 m-4 g-4">
 
         <div class="col" th:each="p:${allProducts}">

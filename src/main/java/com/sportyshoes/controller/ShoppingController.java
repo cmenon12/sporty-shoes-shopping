@@ -123,6 +123,9 @@ public class ShoppingController {
   public String orders(@AuthenticationPrincipal UserDetails userDetails, Model model) {
     List<Order> allOrders = orderService.getAllByUser(userService.get(userDetails)
         .get(), -1);
+    if (allOrders.isEmpty()) {
+      model.addAttribute("resultInfo", "There are no orders.");
+    }
     model.addAttribute("allOrders", allOrders);
     return "orders";
   }
