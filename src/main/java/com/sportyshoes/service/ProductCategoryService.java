@@ -1,6 +1,5 @@
 package com.sportyshoes.service;
 
-import com.sportyshoes.entity.Product;
 import com.sportyshoes.entity.ProductCategory;
 import com.sportyshoes.repository.ProductCategoryRepository;
 import java.util.List;
@@ -35,10 +34,10 @@ public class ProductCategoryService {
       return validate(productCategory);
     }
     if (productCategory.getId() != null && getById(productCategory.getId()).isPresent()) {
-      return "ProductCategory already exists";
+      return "ProductCategory with ID=" + productCategory.getId() + "already exists";
     }
     if (getByName(productCategory.getName()).isPresent()) {
-      return "ProductCategory already exists";
+      return "ProductCategory " + productCategory.getName() + "already exists";
     }
     productCategoryRepository.save(productCategory);
     return "ProductCategory created successfully";
@@ -55,12 +54,12 @@ public class ProductCategoryService {
       return "ProductCategory name is null";
     }
     if (getById(productCategory.getId()).isEmpty()) {
-      return "ProductCategory not found";
+      return "ProductCategory with ID=" + productCategory.getId() + "not found";
     }
     if (!Objects.equals(getById(productCategory.getId()).get()
         .getName(), productCategory.getName()) && getByName(
         productCategory.getName()).isPresent()) {
-      return "ProductCategory with that name already exists";
+      return "ProductCategory " + productCategory.getName() + " already exists";
     }
     productCategoryRepository.save(productCategory);
     return "ProductCategory " + productCategory.getName() + " updated successfully";

@@ -53,7 +53,7 @@ public class OrderService {
       return validate(order);
     }
     if (order.getId() != null && getById(order.getId()).isPresent()) {
-      return "Order already exists";
+      return "Order with ID=" + order.getId() + " already exists";
     }
     orderRepository.save(order);
     return "Order created successfully";
@@ -67,7 +67,7 @@ public class OrderService {
       return "Order ID is null";
     }
     if (getById(order.getId()).isEmpty()) {
-      return "Order not found";
+      return "Order with ID=" + order.getId() + " not found";
     }
     orderRepository.save(order);
     return "Order with ID=" + order.getId() + " updated successfully";

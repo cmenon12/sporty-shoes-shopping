@@ -75,7 +75,7 @@ public class UserService {
       return "User email is null";
     }
     if (getByEmail(user.getEmail()).isEmpty()) {
-      return "User not found";
+      return "User " + user.getEmail() + " not found";
     }
     userRepository.save(user);
     return "User " + user.getEmail() + " updated successfully";
@@ -96,7 +96,7 @@ public class UserService {
     }
     if (user.getIsAdmin() && !user.getEmail()
         .equals(ADMIN_EMAIL)) {
-      return "Only " + ADMIN_EMAIL + " can be an admin";
+      return "User cannot be an admin";
     }
     return null;
   }
