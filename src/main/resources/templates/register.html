@@ -16,27 +16,23 @@
         <p>Enter an email and password to register!</p>
         <form th:method="post" th:action="@{/register}" th:object="${user}">
           <div class="mb-3 form-floating">
-            <input type="email" class="form-control"
-                   th:if="${resultDanger == null || resultDanger != 'User email is required'}"
-                   id="inputEmail" th:field="*{email}" placeholder="name@example.com" required
-                   autofocus autocomplete="email">
-            <input type="email" class="form-control is-invalid"
-                   th:if="${resultDanger != null && resultDanger == 'User email is required'}"
+            <input type="email"
+                   th:class="'form-control' + ${resultDanger != null ? ' is-invalid' : ''}"
                    id="inputEmail" th:field="*{email}" placeholder="name@example.com" required
                    autofocus autocomplete="email">
             <label for="inputEmail" class="form-label">Email address</label>
           </div>
           <div class="mb-3 form-floating">
-            <input type="password" class="form-control" th:if="${resultDanger == null}"
+            <input type="password"
+                   th:class="'form-control' + ${resultDanger != null ? ' is-invalid' : ''}"
                    id="inputPassword" th:field="*{password}" placeholder="Password" required
-                   autocomplete="password">
-            <input type="password" class="form-control is-invalid" th:if="${resultDanger != null}"
-                   id="inputPassword" th:field="*{password}" placeholder="Password" required
-                   autocomplete="password">
+                   autocomplete="new-password">
             <label for="inputPassword" class="form-label">Password</label>
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        <br>
+        <p class="text-center"><a th:href="@{/login}">Login with an existing account.</a></p>
       </div>
       <div class="col-sm"></div>
     </div>
