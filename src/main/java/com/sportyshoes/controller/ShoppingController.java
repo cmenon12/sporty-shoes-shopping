@@ -42,6 +42,7 @@ public class ShoppingController {
     return "shop";
   }
 
+  @SuppressWarnings("OptionalGetWithoutIsPresent")
   @PostMapping(value = "/order")
   public String order(@AuthenticationPrincipal UserDetails userDetails,
       RedirectAttributes redirectAttrs,
@@ -100,7 +101,6 @@ public class ShoppingController {
         }
         redirectAttrs.addFlashAttribute("resultDanger", resultDanger.toString());
       }
-      return "redirect:/";
 
     } else {
       // create order
@@ -115,10 +115,11 @@ public class ShoppingController {
       } else {
         redirectAttrs.addFlashAttribute("resultDanger", result);
       }
-      return "redirect:/";
     }
+    return "redirect:/";
   }
 
+  @SuppressWarnings("OptionalGetWithoutIsPresent")
   @GetMapping(value = "/orders")
   public String orders(@AuthenticationPrincipal UserDetails userDetails, Model model) {
     List<Order> allOrders = orderService.getAllByUser(userService.get(userDetails)

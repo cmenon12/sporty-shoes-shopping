@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+<!--suppress HtmlUnknownTag -->
 <html xmlns:th="http://www.thymeleaf.org" lang="en-GB">
+<!--suppress HtmlRequiredTitleElement -->
 <head
     th:replace="~{fragments/base :: head('Sporty Shoes Shop - Admin - ' + ${product.getId() != null ? 'Edit' : 'Create'} + ' Product')}"></head>
 <body class="text-bg-light">
@@ -48,10 +50,12 @@
           <div class="row m-3">
             <div class="col">
               <div class="form-floating">
+                <!--suppress XmlDuplicatedId -->
                 <select th:if="${allCategories.isEmpty()}" class="form-select" id="productCategory"
                         aria-label="Product Category" disabled>
                   <option>No categories available.</option>
                 </select>
+                <!--suppress XmlDuplicatedId -->
                 <select th:unless="${allCategories.isEmpty()}" name="categoryId"
                         class="form-select" id="productCategory" aria-label="Product Category">
                   <option value="none">None</option>

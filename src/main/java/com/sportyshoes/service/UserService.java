@@ -48,15 +48,6 @@ public class UserService implements UserDetailsService {
     return userRepository.findById(email);
   }
 
-  public Optional<User> getAdmin() {
-    List<User> admins = userRepository.getAdmin();
-    if (admins.isEmpty()) {
-      return Optional.empty();
-    } else {
-      return Optional.of(admins.get(0));
-    }
-  }
-
   public Optional<User> get(UserDetails userDetails) {
     return getByEmail(userDetails.getUsername());
   }

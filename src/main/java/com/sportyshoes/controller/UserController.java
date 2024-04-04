@@ -25,7 +25,7 @@ public class UserController {
   @Autowired
   PasswordEncoder passwordEncoder;
 
-  SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+  final SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
 
   @GetMapping(value = "/login")
   public String login(@AuthenticationPrincipal UserDetails userDetails, Model model) {
