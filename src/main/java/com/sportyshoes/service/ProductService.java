@@ -60,7 +60,8 @@ public class ProductService {
     newProduct.setPrice(product.getPrice());
     newProduct.setStock(product.getStock());
     newProduct.setCategory(product.getCategory());
-    if (!equivalent(product, newProduct)) {
+    Product existingProduct = getById(product.getId()).get();
+    if (!equivalent(existingProduct, newProduct)) {
       productRepository.save(newProduct);
       product.setIsDeleted(true);
       productRepository.save(product);
