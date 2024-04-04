@@ -5,14 +5,40 @@ import com.sportyshoes.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
   @Autowired
   UserRepository userRepository;
 
+  @Override
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    Optional<User> user = userRepository.findById(email);
+    if (user.isPresent()) {
+      return org.springframework.security.core.userdetails.User.builder()
+          .username(user.get()
+              .getEmail())
+          .password(user.get()
+              .getPassword())
+          .roles(parseRoles(user.get()))
+          .build();
+    } else {
+      throw new UsernameNotFoundException("User " + email + " not found.");
+    }
+  }
+
+  private String[] parseRoles(User user) {
+    if (user.getIsAdmin()) {
+      return new String[]{"ADMIN", "USER"};
+    } else {
+      return new String[]{"USER"};
+    }
+  }
 
   public List<User> getAll() {
     return userRepository.findAll();
