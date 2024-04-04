@@ -38,14 +38,10 @@ public class AdminProductController {
 
   @GetMapping(value = "/products")
   public String products(Model model, HttpSession session) {
-    User user = (User) session.getAttribute("user");
-    if (user == null) {
-      return "redirect:/login";
+    if (parseUser(session) != null) {
+      return parseUser(session);
     }
-    if (!user.getIsAdmin()) {
-      return "redirect:/";
-    }
-    model.addAttribute("user", user);
+    model.addAttribute("user", session.getAttribute("user"));
     List<Product> allProducts = productService.getAll();
     if (allProducts.isEmpty()) {
       model.addAttribute("resultInfo", "There are no products.");
@@ -57,14 +53,10 @@ public class AdminProductController {
   @GetMapping(value = "/products/{id}")
   public String update(@PathVariable("id") Integer id, Model model, HttpSession session,
       RedirectAttributes redirectAttrs) {
-    User user = (User) session.getAttribute("user");
-    if (user == null) {
-      return "redirect:/login";
+    if (parseUser(session) != null) {
+      return parseUser(session);
     }
-    if (!user.getIsAdmin()) {
-      return "redirect:/";
-    }
-    model.addAttribute("user", user);
+    model.addAttribute("user", session.getAttribute("user"));
     Optional<Product> product = productService.getById(id);
     if (product.isEmpty()) {
       redirectAttrs.addFlashAttribute("resultDanger", "Product with ID=" + id + " not found.");
@@ -78,14 +70,10 @@ public class AdminProductController {
 
   @GetMapping(value = "/products/new")
   public String create(Model model, HttpSession session) {
-    User user = (User) session.getAttribute("user");
-    if (user == null) {
-      return "redirect:/login";
+    if (parseUser(session) != null) {
+      return parseUser(session);
     }
-    if (!user.getIsAdmin()) {
-      return "redirect:/";
-    }
-    model.addAttribute("user", user);
+    model.addAttribute("user", session.getAttribute("user"));
     model.addAttribute("product", new Product());
     List<ProductCategory> allCategories = categoryService.getAll();
     model.addAttribute("allCategories", allCategories);
@@ -96,14 +84,10 @@ public class AdminProductController {
   public String update(@PathVariable("id") Integer id, Product product, Model model,
       @RequestBody MultiValueMap<String, String> formData, HttpSession session,
       RedirectAttributes redirectAttrs) {
-    User user = (User) session.getAttribute("user");
-    if (user == null) {
-      return "redirect:/login";
+    if (parseUser(session) != null) {
+      return parseUser(session);
     }
-    if (!user.getIsAdmin()) {
-      return "redirect:/";
-    }
-    model.addAttribute("user", user);
+    model.addAttribute("user", session.getAttribute("user"));
     if (product.getId() != (long) id) {
       redirectAttrs.addFlashAttribute("resultDanger", "Product ID mismatch.");
       return "redirect:/admin/products";
@@ -113,22 +97,8 @@ public class AdminProductController {
       redirectAttrs.addFlashAttribute("resultDanger", "Product with ID=" + id + " not found.");
       return "redirect:/admin/products";
     }
-    if (Objects.equals(formData.get("categoryId")
-        .get(0), "none")
-        || Objects.isNull(formData.get("categoryId")
-        .get(0))) {
-      product.setCategory(null);
-    } else {
-      Optional<ProductCategory> category = categoryService.getById(Long.parseLong(
-          formData.get("categoryId")
-              .get(0)));
-      if (category.isEmpty()) {
-        redirectAttrs.addFlashAttribute("resultDanger",
-            "ProductCategory with ID=" + formData.get("categoryId")
-                .get(0) + " not found.");
-        return "redirect:/admin/products";
-      }
-      product.setCategory(category.get());
+    if (parseProductCategory(product, formData, redirectAttrs)) {
+      return "redirect:/admin/products";
     }
     String result = productService.update(product);
     if (result.contains("updated successfully")) {
@@ -143,30 +113,12 @@ public class AdminProductController {
   public String create(Product product, Model model,
       @RequestBody MultiValueMap<String, String> formData,
       HttpSession session, RedirectAttributes redirectAttrs) {
-    User user = (User) session.getAttribute("user");
-    if (user == null) {
-      return "redirect:/login";
+    if (parseUser(session) != null) {
+      return parseUser(session);
     }
-    if (!user.getIsAdmin()) {
-      return "redirect:/";
-    }
-    model.addAttribute("user", user);
-    if (Objects.equals(formData.get("categoryId")
-        .get(0), "none")
-        || Objects.isNull(formData.get("categoryId")
-        .get(0))) {
-      product.setCategory(null);
-    } else {
-      Optional<ProductCategory> category = categoryService.getById(Long.parseLong(
-          formData.get("categoryId")
-              .get(0)));
-      if (category.isEmpty()) {
-        redirectAttrs.addFlashAttribute("resultDanger",
-            "ProductCategory with ID=" + formData.get("categoryId")
-                .get(0) + " not found.");
-        return "redirect:/admin/products";
-      }
-      product.setCategory(category.get());
+    model.addAttribute("user", session.getAttribute("user"));
+    if (parseProductCategory(product, formData, redirectAttrs)) {
+      return "redirect:/admin/products";
     }
     String result = productService.create(product);
     if (result.contains("created successfully")) {
@@ -180,13 +132,10 @@ public class AdminProductController {
   @GetMapping(value = "/products/{id}/delete")
   public String delete(@PathVariable("id") Integer id, Model model,
       HttpSession session, RedirectAttributes redirectAttrs) {
-    User user = (User) session.getAttribute("user");
-    if (user == null) {
-      return "redirect:/login";
+    if (parseUser(session) != null) {
+      return parseUser(session);
     }
-    if (!user.getIsAdmin()) {
-      return "redirect:/";
-    }
+    model.addAttribute("user", session.getAttribute("user"));
     Optional<Product> existingProduct = productService.getById(id);
     if (existingProduct.isEmpty()) {
       redirectAttrs.addFlashAttribute("resultDanger", "Product with ID=" + id + " not found.");
@@ -199,6 +148,41 @@ public class AdminProductController {
       redirectAttrs.addFlashAttribute("resultDanger", result);
     }
     return "redirect:/admin/products";
+  }
+
+  private boolean parseProductCategory(Product product,
+      @RequestBody MultiValueMap<String, String> formData,
+      RedirectAttributes redirectAttrs) {
+    if (Objects.equals(formData.get("categoryId")
+        .get(0), "none")
+        || Objects.isNull(formData.get("categoryId")
+        .get(0))) {
+      product.setCategory(null);
+    } else {
+      Optional<ProductCategory> category = categoryService.getById(Long.parseLong(
+          formData.get("categoryId")
+              .get(0)));
+      if (category.isEmpty()) {
+        redirectAttrs.addFlashAttribute(
+            "resultDanger",
+            "ProductCategory with ID=" + formData.get("categoryId")
+                .get(0) + " not found.");
+        return true;
+      }
+      product.setCategory(category.get());
+    }
+    return false;
+  }
+
+  private String parseUser(HttpSession session) {
+    User user = (User) session.getAttribute("user");
+    if (user == null) {
+      return "redirect:/login";
+    }
+    if (!user.getIsAdmin()) {
+      return "redirect:/";
+    }
+    return null;
   }
 
 }

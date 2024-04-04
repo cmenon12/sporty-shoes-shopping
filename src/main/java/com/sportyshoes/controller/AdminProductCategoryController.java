@@ -43,14 +43,10 @@ public class AdminProductCategoryController {
   @GetMapping(value = "/product-categories/{id}")
   public String update(@PathVariable("id") Integer id, Model model, HttpSession session,
       RedirectAttributes redirectAttrs) {
-    User user = (User) session.getAttribute("user");
-    if (user == null) {
-      return "redirect:/login";
+    if (parseUser(session) != null) {
+      return parseUser(session);
     }
-    if (!user.getIsAdmin()) {
-      return "redirect:/";
-    }
-    model.addAttribute("user", user);
+    model.addAttribute("user", session.getAttribute("user"));
     Optional<ProductCategory> category = categoryService.getById(id);
     if (category.isEmpty()) {
       redirectAttrs.addFlashAttribute(
@@ -63,14 +59,10 @@ public class AdminProductCategoryController {
 
   @GetMapping(value = "/product-categories/new")
   public String create(Model model, HttpSession session) {
-    User user = (User) session.getAttribute("user");
-    if (user == null) {
-      return "redirect:/login";
+    if (parseUser(session) != null) {
+      return parseUser(session);
     }
-    if (!user.getIsAdmin()) {
-      return "redirect:/";
-    }
-    model.addAttribute("user", user);
+    model.addAttribute("user", session.getAttribute("user"));
     model.addAttribute("category", new ProductCategory());
     return "admin_product_categories_edit";
   }
@@ -78,14 +70,10 @@ public class AdminProductCategoryController {
   @PostMapping(value = "/product-categories/{id}")
   public String update(@PathVariable("id") Integer id, ProductCategory category, Model model,
       HttpSession session, RedirectAttributes redirectAttrs) {
-    User user = (User) session.getAttribute("user");
-    if (user == null) {
-      return "redirect:/login";
+    if (parseUser(session) != null) {
+      return parseUser(session);
     }
-    if (!user.getIsAdmin()) {
-      return "redirect:/";
-    }
-    model.addAttribute("user", user);
+    model.addAttribute("user", session.getAttribute("user"));
     if (category.getId() != (long) id) {
       redirectAttrs.addFlashAttribute("resultDanger", "ProductCategory ID mismatch.");
       return "redirect:/admin/product-categories";
@@ -108,14 +96,10 @@ public class AdminProductCategoryController {
   @PostMapping(value = "/product-categories/new")
   public String create(ProductCategory category, Model model,
       HttpSession session, RedirectAttributes redirectAttrs) {
-    User user = (User) session.getAttribute("user");
-    if (user == null) {
-      return "redirect:/login";
+    if (parseUser(session) != null) {
+      return parseUser(session);
     }
-    if (!user.getIsAdmin()) {
-      return "redirect:/";
-    }
-    model.addAttribute("user", user);
+    model.addAttribute("user", session.getAttribute("user"));
     String result = categoryService.create(category);
     if (result.contains("created successfully")) {
       redirectAttrs.addFlashAttribute("resultSuccess", result);
@@ -128,13 +112,10 @@ public class AdminProductCategoryController {
   @GetMapping(value = "/product-categories/{id}/delete")
   public String delete(@PathVariable("id") Integer id, Model model,
       HttpSession session, RedirectAttributes redirectAttrs) {
-    User user = (User) session.getAttribute("user");
-    if (user == null) {
-      return "redirect:/login";
+    if (parseUser(session) != null) {
+      return parseUser(session);
     }
-    if (!user.getIsAdmin()) {
-      return "redirect:/";
-    }
+    model.addAttribute("user", session.getAttribute("user"));
     Optional<ProductCategory> existingCategory = categoryService.getById(id);
     if (existingCategory.isEmpty()) {
       redirectAttrs.addFlashAttribute(
@@ -148,6 +129,17 @@ public class AdminProductCategoryController {
       redirectAttrs.addFlashAttribute("resultDanger", result);
     }
     return "redirect:/admin/product-categories";
+  }
+
+  private String parseUser(HttpSession session) {
+    User user = (User) session.getAttribute("user");
+    if (user == null) {
+      return "redirect:/login";
+    }
+    if (!user.getIsAdmin()) {
+      return "redirect:/";
+    }
+    return null;
   }
 
 }

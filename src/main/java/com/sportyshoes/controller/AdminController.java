@@ -20,6 +20,17 @@ public class AdminController {
 
   @GetMapping(value = "/orders")
   public String orders(Model model, HttpSession session) {
+    if (parseUser(session) != null) {
+      return parseUser(session);
+    }
+    model.addAttribute("user", session.getAttribute("user"));
+    List<Order> allOrders = orderService.getAll(-1);
+    model.addAttribute("allOrders", allOrders);
+    model.addAttribute("showUser", true);
+    return "orders";
+  }
+
+  private String parseUser(HttpSession session) {
     User user = (User) session.getAttribute("user");
     if (user == null) {
       return "redirect:/login";
@@ -27,11 +38,7 @@ public class AdminController {
     if (!user.getIsAdmin()) {
       return "redirect:/";
     }
-    model.addAttribute("user", user);
-    List<Order> allOrders = orderService.getAll(-1);
-    model.addAttribute("allOrders", allOrders);
-    model.addAttribute("showUser", true);
-    return "orders";
+    return null;
   }
 
 }
