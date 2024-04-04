@@ -1,8 +1,9 @@
 package com.sportyshoes.controller;
 
+import static com.sportyshoes.controller.ControllerHelper.parseAdminUser;
+
 import com.sportyshoes.entity.Product;
 import com.sportyshoes.entity.ProductCategory;
-import com.sportyshoes.entity.User;
 import com.sportyshoes.service.ProductCategoryService;
 import com.sportyshoes.service.ProductService;
 import jakarta.servlet.http.HttpSession;
@@ -38,8 +39,8 @@ public class AdminProductController {
 
   @GetMapping(value = "/products")
   public String products(Model model, HttpSession session) {
-    if (parseUser(session) != null) {
-      return parseUser(session);
+    if (parseAdminUser(session) != null) {
+      return parseAdminUser(session);
     }
     model.addAttribute("user", session.getAttribute("user"));
     List<Product> allProducts = productService.getAll();
@@ -53,8 +54,8 @@ public class AdminProductController {
   @GetMapping(value = "/products/{id}")
   public String update(@PathVariable("id") Integer id, Model model, HttpSession session,
       RedirectAttributes redirectAttrs) {
-    if (parseUser(session) != null) {
-      return parseUser(session);
+    if (parseAdminUser(session) != null) {
+      return parseAdminUser(session);
     }
     model.addAttribute("user", session.getAttribute("user"));
     Optional<Product> product = productService.getById(id);
@@ -70,8 +71,8 @@ public class AdminProductController {
 
   @GetMapping(value = "/products/new")
   public String create(Model model, HttpSession session) {
-    if (parseUser(session) != null) {
-      return parseUser(session);
+    if (parseAdminUser(session) != null) {
+      return parseAdminUser(session);
     }
     model.addAttribute("user", session.getAttribute("user"));
     model.addAttribute("product", new Product());
@@ -84,8 +85,8 @@ public class AdminProductController {
   public String update(@PathVariable("id") Integer id, Product product, Model model,
       @RequestBody MultiValueMap<String, String> formData, HttpSession session,
       RedirectAttributes redirectAttrs) {
-    if (parseUser(session) != null) {
-      return parseUser(session);
+    if (parseAdminUser(session) != null) {
+      return parseAdminUser(session);
     }
     model.addAttribute("user", session.getAttribute("user"));
     if (product.getId() != (long) id) {
@@ -113,8 +114,8 @@ public class AdminProductController {
   public String create(Product product, Model model,
       @RequestBody MultiValueMap<String, String> formData,
       HttpSession session, RedirectAttributes redirectAttrs) {
-    if (parseUser(session) != null) {
-      return parseUser(session);
+    if (parseAdminUser(session) != null) {
+      return parseAdminUser(session);
     }
     model.addAttribute("user", session.getAttribute("user"));
     if (parseProductCategory(product, formData, redirectAttrs)) {
@@ -132,8 +133,8 @@ public class AdminProductController {
   @GetMapping(value = "/products/{id}/delete")
   public String delete(@PathVariable("id") Integer id, Model model,
       HttpSession session, RedirectAttributes redirectAttrs) {
-    if (parseUser(session) != null) {
-      return parseUser(session);
+    if (parseAdminUser(session) != null) {
+      return parseAdminUser(session);
     }
     model.addAttribute("user", session.getAttribute("user"));
     Optional<Product> existingProduct = productService.getById(id);
@@ -172,17 +173,6 @@ public class AdminProductController {
       product.setCategory(category.get());
     }
     return false;
-  }
-
-  private String parseUser(HttpSession session) {
-    User user = (User) session.getAttribute("user");
-    if (user == null) {
-      return "redirect:/login";
-    }
-    if (!user.getIsAdmin()) {
-      return "redirect:/";
-    }
-    return null;
   }
 
 }

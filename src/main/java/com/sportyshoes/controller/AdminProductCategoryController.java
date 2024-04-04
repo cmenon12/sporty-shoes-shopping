@@ -1,5 +1,7 @@
 package com.sportyshoes.controller;
 
+import static com.sportyshoes.controller.ControllerHelper.parseAdminUser;
+
 import com.sportyshoes.entity.ProductCategory;
 import com.sportyshoes.entity.User;
 import com.sportyshoes.service.ProductCategoryService;
@@ -43,8 +45,8 @@ public class AdminProductCategoryController {
   @GetMapping(value = "/product-categories/{id}")
   public String update(@PathVariable("id") Integer id, Model model, HttpSession session,
       RedirectAttributes redirectAttrs) {
-    if (parseUser(session) != null) {
-      return parseUser(session);
+    if (parseAdminUser(session) != null) {
+      return parseAdminUser(session);
     }
     model.addAttribute("user", session.getAttribute("user"));
     Optional<ProductCategory> category = categoryService.getById(id);
@@ -59,8 +61,8 @@ public class AdminProductCategoryController {
 
   @GetMapping(value = "/product-categories/new")
   public String create(Model model, HttpSession session) {
-    if (parseUser(session) != null) {
-      return parseUser(session);
+    if (parseAdminUser(session) != null) {
+      return parseAdminUser(session);
     }
     model.addAttribute("user", session.getAttribute("user"));
     model.addAttribute("category", new ProductCategory());
@@ -70,8 +72,8 @@ public class AdminProductCategoryController {
   @PostMapping(value = "/product-categories/{id}")
   public String update(@PathVariable("id") Integer id, ProductCategory category, Model model,
       HttpSession session, RedirectAttributes redirectAttrs) {
-    if (parseUser(session) != null) {
-      return parseUser(session);
+    if (parseAdminUser(session) != null) {
+      return parseAdminUser(session);
     }
     model.addAttribute("user", session.getAttribute("user"));
     if (category.getId() != (long) id) {
@@ -96,8 +98,8 @@ public class AdminProductCategoryController {
   @PostMapping(value = "/product-categories/new")
   public String create(ProductCategory category, Model model,
       HttpSession session, RedirectAttributes redirectAttrs) {
-    if (parseUser(session) != null) {
-      return parseUser(session);
+    if (parseAdminUser(session) != null) {
+      return parseAdminUser(session);
     }
     model.addAttribute("user", session.getAttribute("user"));
     String result = categoryService.create(category);
@@ -112,8 +114,8 @@ public class AdminProductCategoryController {
   @GetMapping(value = "/product-categories/{id}/delete")
   public String delete(@PathVariable("id") Integer id, Model model,
       HttpSession session, RedirectAttributes redirectAttrs) {
-    if (parseUser(session) != null) {
-      return parseUser(session);
+    if (parseAdminUser(session) != null) {
+      return parseAdminUser(session);
     }
     model.addAttribute("user", session.getAttribute("user"));
     Optional<ProductCategory> existingCategory = categoryService.getById(id);
@@ -129,17 +131,6 @@ public class AdminProductCategoryController {
       redirectAttrs.addFlashAttribute("resultDanger", result);
     }
     return "redirect:/admin/product-categories";
-  }
-
-  private String parseUser(HttpSession session) {
-    User user = (User) session.getAttribute("user");
-    if (user == null) {
-      return "redirect:/login";
-    }
-    if (!user.getIsAdmin()) {
-      return "redirect:/";
-    }
-    return null;
   }
 
 }
