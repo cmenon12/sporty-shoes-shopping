@@ -2,15 +2,16 @@ package com.sportyshoes.controller;
 
 import com.sportyshoes.entity.Order;
 import com.sportyshoes.entity.Product;
-import com.sportyshoes.entity.User;
 import com.sportyshoes.service.OrderService;
 import com.sportyshoes.service.ProductService;
-import jakarta.servlet.http.HttpSession;
+import com.sportyshoes.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
@@ -28,12 +29,11 @@ public class ShoppingController {
   @Autowired
   OrderService orderService;
 
+  @Autowired
+  UserService userService;
+
   @GetMapping(value = "/")
-  public String home(Model model, HttpSession session) {
-    if (session.getAttribute("user") == null) {
-      return "redirect:/login";
-    }
-    model.addAttribute("user", session.getAttribute("user"));
+  public String home(Model model) {
     List<Product> allProducts = productService.getAll();
     if (allProducts.isEmpty()) {
       model.addAttribute("resultInfo", "There are no products.");
@@ -43,11 +43,9 @@ public class ShoppingController {
   }
 
   @PostMapping(value = "/order")
-  public String order(HttpSession session, RedirectAttributes redirectAttrs,
+  public String order(@AuthenticationPrincipal UserDetails userDetails,
+      RedirectAttributes redirectAttrs,
       @RequestBody MultiValueMap<String, String> userFormData) {
-    if (session.getAttribute("user") == null) {
-      return "redirect:/login";
-    }
 
     // Check if address is provided
     String address = userFormData.getFirst("address");
@@ -109,7 +107,8 @@ public class ShoppingController {
       Order order = new Order();
       order.setAddress(address);
       order.setProducts(basket);
-      order.setUser((User) session.getAttribute("user"));
+      order.setUser(userService.get(userDetails)
+          .get());
       String result = orderService.create(order);
       if (result.contains("created")) {
         redirectAttrs.addFlashAttribute("resultSuccess", result);
@@ -121,12 +120,9 @@ public class ShoppingController {
   }
 
   @GetMapping(value = "/orders")
-  public String orders(Model model, HttpSession session) {
-    if (session.getAttribute("user") == null) {
-      return "redirect:/login";
-    }
-    model.addAttribute("user", session.getAttribute("user"));
-    List<Order> allOrders = orderService.getAllByUser((User) session.getAttribute("user"), -1);
+  public String orders(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+    List<Order> allOrders = orderService.getAllByUser(userService.get(userDetails)
+        .get(), -1);
     model.addAttribute("allOrders", allOrders);
     return "orders";
   }

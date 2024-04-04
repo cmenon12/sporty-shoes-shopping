@@ -2,8 +2,9 @@ package com.sportyshoes.controller;
 
 import com.sportyshoes.entity.User;
 import com.sportyshoes.service.UserService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +22,8 @@ public class UserController {
   PasswordEncoder passwordEncoder;
 
   @GetMapping(value = "/login")
-  public String login(Model model, HttpSession session) {
-    if (session.getAttribute("user") != null) {
+  public String login(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+    if (userDetails != null) {
       return "redirect:/";
     }
     if (userService.getAll()
@@ -36,8 +37,8 @@ public class UserController {
   }
 
   @GetMapping(value = "/register")
-  public String register(Model model, HttpSession session) {
-    if (session.getAttribute("user") != null) {
+  public String register(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+    if (userDetails != null) {
       return "redirect:/";
     }
     if (userService.getAll()
@@ -51,15 +52,12 @@ public class UserController {
   }
 
   @PostMapping(value = "/register")
-  public String register(User user, RedirectAttributes redirectAttrs, HttpSession session) {
+  public String register(User user, RedirectAttributes redirectAttrs) {
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     String result = userService.create(user);
     if (result.contains("created")) {
-      session.setAttribute(
-          "user", userService.getByEmail(user.getEmail())
-              .get());
       redirectAttrs.addFlashAttribute("resultSuccess", result);
-      return "redirect:/";
+      return "redirect:/login";
     } else {
       redirectAttrs.addFlashAttribute("user", user);
       redirectAttrs.addFlashAttribute("resultDanger", result);

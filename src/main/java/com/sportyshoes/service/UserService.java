@@ -57,6 +57,10 @@ public class UserService implements UserDetailsService {
     }
   }
 
+  public Optional<User> get(UserDetails userDetails) {
+    return getByEmail(userDetails.getUsername());
+  }
+
   public String authenticate(User user) {
     Optional<User> userFound = getByEmail(user.getEmail());
     if (userFound.isEmpty()) {

@@ -1,11 +1,7 @@
 package com.sportyshoes.controller;
 
-import static com.sportyshoes.controller.ControllerHelper.parseAdminUser;
-
 import com.sportyshoes.entity.ProductCategory;
-import com.sportyshoes.entity.User;
 import com.sportyshoes.service.ProductCategoryService;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +21,7 @@ public class AdminProductCategoryController {
   ProductCategoryService categoryService;
 
   @GetMapping(value = "/product-categories")
-  public String categories(Model model, HttpSession session) {
-    User user = (User) session.getAttribute("user");
-    if (user == null) {
-      return "redirect:/login";
-    }
-    if (!user.getIsAdmin()) {
-      return "redirect:/";
-    }
-    model.addAttribute("user", user);
+  public String categories(Model model) {
     List<ProductCategory> allCategories = categoryService.getAll();
     if (allCategories.isEmpty()) {
       model.addAttribute("resultInfo", "There are no product categories.");
@@ -43,12 +31,8 @@ public class AdminProductCategoryController {
   }
 
   @GetMapping(value = "/product-categories/{id}")
-  public String update(@PathVariable("id") Integer id, Model model, HttpSession session,
+  public String update(@PathVariable("id") Integer id, Model model,
       RedirectAttributes redirectAttrs) {
-    if (parseAdminUser(session) != null) {
-      return parseAdminUser(session);
-    }
-    model.addAttribute("user", session.getAttribute("user"));
     Optional<ProductCategory> category = categoryService.getById(id);
     if (category.isEmpty()) {
       redirectAttrs.addFlashAttribute(
@@ -60,22 +44,14 @@ public class AdminProductCategoryController {
   }
 
   @GetMapping(value = "/product-categories/new")
-  public String create(Model model, HttpSession session) {
-    if (parseAdminUser(session) != null) {
-      return parseAdminUser(session);
-    }
-    model.addAttribute("user", session.getAttribute("user"));
+  public String create(Model model) {
     model.addAttribute("category", new ProductCategory());
     return "admin_product_categories_edit";
   }
 
   @PostMapping(value = "/product-categories/{id}")
-  public String update(@PathVariable("id") Integer id, ProductCategory category, Model model,
-      HttpSession session, RedirectAttributes redirectAttrs) {
-    if (parseAdminUser(session) != null) {
-      return parseAdminUser(session);
-    }
-    model.addAttribute("user", session.getAttribute("user"));
+  public String update(@PathVariable("id") Integer id, ProductCategory category,
+      RedirectAttributes redirectAttrs) {
     if (category.getId() != (long) id) {
       redirectAttrs.addFlashAttribute("resultDanger", "ProductCategory ID mismatch.");
       return "redirect:/admin/product-categories";
@@ -96,12 +72,7 @@ public class AdminProductCategoryController {
   }
 
   @PostMapping(value = "/product-categories/new")
-  public String create(ProductCategory category, Model model,
-      HttpSession session, RedirectAttributes redirectAttrs) {
-    if (parseAdminUser(session) != null) {
-      return parseAdminUser(session);
-    }
-    model.addAttribute("user", session.getAttribute("user"));
+  public String create(ProductCategory category, RedirectAttributes redirectAttrs) {
     String result = categoryService.create(category);
     if (result.contains("created successfully")) {
       redirectAttrs.addFlashAttribute("resultSuccess", result);

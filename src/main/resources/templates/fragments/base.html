@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en-GB">
+<html lang="en-GB"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="head(title)">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,8 +30,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/orders">Orders</a>
           </li>
-          <!--/*@thymesVar id="user" type="com.sportyshoes.entity.User"*/-->
-          <li class="nav-item dropdown" th:if="${user != null && user.getIsAdmin() == true}">
+          <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                aria-expanded="false">
               Admin
