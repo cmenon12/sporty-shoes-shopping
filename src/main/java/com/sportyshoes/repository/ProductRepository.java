@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
+  @SuppressWarnings("NullableProblems")
   @Query("select p from Product p where p.isDeleted = false")
   List<Product> findAll();
 
