@@ -23,7 +23,12 @@ public class UserService {
   }
 
   public Optional<User> getAdmin() {
-    return userRepository.getAdmin();
+    List<User> admins = userRepository.getAdmin();
+    if (admins.isEmpty()) {
+      return Optional.empty();
+    } else {
+      return Optional.of(admins.get(0));
+    }
   }
 
   public String authenticate(User user) {
