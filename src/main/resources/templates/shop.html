@@ -29,7 +29,8 @@
                       th:text="'Buy for ' + ${#numbers.formatCurrency(p.getPrice())}">Buy</span>
                 <input type="number" class="form-control" min="0" step="1" value="0"
                        th:name="'product-input-' + ${p.getId()}" th:max="${p.getStock()}"
-                       aria-label="Buy" th:aria-describedby="'product-input-label-' + ${p.getId()}">
+                       aria-label="Buy" th:aria-describedby="'product-input-label-' + ${p.getId()}"
+                       autocomplete="off">
               </div>
               <span th:unless="${p.getStock() > 0}">Out of stock</span>
             </div>

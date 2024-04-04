@@ -21,18 +21,20 @@
             <input type="email" class="form-control"
                    th:if="${resultDanger == null || resultDanger != 'User email is required'}"
                    id="inputEmail" th:field="*{email}" placeholder="name@example.com" required
-                   autofocus>
+                   autofocus autocomplete="email">
             <input type="email" class="form-control is-invalid"
                    th:if="${resultDanger != null && resultDanger == 'User email is required'}"
                    id="inputEmail" th:field="*{email}" placeholder="name@example.com" required
-                   autofocus>
+                   autofocus autocomplete="email">
             <label for="inputEmail" class="form-label">Email address</label>
           </div>
           <div class="mb-3 form-floating">
             <input type="password" class="form-control" th:if="${resultDanger == null}"
-                   id="inputPassword" th:field="*{password}" placeholder="Password" required>
+                   id="inputPassword" th:field="*{password}" placeholder="Password" required
+                   autocomplete="password">
             <input type="password" class="form-control is-invalid" th:if="${resultDanger != null}"
-                   id="inputPassword" th:field="*{password}" placeholder="Password" required>
+                   id="inputPassword" th:field="*{password}" placeholder="Password" required
+                   autocomplete="password">
             <label for="inputPassword" class="form-label">Password</label>
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
