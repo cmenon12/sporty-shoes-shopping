@@ -13,8 +13,6 @@ public class UserService {
   @Autowired
   UserRepository userRepository;
 
-  private static final String ADMIN_EMAIL = "admin@sportyshoes.com";
-  private static final String ADMIN_PASSWORD = "admin";
 
   public List<User> getAll() {
     return userRepository.findAll();
@@ -46,25 +44,9 @@ public class UserService {
     if (user.getEmail() != null && getByEmail(user.getEmail()).isPresent()) {
       return "User already exists";
     }
-    user.setIsAdmin(false);
+    user.setIsAdmin(getAll().isEmpty());
     userRepository.save(user);
-    return "User created successfully";
-  }
-
-  public String createAdmin() {
-    if (getByEmail(ADMIN_EMAIL).isPresent()) {
-      return "Admin user already exists";
-    }
-    User user = new User();
-    user.setEmail(ADMIN_EMAIL);
-    user.setPassword(ADMIN_PASSWORD);
-    user.setIsAdmin(true);
-    userRepository.save(user);
-    System.out.println("Admin user created successfully");
-    System.out.println("Email: " + ADMIN_EMAIL);
-    System.out.println("Password: " + ADMIN_PASSWORD);
-    return "Admin user created successfully! Login with email: `" + ADMIN_EMAIL
-        + "` and password: `" + ADMIN_PASSWORD + "`";
+    return "User created successfully" + (user.getIsAdmin() ? " as admin" : "");
   }
 
   public String update(User user) {
@@ -94,11 +76,6 @@ public class UserService {
     if (user.getIsAdmin() == null) {
       return "User role is required";
     }
-    if (user.getIsAdmin() && !user.getEmail()
-        .equals(ADMIN_EMAIL)) {
-      return "User cannot be an admin";
-    }
     return null;
   }
-
 }
