@@ -25,7 +25,7 @@ public class UserService {
   }
 
   public Optional<User> getAdmin() {
-    return getByEmail(ADMIN_EMAIL);
+    return userRepository.getAdmin();
   }
 
   public String authenticate(User user) {
