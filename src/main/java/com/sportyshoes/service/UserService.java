@@ -61,17 +61,6 @@ public class UserService implements UserDetailsService {
     return getByEmail(userDetails.getUsername());
   }
 
-  public String authenticate(User user) {
-    Optional<User> userFound = getByEmail(user.getEmail());
-    if (userFound.isEmpty()) {
-      return "User not found";
-    } else if (!userFound.get().getPassword().equals(user.getPassword())) {
-      return "Incorrect password for user " + user.getEmail();
-    } else {
-      return "Welcome " + user.getEmail() + "!";
-    }
-  }
-
   public String create(User user) {
     if (validate(user) != null) {
       return validate(user);
