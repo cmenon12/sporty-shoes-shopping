@@ -39,7 +39,7 @@
                   th:class="${p.getStock() < 1 ? 'text-danger' : ''}"></td>
               <td>
                 <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                  <a th:href="'/admin/product/' + ${p.getId()}"
+                  <a th:href="'/admin/products/' + ${p.getId()}"
                      class="btn btn-primary">Edit</a>
                   <a th:href="'/admin/products/' + ${p.getId()} + '/delete'" class="btn btn-danger">Delete</a>
                 </div>
