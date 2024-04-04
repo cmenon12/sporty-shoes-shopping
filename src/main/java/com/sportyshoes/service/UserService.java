@@ -5,16 +5,40 @@ import com.sportyshoes.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
   @Autowired
   UserRepository userRepository;
 
-  private static final String ADMIN_EMAIL = "admin@sportyshoes.com";
-  private static final String ADMIN_PASSWORD = "admin";
+  @Override
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    Optional<User> user = userRepository.findById(email);
+    if (user.isPresent()) {
+      return org.springframework.security.core.userdetails.User.builder()
+          .username(user.get()
+              .getEmail())
+          .password(user.get()
+              .getPassword())
+          .roles(parseRoles(user.get()))
+          .build();
+    } else {
+      throw new UsernameNotFoundException("User " + email + " not found.");
+    }
+  }
+
+  private String[] parseRoles(User user) {
+    if (user.getIsAdmin()) {
+      return new String[]{"ADMIN", "USER"};
+    } else {
+      return new String[]{"USER"};
+    }
+  }
 
   public List<User> getAll() {
     return userRepository.findAll();
@@ -25,18 +49,16 @@ public class UserService {
   }
 
   public Optional<User> getAdmin() {
-    return getByEmail(ADMIN_EMAIL);
+    List<User> admins = userRepository.getAdmin();
+    if (admins.isEmpty()) {
+      return Optional.empty();
+    } else {
+      return Optional.of(admins.get(0));
+    }
   }
 
-  public String authenticate(User user) {
-    Optional<User> userFound = getByEmail(user.getEmail());
-    if (userFound.isEmpty()) {
-      return "User not found";
-    } else if (!userFound.get().getPassword().equals(user.getPassword())) {
-      return "Incorrect password for user " + user.getEmail();
-    } else {
-      return "Welcome " + user.getEmail() + "!";
-    }
+  public Optional<User> get(UserDetails userDetails) {
+    return getByEmail(userDetails.getUsername());
   }
 
   public String create(User user) {
@@ -46,25 +68,9 @@ public class UserService {
     if (user.getEmail() != null && getByEmail(user.getEmail()).isPresent()) {
       return "User already exists";
     }
-    user.setIsAdmin(false);
+    user.setIsAdmin(getAll().isEmpty());
     userRepository.save(user);
-    return "User created successfully";
-  }
-
-  public String createAdmin() {
-    if (getByEmail(ADMIN_EMAIL).isPresent()) {
-      return "Admin user already exists";
-    }
-    User user = new User();
-    user.setEmail(ADMIN_EMAIL);
-    user.setPassword(ADMIN_PASSWORD);
-    user.setIsAdmin(true);
-    userRepository.save(user);
-    System.out.println("Admin user created successfully");
-    System.out.println("Email: " + ADMIN_EMAIL);
-    System.out.println("Password: " + ADMIN_PASSWORD);
-    return "Admin user created successfully! Login with email: `" + ADMIN_EMAIL
-        + "` and password: `" + ADMIN_PASSWORD + "`";
+    return "User created successfully" + (user.getIsAdmin() ? " as admin" : "");
   }
 
   public String update(User user) {
@@ -94,11 +100,6 @@ public class UserService {
     if (user.getIsAdmin() == null) {
       return "User role is required";
     }
-    if (user.getIsAdmin() && !user.getEmail()
-        .equals(ADMIN_EMAIL)) {
-      return "User cannot be an admin";
-    }
     return null;
   }
-
 }

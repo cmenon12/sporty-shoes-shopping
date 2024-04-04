@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en-GB">
+<html lang="en-GB"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="head(title)">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,10 +13,11 @@
 </head>
 <body class="text-bg-light">
 <header class="mb-1" th:fragment="header(title)">
-  <!--/*@thymesVar id="navbar" type="java.lang.Boolean"*/-->
-  <nav class="navbar navbar-expand-lg bg-body-secondary mb-2" th:if="${navbar != false}">
+  <nav
+      th:class="'navbar navbar-expand-lg mb-2 ' + ${#strings.contains(title, 'Admin') ? 'bg-warning' : 'bg-primary-subtle'}"
+      sec:authorize="isAuthenticated()">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/" th:text="${title}">Sporty Shoes Shop</a>
+      <a class="navbar-brand" href="/">Sporty Shoes Shop</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
               data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
               aria-expanded="false" aria-label="Toggle navigation">
@@ -28,8 +31,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/orders">Orders</a>
           </li>
-          <!--/*@thymesVar id="user" type="com.sportyshoes.entity.User"*/-->
-          <li class="nav-item dropdown" th:if="${user != null && user.getIsAdmin() == true}">
+          <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                aria-expanded="false">
               Admin

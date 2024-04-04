@@ -1,12 +1,9 @@
 package com.sportyshoes.controller;
 
-import static com.sportyshoes.controller.ControllerHelper.parseAdminUser;
-
 import com.sportyshoes.entity.Product;
 import com.sportyshoes.entity.ProductCategory;
 import com.sportyshoes.service.ProductCategoryService;
 import com.sportyshoes.service.ProductService;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -38,11 +35,7 @@ public class AdminProductController {
   }
 
   @GetMapping(value = "/products")
-  public String products(Model model, HttpSession session) {
-    if (parseAdminUser(session) != null) {
-      return parseAdminUser(session);
-    }
-    model.addAttribute("user", session.getAttribute("user"));
+  public String products(Model model) {
     List<Product> allProducts = productService.getAll();
     if (allProducts.isEmpty()) {
       model.addAttribute("resultInfo", "There are no products.");
@@ -52,12 +45,8 @@ public class AdminProductController {
   }
 
   @GetMapping(value = "/products/{id}")
-  public String update(@PathVariable("id") Integer id, Model model, HttpSession session,
+  public String update(@PathVariable("id") Integer id, Model model,
       RedirectAttributes redirectAttrs) {
-    if (parseAdminUser(session) != null) {
-      return parseAdminUser(session);
-    }
-    model.addAttribute("user", session.getAttribute("user"));
     Optional<Product> product = productService.getById(id);
     if (product.isEmpty()) {
       redirectAttrs.addFlashAttribute("resultDanger", "Product with ID=" + id + " not found.");
@@ -70,11 +59,7 @@ public class AdminProductController {
   }
 
   @GetMapping(value = "/products/new")
-  public String create(Model model, HttpSession session) {
-    if (parseAdminUser(session) != null) {
-      return parseAdminUser(session);
-    }
-    model.addAttribute("user", session.getAttribute("user"));
+  public String create(Model model) {
     model.addAttribute("product", new Product());
     List<ProductCategory> allCategories = categoryService.getAll();
     model.addAttribute("allCategories", allCategories);
@@ -82,13 +67,9 @@ public class AdminProductController {
   }
 
   @PostMapping(value = "/products/{id}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-  public String update(@PathVariable("id") Integer id, Product product, Model model,
-      @RequestBody MultiValueMap<String, String> formData, HttpSession session,
+  public String update(@PathVariable("id") Integer id, Product product,
+      @RequestBody MultiValueMap<String, String> formData,
       RedirectAttributes redirectAttrs) {
-    if (parseAdminUser(session) != null) {
-      return parseAdminUser(session);
-    }
-    model.addAttribute("user", session.getAttribute("user"));
     if (product.getId() != (long) id) {
       redirectAttrs.addFlashAttribute("resultDanger", "Product ID mismatch.");
       return "redirect:/admin/products";
@@ -111,13 +92,8 @@ public class AdminProductController {
   }
 
   @PostMapping(value = "/products/new", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-  public String create(Product product, Model model,
-      @RequestBody MultiValueMap<String, String> formData,
-      HttpSession session, RedirectAttributes redirectAttrs) {
-    if (parseAdminUser(session) != null) {
-      return parseAdminUser(session);
-    }
-    model.addAttribute("user", session.getAttribute("user"));
+  public String create(Product product,
+      @RequestBody MultiValueMap<String, String> formData, RedirectAttributes redirectAttrs) {
     if (parseProductCategory(product, formData, redirectAttrs)) {
       return "redirect:/admin/products";
     }
@@ -131,12 +107,7 @@ public class AdminProductController {
   }
 
   @GetMapping(value = "/products/{id}/delete")
-  public String delete(@PathVariable("id") Integer id, Model model,
-      HttpSession session, RedirectAttributes redirectAttrs) {
-    if (parseAdminUser(session) != null) {
-      return parseAdminUser(session);
-    }
-    model.addAttribute("user", session.getAttribute("user"));
+  public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttrs) {
     Optional<Product> product = productService.getById(id);
     if (product.isEmpty()) {
       redirectAttrs.addFlashAttribute("resultDanger", "Product with ID=" + id + " not found.");

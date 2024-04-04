@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en-GB">
+<head th:replace="~{fragments/base :: head('Sporty Shoes Shop - Register')}"></head>
+<body class="text-bg-light">
+
+<header th:replace="~{fragments/base :: header('Sporty Shoes Shop - Register')}"></header>
+
+<main>
+  <div class="container ">
+    <div
+        th:replace="~{fragments/base :: alerts(${resultSuccess}, ${resultDanger}, ${resultInfo})}"></div>
+    <hr>
+    <div class="row">
+      <div class="col-sm"></div>
+      <div class="col-lg-6">
+        <p>Enter an email and password to register!</p>
+        <form th:method="post" th:action="@{/register}" th:object="${user}">
+          <div class="mb-3 form-floating">
+            <input type="email"
+                   th:class="'form-control' + ${resultDanger != null ? ' is-invalid' : ''}"
+                   id="inputEmail" th:field="*{email}" placeholder="name@example.com" required
+                   autofocus autocomplete="email">
+            <label for="inputEmail" class="form-label">Email address</label>
+          </div>
+          <div class="mb-3 form-floating">
+            <input type="password"
+                   th:class="'form-control' + ${resultDanger != null ? ' is-invalid' : ''}"
+                   id="inputPassword" th:field="*{password}" placeholder="Password" required
+                   autocomplete="new-password">
+            <label for="inputPassword" class="form-label">Password</label>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <br>
+        <p class="text-center"><a th:href="@{/login}">Login with an existing account.</a></p>
+      </div>
+      <div class="col-sm"></div>
+    </div>
+  </div>
+</main>
+
+<footer th:replace="~{fragments/base :: footer}"></footer>
+</body>
+</html>

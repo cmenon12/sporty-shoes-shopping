@@ -10,35 +10,36 @@
     <div class="container ">
     <div
         th:replace="~{fragments/base :: alerts(${resultSuccess}, ${resultDanger}, ${resultInfo})}"></div>
+      <div th:if="${param.error}" class="alert alert-danger">
+        Invalid email and/or password.
+      </div>
+      <div th:if="${param.logout}" class="alert alert-success">
+        You have been logged out.
+      </div>
     <hr>
     <div class="row">
       <div class="col-sm"></div>
       <div class="col-lg-6">
-        <p>Enter your email and password to login. If you don't have an account, we'll create one
-          for you automatically!</p>
-        <form th:method="post" th:action="@{/login}" th:object="${user}">
+        <p>Enter your email and password to login!</p>
+        <form th:method="post" th:action="@{/login}">
           <div class="mb-3 form-floating">
-            <input type="email" class="form-control"
-                   th:if="${resultDanger == null || resultDanger != 'User email is required'}"
-                   id="inputEmail" th:field="*{email}" placeholder="name@example.com" required
+            <input type="email"
+                   th:class="'form-control' + ${param.error != null ? ' is-invalid' : ''}"
+                   id="username" name="username" placeholder="name@example.com" required
                    autofocus autocomplete="email">
-            <input type="email" class="form-control is-invalid"
-                   th:if="${resultDanger != null && resultDanger == 'User email is required'}"
-                   id="inputEmail" th:field="*{email}" placeholder="name@example.com" required
-                   autofocus autocomplete="email">
-            <label for="inputEmail" class="form-label">Email address</label>
+            <label for="username" class="form-label">Email address</label>
           </div>
           <div class="mb-3 form-floating">
-            <input type="password" class="form-control" th:if="${resultDanger == null}"
-                   id="inputPassword" th:field="*{password}" placeholder="Password" required
+            <input type="password"
+                   th:class="'form-control' + ${param.error != null ? ' is-invalid' : ''}"
+                   id="password" name="password" placeholder="Password" required
                    autocomplete="password">
-            <input type="password" class="form-control is-invalid" th:if="${resultDanger != null}"
-                   id="inputPassword" th:field="*{password}" placeholder="Password" required
-                   autocomplete="password">
-            <label for="inputPassword" class="form-label">Password</label>
+            <label for="password" class="form-label">Password</label>
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        <br>
+        <p class="text-center"><a th:href="@{/register}">Register a new account.</a></p>
       </div>
       <div class="col-sm"></div>
     </div>

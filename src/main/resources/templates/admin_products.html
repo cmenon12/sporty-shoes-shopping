@@ -14,7 +14,7 @@
         <div class="mb-3">
           <a th:href="@{/admin/products/new}" class="btn btn-lg btn-primary">New Product</a>
         </div>
-        <div class="table-responsive">
+        <div class="table-responsive" th:unless="${allProducts.isEmpty()}">
 
           <table class="table table-hover">
             <caption

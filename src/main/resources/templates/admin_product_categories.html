@@ -18,7 +18,7 @@
           <a th:href="@{/admin/product-categories/new}" class="btn btn-lg btn-primary">New Product
             Category</a>
         </div>
-        <div class="table-responsive">
+        <div class="table-responsive" th:unless="${allCategories.isEmpty()}">
 
           <table class="table table-hover">
             <caption
