@@ -1,17 +1,23 @@
 package com.sportyshoes.controller;
 
 import com.sportyshoes.entity.Product;
+import com.sportyshoes.entity.ProductCategory;
 import com.sportyshoes.entity.User;
+import com.sportyshoes.service.ProductCategoryService;
 import com.sportyshoes.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -21,6 +27,9 @@ public class AdminProductController {
 
   @Autowired
   ProductService productService;
+
+  @Autowired
+  ProductCategoryService categoryService;
 
   @GetMapping(value = "/")
   public String productsRedirect() {
@@ -62,6 +71,8 @@ public class AdminProductController {
       return "redirect:/admin/products";
     }
     model.addAttribute("product", product.get());
+    List<ProductCategory> allCategories = categoryService.getAll();
+    model.addAttribute("allCategories", allCategories);
     return "admin_products_edit";
   }
 
@@ -76,12 +87,15 @@ public class AdminProductController {
     }
     model.addAttribute("user", user);
     model.addAttribute("product", new Product());
+    List<ProductCategory> allCategories = categoryService.getAll();
+    model.addAttribute("allCategories", allCategories);
     return "admin_products_edit";
   }
 
-  @PostMapping(value = "/products/{id}")
+  @PostMapping(value = "/products/{id}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
   public String update(@PathVariable("id") Integer id, Product product, Model model,
-      HttpSession session, RedirectAttributes redirectAttrs) {
+      @RequestBody MultiValueMap<String, String> formData, HttpSession session,
+      RedirectAttributes redirectAttrs) {
     User user = (User) session.getAttribute("user");
     if (user == null) {
       return "redirect:/login";
@@ -99,6 +113,23 @@ public class AdminProductController {
       redirectAttrs.addFlashAttribute("resultDanger", "Product with ID=" + id + " not found.");
       return "redirect:/admin/products";
     }
+    if (Objects.equals(formData.get("categoryId")
+        .get(0), "none")
+        || Objects.isNull(formData.get("categoryId")
+        .get(0))) {
+      product.setCategory(null);
+    } else {
+      Optional<ProductCategory> category = categoryService.getById(Long.parseLong(
+          formData.get("categoryId")
+              .get(0)));
+      if (category.isEmpty()) {
+        redirectAttrs.addFlashAttribute("resultDanger",
+            "ProductCategory with ID=" + formData.get("categoryId")
+                .get(0) + " not found.");
+        return "redirect:/admin/products";
+      }
+      product.setCategory(category.get());
+    }
     String result = productService.update(product);
     if (result.contains("updated successfully")) {
       redirectAttrs.addFlashAttribute("resultSuccess", result);
@@ -108,8 +139,9 @@ public class AdminProductController {
     return "redirect:/admin/products";
   }
 
-  @PostMapping(value = "/products/new")
+  @PostMapping(value = "/products/new", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
   public String create(Product product, Model model,
+      @RequestBody MultiValueMap<String, String> formData,
       HttpSession session, RedirectAttributes redirectAttrs) {
     User user = (User) session.getAttribute("user");
     if (user == null) {
@@ -119,6 +151,23 @@ public class AdminProductController {
       return "redirect:/";
     }
     model.addAttribute("user", user);
+    if (Objects.equals(formData.get("categoryId")
+        .get(0), "none")
+        || Objects.isNull(formData.get("categoryId")
+        .get(0))) {
+      product.setCategory(null);
+    } else {
+      Optional<ProductCategory> category = categoryService.getById(Long.parseLong(
+          formData.get("categoryId")
+              .get(0)));
+      if (category.isEmpty()) {
+        redirectAttrs.addFlashAttribute("resultDanger",
+            "ProductCategory with ID=" + formData.get("categoryId")
+                .get(0) + " not found.");
+        return "redirect:/admin/products";
+      }
+      product.setCategory(category.get());
+    }
     String result = productService.create(product);
     if (result.contains("created successfully")) {
       redirectAttrs.addFlashAttribute("resultSuccess", result);
