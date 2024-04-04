@@ -31,7 +31,6 @@ public class UserController {
       model.addAttribute(
           "resultInfo", "No users found. Please register a user who will be the admin.");
     }
-    model.addAttribute("navbar", false);
     model.addAttribute("user", new User());
     return "login";
   }
@@ -46,7 +45,6 @@ public class UserController {
       model.addAttribute(
           "resultInfo", "No users found. Please register a user who will be the admin.");
     }
-    model.addAttribute("navbar", false);
     model.addAttribute("user", new User());
     return "register";
   }
