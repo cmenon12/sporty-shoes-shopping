@@ -118,8 +118,8 @@ public class AdminProductCategoryController {
       return parseAdminUser(session);
     }
     model.addAttribute("user", session.getAttribute("user"));
-    Optional<ProductCategory> existingCategory = categoryService.getById(id);
-    if (existingCategory.isEmpty()) {
+    Optional<ProductCategory> category = categoryService.getById(id);
+    if (category.isEmpty()) {
       redirectAttrs.addFlashAttribute(
           "resultDanger", "ProductCategory with ID=" + id + " not found.");
       return "redirect:/admin/product-categories";

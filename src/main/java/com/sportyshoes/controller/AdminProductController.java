@@ -137,8 +137,8 @@ public class AdminProductController {
       return parseAdminUser(session);
     }
     model.addAttribute("user", session.getAttribute("user"));
-    Optional<Product> existingProduct = productService.getById(id);
-    if (existingProduct.isEmpty()) {
+    Optional<Product> product = productService.getById(id);
+    if (product.isEmpty()) {
       redirectAttrs.addFlashAttribute("resultDanger", "Product with ID=" + id + " not found.");
       return "redirect:/admin/products";
     }
