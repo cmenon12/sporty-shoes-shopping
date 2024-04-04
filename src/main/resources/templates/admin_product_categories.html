@@ -28,7 +28,7 @@
               <th scope="col">ID</th>
               <th scope="col">Name</th>
               <th scope="col">No. of Products</th>
-              <th scope="col">Actions</th>
+              <th scope="col">Edit</th>
             </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -40,8 +40,6 @@
                 <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                   <a th:href="'/admin/product-categories/' + ${c.getId()}"
                      class="btn btn-primary">Edit</a>
-                  <a th:href="'/admin/product-categories/' + ${c.getId()} + '/delete'"
-                     class="btn btn-danger">Delete</a>
                 </div>
               </td>
             </tr>

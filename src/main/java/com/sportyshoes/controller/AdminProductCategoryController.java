@@ -111,26 +111,4 @@ public class AdminProductCategoryController {
     return "redirect:/admin/product-categories";
   }
 
-  @GetMapping(value = "/product-categories/{id}/delete")
-  public String delete(@PathVariable("id") Integer id, Model model,
-      HttpSession session, RedirectAttributes redirectAttrs) {
-    if (parseAdminUser(session) != null) {
-      return parseAdminUser(session);
-    }
-    model.addAttribute("user", session.getAttribute("user"));
-    Optional<ProductCategory> category = categoryService.getById(id);
-    if (category.isEmpty()) {
-      redirectAttrs.addFlashAttribute(
-          "resultDanger", "ProductCategory with ID=" + id + " not found.");
-      return "redirect:/admin/product-categories";
-    }
-    String result = categoryService.delete(id);
-    if (result.contains("deleted successfully")) {
-      redirectAttrs.addFlashAttribute("resultSuccess", result);
-    } else {
-      redirectAttrs.addFlashAttribute("resultDanger", result);
-    }
-    return "redirect:/admin/product-categories";
-  }
-
 }
