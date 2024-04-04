@@ -35,7 +35,7 @@
             <tr th:each="c:${allCategories}">
               <th th:text="${c.getId()}" scope="row"></th>
               <th th:text="${c.getName()}" scope="row"></th>
-              <td th:text="${c.getProducts().size()}"></td>
+              <td th:text="${c.getProducts(false).size()}"></td>
               <td>
                 <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                   <a th:href="'/admin/product-categories/' + ${c.getId()}"

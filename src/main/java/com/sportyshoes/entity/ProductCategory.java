@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,5 +29,11 @@ public class ProductCategory {
 
   @OneToMany(mappedBy = "category")
   private Set<Product> products;
+
+  public Set<Product> getProducts(boolean includeDeleted) {
+    return products.stream()
+        .filter(p -> includeDeleted || !p.getIsDeleted())
+        .collect(Collectors.toSet());
+  }
 
 }
