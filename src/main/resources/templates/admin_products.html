@@ -23,6 +23,7 @@
             <tr>
               <th scope="col">ID</th>
               <th scope="col">Name</th>
+              <th scope="col">Category</th>
               <th scope="col">Description</th>
               <th scope="col">Price</th>
               <th scope="col">Stock</th>
@@ -33,6 +34,8 @@
             <tr th:each="p:${allProducts}">
               <th th:text="${p.getId()}" scope="row"></th>
               <th th:text="${p.getName()}" scope="row"></th>
+              <td><span class="badge text-bg-secondary" th:if="${p.getCategory() != null}"
+                        th:text="${p.getCategory().getName()}"></span></td>
               <td th:text="${p.getDescription()}" class="text-break"></td>
               <td th:text="${#numbers.formatCurrency(p.getPrice())}"></td>
               <td th:text="${p.getStock()}"
