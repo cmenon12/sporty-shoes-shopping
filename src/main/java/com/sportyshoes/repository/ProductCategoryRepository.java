@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface ProductCategoryRepository extends JpaRepository<ProductCategory, Long> {
 
   @Query("select c from product_category c where c.name = :name")
-  public Optional<ProductCategory> findByName(String name);
+  Optional<ProductCategory> findByName(String name);
 
 }

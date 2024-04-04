@@ -100,7 +100,6 @@ public class ShoppingController {
         }
         redirectAttrs.addFlashAttribute("resultDanger", resultDanger.toString());
       }
-      return "redirect:/";
 
     } else {
       // create order
@@ -115,8 +114,8 @@ public class ShoppingController {
       } else {
         redirectAttrs.addFlashAttribute("resultDanger", result);
       }
-      return "redirect:/";
     }
+    return "redirect:/";
   }
 
   @GetMapping(value = "/orders")
