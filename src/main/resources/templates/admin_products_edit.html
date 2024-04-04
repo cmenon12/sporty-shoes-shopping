@@ -48,6 +48,29 @@
           <div class="row m-3">
             <div class="col">
               <div class="form-floating">
+                <select th:if="${allCategories.isEmpty()}" class="form-select" id="productCategory"
+                        aria-label="Product Category" disabled>
+                  <option>No categories available.</option>
+                </select>
+                <select th:unless="${allCategories.isEmpty()}" name="categoryId"
+                        class="form-select" id="productCategory" aria-label="Product Category">
+                  <option value="none">None</option>
+                  <th:block th:each="c: ${allCategories}">
+                    <option th:value="${c.id}"
+                            th:text="${c.name}"
+                            th:if="${c == product.getCategory()}" selected></option>
+                    <option th:value="${c.id}"
+                            th:text="${c.name}"
+                            th:unless="${c == product.getCategory()}"></option>
+                  </th:block>
+                </select>
+                <label for="productCategory" class="form-label">Product Category</label>
+              </div>
+            </div>
+          </div>
+          <div class="row m-3">
+            <div class="col">
+              <div class="form-floating">
                 <input type="number" class="form-control" id="productPriceLabel"
                        placeholder="Price £"
                        th:field="*{price}" min="0" step="0.01" required>

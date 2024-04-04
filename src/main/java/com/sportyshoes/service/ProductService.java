@@ -1,6 +1,7 @@
 package com.sportyshoes.service;
 
 import com.sportyshoes.entity.Product;
+import com.sportyshoes.entity.ProductCategory;
 import com.sportyshoes.repository.ProductRepository;
 import java.util.List;
 import java.util.Objects;
@@ -22,12 +23,16 @@ public class ProductService {
     return productRepository.findById(id);
   }
 
+  public List<Product> getByProductCategory(ProductCategory category) {
+    return productRepository.findByProductCategory(category);
+  }
+
   public String create(Product product) {
     if (validate(product) != null) {
       return validate(product);
     }
     if (product.getId() != null && getById(product.getId()).isPresent()) {
-      return "Product already exists";
+      return "Product with ID=" + product.getId() + "already exists";
     }
     productRepository.save(product);
     return "Product created successfully";
@@ -47,7 +52,7 @@ public class ProductService {
       return "Product ID is null";
     }
     if (getById(product.getId()).isEmpty()) {
-      return "Product not found";
+      return "Product with ID=" + product.getId() + "not found";
     }
     Product newProduct = new Product();
     newProduct.setName(product.getName());
@@ -55,7 +60,8 @@ public class ProductService {
     newProduct.setPrice(product.getPrice());
     newProduct.setStock(product.getStock());
     newProduct.setCategory(product.getCategory());
-    if (!equivalent(product, newProduct)) {
+    Product existingProduct = getById(product.getId()).get();
+    if (!equivalent(existingProduct, newProduct)) {
       productRepository.save(newProduct);
       product.setIsDeleted(true);
       productRepository.save(product);
@@ -71,7 +77,7 @@ public class ProductService {
       return "Product ID is null";
     }
     if (product.getStock() < quantity) {
-      return "Product stock is not enough";
+      return "Product stock cannot be" + product.getStock() + "; must be at least 0";
     }
     product.setStock(product.getStock() - quantity);
     productRepository.save(product);
@@ -91,7 +97,7 @@ public class ProductService {
       return "Product is null";
     }
     if (getById(product.getId()).isEmpty()) {
-      return "Product not found";
+      return "Product with ID=" + product.getId() + " not found";
     }
     product.setIsDeleted(true);
     productRepository.save(product);
@@ -105,11 +111,17 @@ public class ProductService {
     if (product.getName() == null || product.getName().isEmpty()) {
       return "Product name is required";
     }
-    if (product.getPrice() == null || product.getPrice() < 0) {
+    if (product.getPrice() == null) {
       return "Product price is required";
     }
-    if (product.getStock() == null || product.getStock() < 0) {
+    if (product.getPrice() < 0) {
+      return "Product price cannot be" + product.getPrice() + "; must be at least 0";
+    }
+    if (product.getStock() == null) {
       return "Product stock is required";
+    }
+    if (product.getStock() < 0) {
+      return "Product stock cannot be" + product.getStock() + "; must be at least 0";
     }
     if (product.getIsDeleted()) {
       return "Product has been deleted";

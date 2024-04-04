@@ -57,7 +57,7 @@
 
   <main>
     <div class="container">
-    <div th:fragment="alerts(resultSuccess, resultDanger, resultInfo)">
+      <div class="my-3" th:fragment="alerts(resultSuccess, resultDanger, resultInfo)">
       <div class="alert alert-success alert-dismissible m-1" role="alert"
            th:if="${resultSuccess != null}">
         <span th:text="${resultSuccess}"></span>
