@@ -97,6 +97,11 @@ public class ProductCategoryService {
     if (productCategory.getName() == null || productCategory.getName().isEmpty()) {
       return "ProductCategory name is required";
     }
+    if (productCategory.getName()
+        .trim()
+        .equals("none")) {
+      return "ProductCategory name cannot be 'none'";
+    }
     return null;
   }
 
