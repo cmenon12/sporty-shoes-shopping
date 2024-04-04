@@ -2,10 +2,14 @@ package com.sportyshoes.controller;
 
 import com.sportyshoes.entity.User;
 import com.sportyshoes.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +24,8 @@ public class UserController {
 
   @Autowired
   PasswordEncoder passwordEncoder;
+
+  SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
 
   @GetMapping(value = "/login")
   public String login(@AuthenticationPrincipal UserDetails userDetails, Model model) {
@@ -61,6 +67,13 @@ public class UserController {
       redirectAttrs.addFlashAttribute("resultDanger", result);
       return "redirect:/register";
     }
+  }
+
+  @GetMapping(value = "/logout")
+  public String logout(Authentication authentication, HttpServletRequest request,
+      HttpServletResponse response) {
+    this.logoutHandler.logout(request, response, authentication);
+    return "redirect:/login";
   }
 
 }
