@@ -18,7 +18,7 @@
     // Loop through all table rows, and hide those who don't match the search query
     for (let i = 1; i < rows.length; i++) {
 
-      const txtValue = rows[i].getAttribute("searchText");
+      const txtValue = rows[i].getAttribute("data-search");
       if (txtValue.toLowerCase().indexOf(filter) > -1) {
         rows[i].style.display = "";
         count++;
@@ -41,12 +41,11 @@
     <div class="row">
       <div class="col-sm"></div>
       <div class="col-lg-8">
-        <div class="input-group mb-3">
-          <span class="input-group-text" id="searchInputLabel">🔍</span>
+        <div class="form-floating mb-3">
           <input id="searchInput" type="text" class="form-control" placeholder="Search for users..."
                  aria-label="Search"
-                 onkeyup="searchUsersTable()"
-                 aria-describedby="searchInputLabel" autofocus>
+                 onkeyup="searchUsersTable()" autofocus>
+          <label for="searchInput">Search for users...</label>
         </div>
         <div class="table-responsive">
 
@@ -61,7 +60,7 @@
             </tr>
             </thead>
             <tbody class="table-group-divider">
-            <tr th:each="u:${allUsers}" th:searchText="${u.getEmail()}">
+            <tr th:each="u:${allUsers}" th:data-search="${u.getEmail()}">
               <th th:text="${u.getEmail()}" scope="row"></th>
               <td>
                 <input class="form-check-input opacity-100" type="checkbox"
