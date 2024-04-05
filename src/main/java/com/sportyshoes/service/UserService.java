@@ -5,6 +5,7 @@ import com.sportyshoes.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,6 +16,9 @@ public class UserService implements UserDetailsService {
 
   @Autowired
   UserRepository userRepository;
+
+  @Autowired
+  ApplicationContext context;
 
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -53,6 +57,8 @@ public class UserService implements UserDetailsService {
   }
 
   public String create(User user) {
+    PasswordEncoderService passwordEncoderService = context.getBean(PasswordEncoderService.class);
+    user.setPassword(passwordEncoderService.encode(user.getPassword()));
     if (validate(user) != null) {
       return validate(user);
     }

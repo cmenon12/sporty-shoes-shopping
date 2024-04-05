@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +20,6 @@ public class UserController {
 
   @Autowired
   UserService userService;
-
-  @Autowired
-  PasswordEncoder passwordEncoder;
 
   final SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
 
@@ -57,7 +53,6 @@ public class UserController {
 
   @PostMapping(value = "/register")
   public String register(User user, RedirectAttributes redirectAttrs) {
-    user.setPassword(passwordEncoder.encode(user.getPassword()));
     String result = userService.create(user);
     if (result.contains("created")) {
       redirectAttrs.addFlashAttribute("resultSuccess", result);
