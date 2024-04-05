@@ -58,7 +58,6 @@ public class UserService implements UserDetailsService {
 
   public String create(User user) {
     PasswordEncoderService passwordEncoderService = context.getBean(PasswordEncoderService.class);
-    user.setPassword(passwordEncoderService.encode(user.getPassword()));
     if (validate(user) != null) {
       return validate(user);
     }
@@ -66,6 +65,7 @@ public class UserService implements UserDetailsService {
       return "User already exists";
     }
     user.setIsAdmin(getAll().isEmpty());
+    user.setPassword(passwordEncoderService.encode(user.getPassword()));
     userRepository.save(user);
     return "User created successfully" + (user.getIsAdmin() ? " as admin" : "");
   }
