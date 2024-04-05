@@ -7,6 +7,32 @@
 <header
     th:replace="~{fragments/base :: header('Sporty Shoes Shop - Admin - Product Categories')}"></header>
 
+<script>
+  function filterCategories() {
+    // Declare variables
+    const search = document.getElementById("searchInput").value.toLowerCase();
+    const rows = document.getElementById('allCategories').getElementsByTagName('tr');
+    let count = 0;
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (let i = 1; i < rows.length; i++) {
+      const row = rows[i];
+      const searchValue = row.getAttribute('data-search');
+      if (search === '' || searchValue.includes(search)) {
+        row.style.display = "";
+        count++;
+      } else {
+        row.style.display = "none";
+      }
+    }
+
+    // Set the caption
+    document.getElementById('allCategories').getElementsByTagName("caption")[0].innerText = count
+        + " " + (count === 1 ? "category" : "categories");
+
+  }
+</script>
+
 <main>
   <div class="container ">
     <div
@@ -15,13 +41,24 @@
     <div class="row">
       <div class="col-sm"></div>
       <div class="col-lg-8">
-        <div class="mb-3">
-          <a th:href="@{/admin/product-categories/new}" class="btn btn-lg btn-primary">New Product
-            Category</a>
+        <div class="row mb-3" th:unless="${allCategories.isEmpty()}">
+          <div class="col-5">
+            <a th:href="@{/admin/product-categories/new}" class="btn btn-lg btn-primary w-100 mt-1">New
+              Product Category</a>
+          </div>
+          <div class="col">
+            <div class="form-floating">
+              <input id="searchInput" type="text" class="form-control"
+                     placeholder="Search for categories..."
+                     aria-label="Search"
+                     onkeyup="filterCategories()" autofocus>
+              <label for="searchInput">Search for categories...</label>
+            </div>
+          </div>
         </div>
         <div class="table-responsive" th:unless="${allCategories.isEmpty()}">
 
-          <table class="table table-hover">
+          <table class="table table-hover" id="allCategories">
             <caption
                 th:text="${allCategories.size() == 1 ? '1 category' : allCategories.size() + ' categories'}"></caption>
             <thead>
@@ -33,7 +70,7 @@
             </tr>
             </thead>
             <tbody class="table-group-divider">
-            <tr th:each="c:${allCategories}">
+            <tr th:each="c:${allCategories}" th:data-search="${c.getName().toLowerCase()}">
               <th th:text="${c.getId()}" scope="row"></th>
               <th th:text="${c.getName()}" scope="row"></th>
               <td th:text="${c.getProducts(false).size()}"></td>
