@@ -6,7 +6,33 @@
 <body class="text-bg-light">
 <header
     th:replace="~{fragments/base :: header('Sporty Shoes Shop - Admin - Users')}"></header>
+<script>
+  function searchUsersTable() {
+    // Declare variables
+    const input = document.getElementById("searchInput");
+    const filter = input.value.toLowerCase();
+    const table = document.getElementById("allUsers");
+    const rows = table.getElementsByTagName("tr");
+    let count = 0;
 
+    // Loop through all table rows, and hide those who don't match the search query
+    for (let i = 1; i < rows.length; i++) {
+
+      const txtValue = rows[i].getAttribute("searchText");
+      if (txtValue.toLowerCase().indexOf(filter) > -1) {
+        rows[i].style.display = "";
+        count++;
+      } else {
+        rows[i].style.display = "none";
+      }
+    }
+
+    // Set the caption
+    table.getElementsByTagName("caption")[0].innerText = count + " " + (count === 1 ? "user"
+        : "users");
+
+  }
+</script>
 <main>
   <div class="container ">
     <div
@@ -19,7 +45,7 @@
           <span class="input-group-text" id="searchInputLabel">🔍</span>
           <input id="searchInput" type="text" class="form-control" placeholder="Search for users..."
                  aria-label="Search"
-                 onkeyup="searchTable('searchInput', 'allUsers', 'user', 'users')"
+                 onkeyup="searchUsersTable()"
                  aria-describedby="searchInputLabel" autofocus>
         </div>
         <div class="table-responsive">
