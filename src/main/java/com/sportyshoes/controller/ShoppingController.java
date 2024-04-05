@@ -43,6 +43,7 @@ public class ShoppingController {
       model.addAttribute("resultInfo", "There are no products.");
     }
     model.addAttribute("allProducts", allProducts);
+    model.addAttribute("allCategories", productCategoryService.getAll());
     return "shop";
   }
 
