@@ -12,6 +12,7 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
@@ -76,6 +77,34 @@ public class Order {
 
   public int getCreatedAsInt() {
     return (int) getCreated().toEpochSecond(java.time.ZoneOffset.UTC);
+  }
+
+  public String[] getProductCategoriesArray() {
+    ArrayList<String> productCategories = new ArrayList<>();
+    for (int i = 0; i < this.getProducts()
+        .size(); i++) {
+      Product product = this.getProducts()
+          .get(i);
+      if (product.getCategory() != null
+          && !productCategories.contains(product.getCategory()
+          .getName()
+          .toLowerCase())) {
+        productCategories.add(product.getCategory()
+            .getName()
+            .toLowerCase());
+      }
+    }
+    return productCategories.toArray(new String[0]);
+  }
+
+  public String getProductCategories() {
+    String[] productCategories = getProductCategoriesArray();
+    StringBuilder productCategoriesString = new StringBuilder();
+    for (String productCategory : productCategories) {
+      productCategoriesString.append(productCategory)
+          .append(", ");
+    }
+    return productCategoriesString.toString();
   }
 
 }
