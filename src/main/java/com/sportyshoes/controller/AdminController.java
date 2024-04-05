@@ -2,6 +2,7 @@ package com.sportyshoes.controller;
 
 import com.sportyshoes.entity.Order;
 import com.sportyshoes.service.OrderService;
+import com.sportyshoes.service.ProductCategoryService;
 import com.sportyshoes.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
 
   @Autowired
+  ProductCategoryService productCategoryService;
+
+  @Autowired
   OrderService orderService;
 
   @Autowired
@@ -29,6 +33,7 @@ public class AdminController {
       model.addAttribute("resultInfo", "There are no orders.");
     }
     model.addAttribute("allOrders", allOrders);
+    model.addAttribute("allCategories", productCategoryService.getAll());
     model.addAttribute("showUser", true);
     return "orders";
   }

@@ -74,4 +74,8 @@ public class Order {
     return productsMap;
   }
 
+  public int getCreatedAsInt() {
+    return (int) getCreated().toEpochSecond(java.time.ZoneOffset.UTC);
+  }
+
 }
