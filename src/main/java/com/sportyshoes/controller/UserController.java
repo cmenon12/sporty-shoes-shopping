@@ -70,7 +70,7 @@ public class UserController {
   public String logout(Authentication authentication, HttpServletRequest request,
       HttpServletResponse response) {
     this.logoutHandler.logout(request, response, authentication);
-    return "redirect:/login";
+    return "redirect:/login?logout";
   }
 
   @SuppressWarnings("OptionalGetWithoutIsPresent")

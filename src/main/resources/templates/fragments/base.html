@@ -76,6 +76,11 @@
   <div class="container">
     <div class="my-3" th:fragment="alerts(resultSuccess, resultDanger, resultInfo)">
       <div class="alert alert-success alert-dismissible m-1" role="alert"
+           th:if="${param.get('continue')}">
+        Welcome <span sec:authentication="name"></span>!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <div class="alert alert-success alert-dismissible m-1" role="alert"
            th:if="${resultSuccess != null}">
         <span th:text="${resultSuccess}"></span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
