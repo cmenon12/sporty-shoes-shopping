@@ -14,23 +14,12 @@ public class OrderService {
   @Autowired
   OrderRepository orderRepository;
 
-  public List<Order> getAll() {
-    return orderRepository.findAll();
-  }
-
   public List<Order> getAll(int sortChronologically) {
     if (sortChronologically > 0) {
       return orderRepository.findAllSortChronologicallyAscending();
     } else {
       return orderRepository.findAllSortChronologicallyDescending();
     }
-  }
-
-  public List<Order> getAllByUser(User user) {
-    if (user == null) {
-      return getAll();
-    }
-    return orderRepository.findAllByUser(user);
   }
 
   public List<Order> getAllByUser(User user, int sortChronologically) {
@@ -57,20 +46,6 @@ public class OrderService {
     }
     orderRepository.save(order);
     return "Order created successfully";
-  }
-
-  public String update(Order order) {
-    if (validate(order) != null) {
-      return validate(order);
-    }
-    if (order.getId() == null) {
-      return "Order ID is null";
-    }
-    if (getById(order.getId()).isEmpty()) {
-      return "Order with ID=" + order.getId() + " not found";
-    }
-    orderRepository.save(order);
-    return "Order with ID=" + order.getId() + " updated successfully";
   }
 
   private String validate(Order order) {

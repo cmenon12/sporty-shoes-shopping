@@ -1,7 +1,6 @@
 package com.sportyshoes.service;
 
 import com.sportyshoes.entity.Product;
-import com.sportyshoes.entity.ProductCategory;
 import com.sportyshoes.repository.ProductRepository;
 import java.util.List;
 import java.util.Objects;
@@ -21,10 +20,6 @@ public class ProductService {
 
   public Optional<Product> getById(long id) {
     return productRepository.findById(id);
-  }
-
-  public List<Product> getByProductCategory(ProductCategory category) {
-    return productRepository.findByProductCategory(category);
   }
 
   public String create(Product product) {

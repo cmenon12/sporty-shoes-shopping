@@ -75,10 +75,6 @@ public class Order {
     return productsMap;
   }
 
-  public int getCreatedAsInt() {
-    return (int) getCreated().toEpochSecond(java.time.ZoneOffset.UTC);
-  }
-
   public String[] getProductCategoriesArray() {
     ArrayList<String> productCategories = new ArrayList<>();
     for (int i = 0; i < this.getProducts()

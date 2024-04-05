@@ -37,6 +37,7 @@
             <tr th:each="u:${allUsers}" th:data-search="${u.getEmail()}">
               <th th:text="${u.getEmail()}" scope="row"></th>
               <td>
+                <!--suppress HtmlFormInputWithoutLabel -->
                 <input class="form-check-input opacity-100" type="checkbox"
                        th:checked="${u.getIsAdmin()}" disabled>
               </td>
