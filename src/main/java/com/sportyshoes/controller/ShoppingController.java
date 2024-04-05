@@ -3,6 +3,7 @@ package com.sportyshoes.controller;
 import com.sportyshoes.entity.Order;
 import com.sportyshoes.entity.Product;
 import com.sportyshoes.service.OrderService;
+import com.sportyshoes.service.ProductCategoryService;
 import com.sportyshoes.service.ProductService;
 import com.sportyshoes.service.UserService;
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ public class ShoppingController {
   ProductService productService;
 
   @Autowired
+  ProductCategoryService productCategoryService;
+
+  @Autowired
   OrderService orderService;
 
   @Autowired
@@ -39,6 +43,7 @@ public class ShoppingController {
       model.addAttribute("resultInfo", "There are no products.");
     }
     model.addAttribute("allProducts", allProducts);
+    model.addAttribute("allCategories", productCategoryService.getAll());
     return "shop";
   }
 
@@ -128,6 +133,7 @@ public class ShoppingController {
       model.addAttribute("resultInfo", "There are no orders.");
     }
     model.addAttribute("allOrders", allOrders);
+    model.addAttribute("allCategories", productCategoryService.getAll());
     return "orders";
   }
 

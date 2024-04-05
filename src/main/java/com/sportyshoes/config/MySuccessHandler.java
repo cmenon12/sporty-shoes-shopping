@@ -19,7 +19,7 @@ public class MySuccessHandler extends SavedRequestAwareAuthenticationSuccessHand
     if (isAdmin) {
       setDefaultTargetUrl("/admin/products");
     } else {
-      setDefaultTargetUrl("/");
+      setDefaultTargetUrl("/?continue");
     }
     // do some logic here if you want something to be done whenever
     // the user successfully logs in.

@@ -14,8 +14,41 @@
     <hr th:unless="${allOrders.isEmpty()}">
     <div class="row" th:unless="${allOrders.isEmpty()}">
       <div class="col">
+        <div class="row">
+          <div class="col">
+            <div class="form-floating mb-2">
+              <select class="form-select" id="inputCategory" aria-label="Product Category"
+                      onchange="filterTable('order', 'orders')">
+                <option value="none" selected>All</option>
+                <option th:each="c:${allCategories}" th:value="${c.getName().toLowerCase()}"
+                        th:text="${c.getName()}"></option>
+              </select>
+              <label for="inputCategory">Product Category</label>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-floating mb-3">
+              <input type="datetime-local" class="form-control" id="inputStartDate"
+                     placeholder="Start Date" onchange="filterTable('order', 'orders')"
+                     th:value="${allOrders.get(allOrders.size()-1).getCreated().toString().substring(0, 16)}"
+                     th:min="${allOrders.get(allOrders.size()-1).getCreated().toString().substring(0, 16)}"
+                     th:max="${allOrders.get(0).getCreated().plusMinutes(1).toString().substring(0, 16)}">
+              <label for="inputStartDate">Start Date & Time</label>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-floating mb-3">
+              <input type="datetime-local" class="form-control" id="inputEndDate"
+                     placeholder="End Date" onchange="filterTable('order', 'orders')"
+                     th:value="${allOrders.get(0).getCreated().plusMinutes(1).toString().substring(0, 16)}"
+                     th:min="${allOrders.get(allOrders.size()-1).getCreated().toString().substring(0, 16)}"
+                     th:max="${allOrders.get(0).getCreated().plusMinutes(1).toString().substring(0, 16)}">
+              <label for="inputEndDate">End Date & Time</label>
+            </div>
+          </div>
+        </div>
         <div class="table-responsive">
-          <table class="table">
+          <table class="table" id="tableToFilter">
             <caption
                 th:text="${allOrders.size() == 1 ? '1 order' : allOrders.size() + ' orders'}"></caption>
             <thead>
@@ -38,15 +71,23 @@
                 <th scope="row" th:if="${pStat.first}" th:rowspan="${pStat.size}"
                     th:text="${o.getId()}"></th>
                 <th scope="row" th:if="${pStat.first}" th:rowspan="${pStat.size}"
-                    th:text="${#temporals.format(o.getCreated(), 'dd MMM yyyy HH:MM:SS')} + ${showUser != null ? ' by ' + o.getUser().getEmail() : ''}"></th>
-                <td class="border-top border-bottom" th:text="${p.getKey().getName()}"></td>
+                    th:text="${#temporals.format(o.getCreated(), 'dd MMM yyyy HH:mm')} + ${showUser != null ? ' by ' + o.getUser().getEmail() : ''}"></th>
+                <td class="border-top border-bottom">
+                  <span th:text="${p.getKey().getName()}"></span>
+                  <span class="badge text-bg-secondary ml-1"
+                        th:if="${p.getKey().getCategory() != null}"
+                        th:text="${p.getKey().getCategory().getName()}"></span>
+                </td>
                 <td class="border-top border-bottom"
                     th:text="${#numbers.formatCurrency(p.getKey().getPrice())}"></td>
                 <td class="border-top border-bottom" th:text="${p.getValue()}"></td>
                 <td class="border-top border-bottom"
                     th:text="${#numbers.formatCurrency(p.getKey().getPrice() * p.getValue())}"></td>
               </tr>
-              <tr class="border-dark-subtle">
+              <tr class="border-dark-subtle"
+                  th:data-date="${o.getCreated().toString().substring(0, 16)}"
+                  th:data-category="${o.getProductCategories()}"
+                  th:data-rows-above="${o.getProductsMap().size()}">
                 <td></td>
                 <td colspan="4" th:text="'Address: ' + ${o.getAddress()}"></td>
                 <th scope="row" th:text="${#numbers.formatCurrency(o.getTotalCost())}"></th>

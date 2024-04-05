@@ -10,14 +10,37 @@
     <div
         th:replace="~{fragments/base :: alerts(${resultSuccess}, ${resultDanger}, ${resultInfo})}"></div>
     <hr th:unless="${allProducts.isEmpty()}">
+    <div class="row mb-3" th:unless="${allProducts.isEmpty()}">
+      <div class="col-2">
+        <a th:href="@{/admin/products/new}" class="btn btn-lg btn-primary w-100 mt-1">New
+          Product</a>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input id="inputSearch" type="text" class="form-control"
+                 placeholder="Search for products..."
+                 aria-label="Search"
+                 onkeyup="filterTable('product', 'products')" autofocus>
+          <label for="inputSearch">Search for products...</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <select class="form-select" id="inputCategory" aria-label="Product Category"
+                  onchange="filterTable('product', 'products')">
+            <option value="none" selected>All</option>
+            <option th:each="c:${allCategories}" th:value="${c.getName().toLowerCase()}"
+                    th:text="${c.getName()}"></option>
+          </select>
+          <label for="inputCategory">Product Category</label>
+        </div>
+      </div>
+    </div>
     <div class="row">
       <div class="col">
-        <div class="mb-3">
-          <a th:href="@{/admin/products/new}" class="btn btn-lg btn-primary">New Product</a>
-        </div>
         <div class="table-responsive" th:unless="${allProducts.isEmpty()}">
 
-          <table class="table table-hover">
+          <table class="table table-hover" id="tableToFilter">
             <caption
                 th:text="${allProducts.size() == 1 ? '1 product' : allProducts.size() + ' products'}"></caption>
             <thead>
@@ -32,7 +55,9 @@
             </tr>
             </thead>
             <tbody class="table-group-divider">
-            <tr th:each="p:${allProducts}">
+            <tr th:each="p:${allProducts}"
+                th:data-category="${p.getCategory().getName().toLowerCase()}"
+                th:data-search="${p.getName().toLowerCase()} + ' ' + ${p.getDescription().toLowerCase()}">
               <th th:text="${p.getId()}" scope="row"></th>
               <th th:text="${p.getName()}" scope="row"></th>
               <td><span class="badge text-bg-secondary" th:if="${p.getCategory() != null}"

@@ -15,16 +15,15 @@
     <div class="row">
       <div class="col-sm"></div>
       <div class="col-lg-8">
-        <div class="input-group mb-3">
-          <span class="input-group-text" id="searchInputLabel">🔍</span>
-          <input id="searchInput" type="text" class="form-control" placeholder="Search for users..."
+        <div class="form-floating mb-3">
+          <input id="inputSearch" type="text" class="form-control" placeholder="Search for users..."
                  aria-label="Search"
-                 onkeyup="searchTable('searchInput', 'allUsers', 'user', 'users')"
-                 aria-describedby="searchInputLabel" autofocus>
+                 onkeyup="filterTable('user', 'users')" autofocus>
+          <label for="inputSearch">Search for users...</label>
         </div>
         <div class="table-responsive">
 
-          <table class="table table-hover" id="allUsers">
+          <table class="table table-hover" id="tableToFilter">
             <caption
                 th:text="${allUsers.size() == 1 ? '1 user' : allUsers.size() + ' users'}"></caption>
             <thead>
@@ -35,9 +34,10 @@
             </tr>
             </thead>
             <tbody class="table-group-divider">
-            <tr th:each="u:${allUsers}" th:searchText="${u.getEmail()}">
+            <tr th:each="u:${allUsers}" th:data-search="${u.getEmail()}">
               <th th:text="${u.getEmail()}" scope="row"></th>
               <td>
+                <!--suppress HtmlFormInputWithoutLabel -->
                 <input class="form-check-input opacity-100" type="checkbox"
                        th:checked="${u.getIsAdmin()}" disabled>
               </td>
