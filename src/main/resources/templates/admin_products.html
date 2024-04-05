@@ -4,40 +4,6 @@
 <head th:replace="~{fragments/base :: head('Sporty Shoes Shop - Admin - Products')}"></head>
 <body class="text-bg-light">
 <header th:replace="~{fragments/base :: header('Sporty Shoes Shop - Admin - Products')}"></header>
-<script>
-  function filterProducts() {
-
-    // get the filter values and the rows
-    const category = document.getElementById('productCategory').value.toLowerCase();
-    const search = document.getElementById('searchInput').value.toLowerCase();
-    const rows = document.getElementById('allProducts').getElementsByTagName('tr');
-    let count = 0;
-    for (let i = 1; i < rows.length; i++) {
-
-      // Get the display value
-      const row = rows[i];
-      const categoryValue = row.getAttribute('data-category');
-      const searchValue = row.getAttribute('data-search');
-      let display;
-      if ((category === 'none' || category === categoryValue)
-          && (search === '' || searchValue.includes(search))) {
-        display = '';
-        count++;
-      } else {
-        display = 'none';
-      }
-
-      // Apply the display value
-      rows[i].style.display = display;
-    }
-
-    // Set the caption
-    document.getElementById('allProducts').getElementsByTagName("caption")[0].innerText = count
-        + " " + (count === 1 ? "product" : "products");
-
-  }
-</script>
-
 
 <main>
   <div class="container ">
@@ -51,22 +17,22 @@
       </div>
       <div class="col">
         <div class="form-floating">
-          <input id="searchInput" type="text" class="form-control"
+          <input id="inputSearch" type="text" class="form-control"
                  placeholder="Search for products..."
                  aria-label="Search"
-                 onkeyup="filterProducts()" autofocus>
-          <label for="searchInput">Search for products...</label>
+                 onkeyup="filterTable('product', 'products')" autofocus>
+          <label for="inputSearch">Search for products...</label>
         </div>
       </div>
       <div class="col">
         <div class="form-floating">
-          <select class="form-select" id="productCategory" aria-label="Product Category"
-                  onchange="filterProducts()">
+          <select class="form-select" id="inputCategory" aria-label="Product Category"
+                  onchange="filterTable('product', 'products')">
             <option value="none" selected>All</option>
             <option th:each="c:${allCategories}" th:value="${c.getName().toLowerCase()}"
                     th:text="${c.getName()}"></option>
           </select>
-          <label for="productCategory">Product Category</label>
+          <label for="inputCategory">Product Category</label>
         </div>
       </div>
     </div>
@@ -74,7 +40,7 @@
       <div class="col">
         <div class="table-responsive" th:unless="${allProducts.isEmpty()}">
 
-          <table class="table table-hover" id="allProducts">
+          <table class="table table-hover" id="tableToFilter">
             <caption
                 th:text="${allProducts.size() == 1 ? '1 product' : allProducts.size() + ' products'}"></caption>
             <thead>

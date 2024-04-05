@@ -7,32 +7,6 @@
 <header
     th:replace="~{fragments/base :: header('Sporty Shoes Shop - Admin - Product Categories')}"></header>
 
-<script>
-  function filterCategories() {
-    // Declare variables
-    const search = document.getElementById("searchInput").value.toLowerCase();
-    const rows = document.getElementById('allCategories').getElementsByTagName('tr');
-    let count = 0;
-
-    // Loop through all table rows, and hide those who don't match the search query
-    for (let i = 1; i < rows.length; i++) {
-      const row = rows[i];
-      const searchValue = row.getAttribute('data-search');
-      if (search === '' || searchValue.includes(search)) {
-        row.style.display = "";
-        count++;
-      } else {
-        row.style.display = "none";
-      }
-    }
-
-    // Set the caption
-    document.getElementById('allCategories').getElementsByTagName("caption")[0].innerText = count
-        + " " + (count === 1 ? "category" : "categories");
-
-  }
-</script>
-
 <main>
   <div class="container ">
     <div
@@ -48,17 +22,17 @@
           </div>
           <div class="col">
             <div class="form-floating">
-              <input id="searchInput" type="text" class="form-control"
+              <input id="inputSearch" type="text" class="form-control"
                      placeholder="Search for categories..."
                      aria-label="Search"
-                     onkeyup="filterCategories()" autofocus>
-              <label for="searchInput">Search for categories...</label>
+                     onkeyup="filterTable('category', 'categories')" autofocus>
+              <label for="inputSearch">Search for categories...</label>
             </div>
           </div>
         </div>
         <div class="table-responsive" th:unless="${allCategories.isEmpty()}">
 
-          <table class="table table-hover" id="allCategories">
+          <table class="table table-hover" id="tableToFilter">
             <caption
                 th:text="${allCategories.size() == 1 ? '1 category' : allCategories.size() + ' categories'}"></caption>
             <thead>

@@ -6,48 +6,7 @@
 <body class="text-bg-light">
 <header
     th:replace="~{fragments/base :: header('Sporty Shoes Shop - ' + ${showUser != null ? 'Admin - ' : ''} + 'Orders')}"></header>
-<script>
-  function filterOrders() {
 
-    // get the filter values and the rows
-    const category = document.getElementById('productCategory').value;
-    const startDate = Math.floor(
-        Date.parse(document.getElementById('productStartDate').value) / 1000);
-    const endDate = Math.floor(Date.parse(document.getElementById('productEndDate').value) / 1000);
-    const rows = document.getElementById('ordersTable').getElementsByTagName('tr');
-    let count = 0;
-    for (let i = 1; i < rows.length; i++) {
-
-      // ignore it if it's not the address row
-      if (!rows[i].hasAttribute('data-categories')) {
-        continue;
-      }
-
-      // Get the display value
-      const row = rows[i];
-      const categories = rows[i].getAttribute('data-categories').split(', ');
-      const date = Math.floor(Date.parse(row.getAttribute('date')) / 1000);
-      let display;
-      if ((category === 'none' || categories.includes(category))
-          && (date >= startDate && date <= endDate)) {
-        display = '';
-        count++;
-      } else {
-        display = 'none';
-      }
-
-      // Apply the display value
-      const productRows = parseInt(row.getAttribute('productrows'));
-      for (let j = i - productRows; j <= i; j++) {
-        rows[j].style.display = display;
-      }
-    }
-
-    // Set the caption
-    document.getElementById('ordersTable').getElementsByTagName("caption")[0].innerText = count
-        + " " + (count === 1 ? "order" : "orders");
-  }
-</script>
 <main>
   <div class="container ">
     <div
@@ -58,38 +17,38 @@
         <div class="row">
           <div class="col">
             <div class="form-floating mb-2">
-              <select class="form-select" id="productCategory" aria-label="Product Category"
-                      onchange="filterOrders()">
+              <select class="form-select" id="inputCategory" aria-label="Product Category"
+                      onchange="filterTable('order', 'orders')">
                 <option value="none" selected>All</option>
                 <option th:each="c:${allCategories}" th:value="${c.getName().toLowerCase()}"
                         th:text="${c.getName()}"></option>
               </select>
-              <label for="productCategory">Product Category</label>
+              <label for="inputCategory">Product Category</label>
             </div>
           </div>
           <div class="col">
             <div class="form-floating mb-3">
-              <input type="datetime-local" class="form-control" id="productStartDate"
-                     placeholder="Start Date" onchange="filterOrders()"
+              <input type="datetime-local" class="form-control" id="inputStartDate"
+                     placeholder="Start Date" onchange="filterTable('order', 'orders')"
                      th:value="${allOrders.get(allOrders.size()-1).getCreated().toString().substring(0, 16)}"
                      th:min="${allOrders.get(allOrders.size()-1).getCreated().toString().substring(0, 16)}"
                      th:max="${allOrders.get(0).getCreated().plusMinutes(1).toString().substring(0, 16)}">
-              <label for="productStartDate">Start Date & Time</label>
+              <label for="inputStartDate">Start Date & Time</label>
             </div>
           </div>
           <div class="col">
             <div class="form-floating mb-3">
-              <input type="datetime-local" class="form-control" id="productEndDate"
-                     placeholder="End Date" onchange="filterOrders()"
+              <input type="datetime-local" class="form-control" id="inputEndDate"
+                     placeholder="End Date" onchange="filterTable('order', 'orders')"
                      th:value="${allOrders.get(0).getCreated().plusMinutes(1).toString().substring(0, 16)}"
                      th:min="${allOrders.get(allOrders.size()-1).getCreated().toString().substring(0, 16)}"
                      th:max="${allOrders.get(0).getCreated().plusMinutes(1).toString().substring(0, 16)}">
-              <label for="productEndDate">End Date & Time</label>
+              <label for="inputEndDate">End Date & Time</label>
             </div>
           </div>
         </div>
         <div class="table-responsive">
-          <table class="table" id="ordersTable">
+          <table class="table" id="tableToFilter">
             <caption
                 th:text="${allOrders.size() == 1 ? '1 order' : allOrders.size() + ' orders'}"></caption>
             <thead>
@@ -125,9 +84,10 @@
                 <td class="border-top border-bottom"
                     th:text="${#numbers.formatCurrency(p.getKey().getPrice() * p.getValue())}"></td>
               </tr>
-              <tr class="border-dark-subtle" th:date="${o.getCreated().toString().substring(0, 16)}"
-                  th:data-categories="${o.getProductCategories()}"
-                  th:productrows="${o.getProductsMap().size()}">
+              <tr class="border-dark-subtle"
+                  th:data-date="${o.getCreated().toString().substring(0, 16)}"
+                  th:data-category="${o.getProductCategories()}"
+                  th:data-rows-above="${o.getProductsMap().size()}">
                 <td></td>
                 <td colspan="4" th:text="'Address: ' + ${o.getAddress()}"></td>
                 <th scope="row" th:text="${#numbers.formatCurrency(o.getTotalCost())}"></th>
