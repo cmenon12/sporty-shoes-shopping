@@ -41,6 +41,7 @@ public class AdminProductController {
       model.addAttribute("resultInfo", "There are no products.");
     }
     model.addAttribute("allProducts", allProducts);
+    model.addAttribute("allCategories", categoryService.getAll());
     return "admin_products";
   }
 
