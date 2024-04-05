@@ -73,11 +73,8 @@ public class UserController {
     return "redirect:/login?logout";
   }
 
-  @SuppressWarnings("OptionalGetWithoutIsPresent")
   @GetMapping(value = "/change-password")
-  public String changePassword(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-    model.addAttribute("user", userService.getByEmail(userDetails.getUsername())
-        .get());
+  public String changePassword() {
     return "change_password";
   }
 
@@ -96,7 +93,6 @@ public class UserController {
       redirectAttrs.addFlashAttribute("resultSuccess", result);
       return "redirect:/";
     } else {
-      model.addAttribute("user", user);
       model.addAttribute("resultDanger", result);
       return "change_password";
     }

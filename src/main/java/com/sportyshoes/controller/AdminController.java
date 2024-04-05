@@ -6,8 +6,6 @@ import com.sportyshoes.service.ProductCategoryService;
 import com.sportyshoes.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,9 +37,8 @@ public class AdminController {
   }
 
   @GetMapping(value = "/users")
-  public String users(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+  public String users(Model model) {
     model.addAttribute("allUsers", userService.getAll());
-    model.addAttribute("user", true);
     return "admin_users";
   }
 
