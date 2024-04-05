@@ -23,7 +23,7 @@ public class MySecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
     return httpSecurity.authorizeHttpRequests(auth -> {
-          auth.requestMatchers("/register", "/login")
+          auth.requestMatchers("/register", "/login", "/static/**")
               .permitAll();
           auth.requestMatchers("/**")
               .hasAnyRole("USER");
