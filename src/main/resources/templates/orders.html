@@ -7,10 +7,13 @@
 <header
     th:replace="~{fragments/base :: header('Sporty Shoes Shop - ' + ${showUser != null ? 'Admin - ' : ''} + 'Orders')}"></header>
 <script>
-  function filterOrdersByCategory() {
+  function filterOrders() {
 
-    // get the category and the rows
+    // get the filter values and the rows
     const category = document.getElementById('productCategory').value;
+    const startDate = Math.floor(
+        Date.parse(document.getElementById('productStartDate').value) / 1000);
+    const endDate = Math.floor(Date.parse(document.getElementById('productEndDate').value) / 1000);
     const rows = document.getElementById('ordersTable').getElementsByTagName('tr');
     let count = 0;
     for (let i = 1; i < rows.length; i++) {
@@ -23,8 +26,10 @@
       // Get the display value
       const row = rows[i];
       const categories = rows[i].getAttribute('data-categories').split(', ');
+      const date = Math.floor(Date.parse(row.getAttribute('date')) / 1000);
       let display;
-      if (category === 'none' || categories.includes(category)) {
+      if ((category === 'none' || categories.includes(category))
+          && (date >= startDate && date <= endDate)) {
         display = '';
         count++;
       } else {
@@ -107,7 +112,7 @@
                 <th scope="row" th:if="${pStat.first}" th:rowspan="${pStat.size}"
                     th:text="${o.getId()}"></th>
                 <th scope="row" th:if="${pStat.first}" th:rowspan="${pStat.size}"
-                    th:text="${#temporals.format(o.getCreated(), 'dd MMM yyyy HH:mm:SS')} + ${showUser != null ? ' by ' + o.getUser().getEmail() : ''}"></th>
+                    th:text="${#temporals.format(o.getCreated(), 'dd MMM yyyy HH:mm')} + ${showUser != null ? ' by ' + o.getUser().getEmail() : ''}"></th>
                 <td class="border-top border-bottom">
                   <span th:text="${p.getKey().getName()}"></span>
                   <span class="badge text-bg-secondary ml-1"
@@ -120,7 +125,7 @@
                 <td class="border-top border-bottom"
                     th:text="${#numbers.formatCurrency(p.getKey().getPrice() * p.getValue())}"></td>
               </tr>
-              <tr class="border-dark-subtle" th:date="${o.getCreatedAsInt()}"
+              <tr class="border-dark-subtle" th:date="${o.getCreated().toString().substring(0, 16)}"
                   th:data-categories="${o.getProductCategories()}"
                   th:productrows="${o.getProductsMap().size()}">
                 <td></td>
