@@ -32,7 +32,7 @@ public class ShoppingController {
   @Autowired
   UserService userService;
 
-  @GetMapping(value = "/")
+  @GetMapping(value = "")
   public String home(Model model) {
     List<Product> allProducts = productService.getAll();
     if (allProducts.isEmpty()) {
