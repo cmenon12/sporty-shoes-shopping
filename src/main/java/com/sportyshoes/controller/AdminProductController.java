@@ -29,7 +29,7 @@ public class AdminProductController {
   @Autowired
   ProductCategoryService categoryService;
 
-  @GetMapping(value = "/")
+  @GetMapping(value = "")
   public String productsRedirect() {
     return "redirect:/admin/products";
   }

@@ -8,12 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -21,9 +22,6 @@ public class UserController {
 
   @Autowired
   UserService userService;
-
-  @Autowired
-  PasswordEncoder passwordEncoder;
 
   final SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
 
@@ -57,7 +55,6 @@ public class UserController {
 
   @PostMapping(value = "/register")
   public String register(User user, RedirectAttributes redirectAttrs) {
-    user.setPassword(passwordEncoder.encode(user.getPassword()));
     String result = userService.create(user);
     if (result.contains("created")) {
       redirectAttrs.addFlashAttribute("resultSuccess", result);
@@ -74,6 +71,35 @@ public class UserController {
       HttpServletResponse response) {
     this.logoutHandler.logout(request, response, authentication);
     return "redirect:/login";
+  }
+
+  @SuppressWarnings("OptionalGetWithoutIsPresent")
+  @GetMapping(value = "/change-password")
+  public String changePassword(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+    model.addAttribute("user", userService.getByEmail(userDetails.getUsername())
+        .get());
+    return "change_password";
+  }
+
+  @SuppressWarnings("OptionalGetWithoutIsPresent")
+  @PostMapping(value = "/change-password")
+  public String changePassword(@AuthenticationPrincipal UserDetails userDetails,
+      @RequestBody MultiValueMap<String, String> userFormData, Model model,
+      RedirectAttributes redirectAttrs) {
+    User user = userService.getByEmail(userDetails.getUsername())
+        .get();
+    String existing = userFormData.getFirst("existingPassword");
+    String new1 = userFormData.getFirst("newPassword1");
+    String new2 = userFormData.getFirst("newPassword2");
+    String result = userService.changePassword(user, existing, new1, new2);
+    if (result.contains("successfully")) {
+      redirectAttrs.addFlashAttribute("resultSuccess", result);
+      return "redirect:/";
+    } else {
+      model.addAttribute("user", user);
+      model.addAttribute("resultDanger", result);
+      return "change_password";
+    }
   }
 
 }

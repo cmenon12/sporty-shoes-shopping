@@ -2,8 +2,11 @@ package com.sportyshoes.controller;
 
 import com.sportyshoes.entity.Order;
 import com.sportyshoes.service.OrderService;
+import com.sportyshoes.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +19,9 @@ public class AdminController {
   @Autowired
   OrderService orderService;
 
+  @Autowired
+  UserService userService;
+
   @GetMapping(value = "/orders")
   public String orders(Model model) {
     List<Order> allOrders = orderService.getAll(-1);
@@ -25,6 +31,13 @@ public class AdminController {
     model.addAttribute("allOrders", allOrders);
     model.addAttribute("showUser", true);
     return "orders";
+  }
+
+  @GetMapping(value = "/users")
+  public String users(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+    model.addAttribute("allUsers", userService.getAll());
+    model.addAttribute("user", true);
+    return "admin_users";
   }
 
 }

@@ -5,6 +5,7 @@ import com.sportyshoes.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,6 +16,9 @@ public class UserService implements UserDetailsService {
 
   @Autowired
   UserRepository userRepository;
+
+  @Autowired
+  ApplicationContext context;
 
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -53,6 +57,7 @@ public class UserService implements UserDetailsService {
   }
 
   public String create(User user) {
+    PasswordEncoderService passwordEncoderService = context.getBean(PasswordEncoderService.class);
     if (validate(user) != null) {
       return validate(user);
     }
@@ -60,22 +65,29 @@ public class UserService implements UserDetailsService {
       return "User already exists";
     }
     user.setIsAdmin(getAll().isEmpty());
+    user.setPassword(passwordEncoderService.encode(user.getPassword()));
     userRepository.save(user);
     return "User created successfully" + (user.getIsAdmin() ? " as admin" : "");
   }
 
-  public String update(User user) {
-    if (validate(user) != null) {
-      return validate(user);
+  public String changePassword(User user, String existing, String new1, String new2) {
+    PasswordEncoderService passwordEncoderService = context.getBean(PasswordEncoderService.class);
+    if (existing == null || existing.isEmpty()) {
+      return "Existing password is required";
     }
-    if (user.getEmail() == null) {
-      return "User email is null";
+    if (new1 == null || new1.isEmpty() || new2 == null || new2.isEmpty()) {
+      return "Both new passwords are required";
     }
-    if (getByEmail(user.getEmail()).isEmpty()) {
-      return "User " + user.getEmail() + " not found";
+    if (!new1.equals(new2)) {
+      return "New passwords do not match";
     }
+    String dbPassword = user.getPassword();
+    if (!passwordEncoderService.matches(existing, dbPassword)) {
+      return "Existing password is incorrect";
+    }
+    user.setPassword(passwordEncoderService.encode(new1));
     userRepository.save(user);
-    return "User " + user.getEmail() + " updated successfully";
+    return "Password changed successfully";
   }
 
   private String validate(User user) {

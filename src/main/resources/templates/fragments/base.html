@@ -10,6 +10,35 @@
         rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
         crossorigin="anonymous">
+  <script>
+    function searchTable(inputId, tableId, singular, plural, searchAttr = "searchText") {
+      // Declare variables
+      var input, filter, table, tr, td, i, txtValue, count, caption;
+      input = document.getElementById(inputId);
+      console.log(input);
+      filter = input.value.toLowerCase();
+      table = document.getElementById(tableId);
+      tr = table.getElementsByTagName("tr");
+      count = 0;
+      caption = table.getElementsByTagName("caption")[0]
+
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 1; i < tr.length; i++) {
+
+        txtValue = tr[i].getAttribute(searchAttr);
+        if (txtValue.toLowerCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+          count++;
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+
+      // Set the caption
+      caption.innerText = count + " " + (count === 1 ? singular : plural);
+
+    }
+  </script>
 </head>
 <body class="text-bg-light">
 <header class="mb-1" th:fragment="header(title)">
@@ -41,10 +70,19 @@
               <li><a class="dropdown-item" href="/admin/product-categories">Product Categories</a>
               </li>
               <li><a class="dropdown-item" href="/admin/orders">Orders</a></li>
+              <li><a class="dropdown-item" href="/admin/users">Users</a></li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/logout">Logout</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false">
+              User Account
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/change-password">Change Password</a></li>
+              <li><a class="dropdown-item" href="/logout">Logout</a>
+              </li>
+            </ul>
           </li>
         </ul>
       </div>
