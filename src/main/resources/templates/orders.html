@@ -6,7 +6,43 @@
 <body class="text-bg-light">
 <header
     th:replace="~{fragments/base :: header('Sporty Shoes Shop - ' + ${showUser != null ? 'Admin - ' : ''} + 'Orders')}"></header>
+<script>
+  function filterOrdersByCategory() {
 
+    // get the category and the rows
+    const category = document.getElementById('productCategory').value;
+    const rows = document.getElementById('ordersTable').getElementsByTagName('tr');
+    let count = 0;
+    for (let i = 1; i < rows.length; i++) {
+
+      // ignore it if it's not the address row
+      if (!rows[i].hasAttribute('data-categories')) {
+        continue;
+      }
+
+      // Get the display value
+      const row = rows[i];
+      const categories = rows[i].getAttribute('data-categories').split(', ');
+      let display;
+      if (category === 'none' || categories.includes(category)) {
+        display = '';
+        count++;
+      } else {
+        display = 'none';
+      }
+
+      // Apply the display value
+      const productRows = parseInt(row.getAttribute('productrows'));
+      for (let j = i - productRows; j <= i; j++) {
+        rows[j].style.display = display;
+      }
+    }
+
+    // Set the caption
+    document.getElementById('ordersTable').getElementsByTagName("caption")[0].innerText = count
+        + " " + (count === 1 ? "order" : "orders");
+  }
+</script>
 <main>
   <div class="container ">
     <div
@@ -14,8 +50,17 @@
     <hr th:unless="${allOrders.isEmpty()}">
     <div class="row" th:unless="${allOrders.isEmpty()}">
       <div class="col">
+        <div class="form-floating mb-2">
+          <select class="form-select" id="productCategory" aria-label="Product Category"
+                  onchange="filterOrdersByCategory()">
+            <option value="none" selected>All</option>
+            <option th:each="c:${allCategories}" th:value="${c.getName().toLowerCase()}"
+                    th:text="${c.getName()}"></option>
+          </select>
+          <label for="productCategory">Product Category</label>
+        </div>
         <div class="table-responsive">
-          <table class="table">
+          <table class="table" id="ordersTable">
             <caption
                 th:text="${allOrders.size() == 1 ? '1 order' : allOrders.size() + ' orders'}"></caption>
             <thead>
