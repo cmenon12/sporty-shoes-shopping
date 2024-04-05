@@ -76,4 +76,11 @@ public class UserController {
     return "redirect:/login";
   }
 
+  @GetMapping(value = "/change-password")
+  public String changePassword(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+    model.addAttribute("user", userService.getByEmail(userDetails.getUsername())
+        .get());
+    return "change_password";
+  }
+
 }
