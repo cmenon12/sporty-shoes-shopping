@@ -102,6 +102,8 @@
                        aria-label="Buy" th:aria-describedby="'product-input-label-' + ${p.getId()}"
                        autocomplete="off" onchange="filterProducts()">
               </div>
+              <input th:unless="${p.getStock() > 0}" type="hidden" class="form-control" value="0"
+                     disabled>
               <span th:unless="${p.getStock() > 0}">Out of stock</span>
             </div>
           </div>
