@@ -60,10 +60,43 @@ button.
 ![Admin New Category Page](./screenshots/admin_categories_create.png)
 
 The admin user can then see the new category in the categories list, including how many products
-each category has.
+each category has. They can also search for categories using the search box, and the table will
+update to only show matching categories as they type.
 
 ![Admin Categories Page with Categories](./screenshots/admin_categories.png)
 
 The admin user can also edit the category by clicking the `Edit` button.
 
 ![Admin Edit Category Page](./screenshots/admin_categories_edit.png)
+
+### Products
+
+On the products page, the admin user can create new products by clicking the `New Product` button.
+The user is prompted to add a name, description, category, price, and number in stock.
+
+![Admin New Product Page](./screenshots/admin_products_create.png)
+
+The admin user can see the new product in the products list, and filter them by category. They can
+also search for products using the search box, and the table will update to only show matching
+products as they type.
+
+![Admin Products Page with Products](./screenshots/admin_products.png)
+
+![Admin Products Page with Category Filter](./screenshots/admin_products_filtered.png)
+
+![Admin Products Page with Search](./screenshots/admin_products_search.png)
+
+The admin user can delete the product by clicking the `Delete` button, and it will be removed
+immediately. The product is marked as 'deleted' but not deleted from the database, so that users can
+still see the product in their order history.
+
+The admin user can also edit the product by clicking the `Edit` button. When the product is edited,
+the old product is marked as 'deleted' and a new one is created in its place with the new details.
+This allows users to see the product in their order history with the correct details.
+
+![Admin Edit Product Page](./screenshots/admin_products_edit.png)
+
+Data validation exists to ensure that the stock and the price do not fall below 0. If the admin user
+tries to save the product with invalid data, an error message is shown.
+
+![Admin Edit Product Page with Error](./screenshots/admin_products_edit_error.png) 
