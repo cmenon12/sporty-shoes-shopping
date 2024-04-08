@@ -52,65 +52,59 @@ A tree diagram of the project structure is below.
 
 ```
 .
-├── main
-│   ├── java
-│   │   └── com
-│   │       └── sportyshoes
-│   │           ├── SportyShoes
-│   │           │   └── SportyShoesApplication.java
-│   │           ├── config
-│   │           │   ├── MySecurityConfig.java
-│   │           │   ├── MySuccessHandler.java
-│   │           │   ├── MyWebConfig.java
-│   │           │   └── TrailingSlashRedirectFilter.java
-│   │           ├── controller
-│   │           │   ├── AdminController.java
-│   │           │   ├── AdminProductCategoryController.java
-│   │           │   ├── AdminProductController.java
-│   │           │   ├── ShoppingController.java
-│   │           │   └── UserController.java
-│   │           ├── entity
-│   │           │   ├── Order.java
-│   │           │   ├── Product.java
-│   │           │   ├── ProductCategory.java
-│   │           │   └── User.java
-│   │           ├── repository
-│   │           │   ├── OrderRepository.java
-│   │           │   ├── ProductCategoryRepository.java
-│   │           │   ├── ProductRepository.java
-│   │           │   └── UserRepository.java
-│   │           └── service
-│   │               ├── OrderService.java
-│   │               ├── PasswordEncoderService.java
-│   │               ├── ProductCategoryService.java
-│   │               ├── ProductService.java
-│   │               └── UserService.java
-│   └── resources
-│       ├── application.properties
-│       ├── static
-│       │   ├── favicon.ico
-│       │   ├── filters.js
-│       │   ├── logo.png
-│       │   └── logo_navbar.png
-│       └── templates
-│           ├── admin_product_categories.html
-│           ├── admin_product_categories_edit.html
-│           ├── admin_products.html
-│           ├── admin_products_edit.html
-│           ├── admin_users.html
-│           ├── change_password.html
-│           ├── fragments
-│           │   └── base.html
-│           ├── login.html
-│           ├── orders.html
-│           ├── register.html
-│           └── shop.html
-└── test
-    └── java
-        └── com
-            └── sportyshoes
-                └── SportyShoes
-                    └── SportyShoesApplicationTests.java
+└── main
+    ├── java
+    │   └── com
+    │       └── sportyshoes
+    │           ├── SportyShoes
+    │           │   └── SportyShoesApplication.java
+    │           ├── config
+    │           │   ├── MySecurityConfig.java
+    │           │   ├── MySuccessHandler.java
+    │           │   ├── MyWebConfig.java
+    │           │   └── TrailingSlashRedirectFilter.java
+    │           ├── controller
+    │           │   ├── AdminController.java
+    │           │   ├── AdminProductCategoryController.java
+    │           │   ├── AdminProductController.java
+    │           │   ├── ShoppingController.java
+    │           │   └── UserController.java
+    │           ├── entity
+    │           │   ├── Order.java
+    │           │   ├── Product.java
+    │           │   ├── ProductCategory.java
+    │           │   └── User.java
+    │           ├── repository
+    │           │   ├── OrderRepository.java
+    │           │   ├── ProductCategoryRepository.java
+    │           │   ├── ProductRepository.java
+    │           │   └── UserRepository.java
+    │           └── service
+    │               ├── OrderService.java
+    │               ├── PasswordEncoderService.java
+    │               ├── ProductCategoryService.java
+    │               ├── ProductService.java
+    │               └── UserService.java
+    └── resources
+        ├── application.properties
+        ├── static
+        │   ├── favicon.ico
+        │   ├── filters.js
+        │   ├── logo.png
+        │   └── logo_navbar.png
+        └── templates
+            ├── admin_product_categories.html
+            ├── admin_product_categories_edit.html
+            ├── admin_products.html
+            ├── admin_products_edit.html
+            ├── admin_users.html
+            ├── change_password.html
+            ├── fragments
+            │   └── base.html
+            ├── login.html
+            ├── orders.html
+            ├── register.html
+            └── shop.html
 ```
 
 ### Object Entities
@@ -146,7 +140,7 @@ The admin pages are:
 ## Development History
 
 The project was created using JetBrains IntelliJ IDEA. The full development history can be found in
-the [Pull Request history of the GitHub repository](https://github.com/cmenon12/sporty-shoes-shopping/pulls?q=is%3Apr).
+the [pull request history of the GitHub repository](https://github.com/cmenon12/sporty-shoes-shopping/pulls?q=is%3Apr).
 
 1. I first created the Java Maven project using the Spring Initializr, and opened it in IntelliJ
    IDE.
@@ -162,3 +156,5 @@ the [Pull Request history of the GitHub repository](https://github.com/cmenon12/
 8. I then added the ability for users to change their password, and an admin page to view all users.
 9. I then added the search boxes and filters when looking at products, product categories, users,
    and orders, and improved the look and feel of the application.
+10. Finally, I tested that the application fully met the requirements, and removed the development
+    dependencies.
