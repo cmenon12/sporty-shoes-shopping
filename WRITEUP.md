@@ -117,6 +117,15 @@ A tree diagram of the project structure is below.
 
 The application has four entities: `User`, `Product`, `ProductCategory`, and `Order`.
 
+The diagram below shows the entities and their relationships.
+
 ![./screenshots/entity_diagram.png](./screenshots/entity_diagram.png)
+
+The three entity relationships are:
+
+- One `User` can have many `Order`s, and one `Order` can have one `User` (one-to-many).
+- One `ProductCategory` can have many `Product`s, and one `Product` can have one `ProductCategory` (
+  one-to-many).
+- One `Product` can be in many `Order`s, and one `Order` can have many `Product`s (many-to-many).
 
 ## Development 
