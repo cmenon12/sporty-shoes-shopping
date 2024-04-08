@@ -4,6 +4,8 @@ This is the writeup for the Sporty Shoes Shopping project. The project is a web 
 allows users to browse and purchase shoes. The application is built using the Spring Boot framework
 and the Thymeleaf templating engine, with a Bootstrap front-end.
 
+Screenshots of the application are in a separate file.
+
 ## How to Use
 
 All the source code can be found on GitHub
