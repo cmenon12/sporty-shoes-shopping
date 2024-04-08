@@ -6,6 +6,9 @@ and the Thymeleaf templating engine, with a Bootstrap front-end.
 
 ## How to Use
 
+All the source code can be found on GitHub
+at [https://github.com/cmenon12/sporty-shoes-shopping](https://github.com/cmenon12/sporty-shoes-shopping).
+
 This application runs on Java 17 and Maven.
 
 The MySQL database is required to run this application. The database configuration can be found in
@@ -20,8 +23,7 @@ spring.datasource.username=root
 spring.datasource.password=root
 ```
 
-The database should be created with the command `CREATE DATABASE IF NOT EXISTS SportyShoes;`. The
-database tables will be created when the application is run.
+The database `SportyShoes` is created when the application is first run.
 
 ## Project Structure
 
@@ -37,11 +39,16 @@ The project is structured as follows:
 - The services are in the [`service`](./src/main/java/com/sportyshoes/SportyShoes/service) package.
   These are the classes that handle the business logic of the application.
 - The controllers are in the [`controller`](./src/main/java/com/sportyshoes/SportyShoes/controller)
-  package. The `ShoppingController` handles the shopping pages, and the `UserController` handles the
-  user pages.
-- In the [`resources`](./src/main/resources) directory, the `application.properties` file contains
-  the database configuration, and the `templates` directory contains the HTML templates for the
-  application.
+  package. The `ShoppingController` handles the shopping web requests, and the `UserController`
+  handles the
+  user web requests. There are also three admin controllers.
+- The [`config`](./src/main/java/com/sportyshoes/config) package contains the security and web
+  configuration.
+- In the [`resources`](./src/main/resources) folder, the `application.properties` file contains
+  the database configuration, and the `templates` folder contains the HTML templates for the
+  application. The `static` folder contains some JavaScript and the logo.
+
+A tree diagram of the project structure is below.
 
 ```
 .
@@ -51,7 +58,15 @@ The project is structured as follows:
 │   │       └── sportyshoes
 │   │           ├── SportyShoes
 │   │           │   └── SportyShoesApplication.java
+│   │           ├── config
+│   │           │   ├── MySecurityConfig.java
+│   │           │   ├── MySuccessHandler.java
+│   │           │   ├── MyWebConfig.java
+│   │           │   └── TrailingSlashRedirectFilter.java
 │   │           ├── controller
+│   │           │   ├── AdminController.java
+│   │           │   ├── AdminProductCategoryController.java
+│   │           │   ├── AdminProductController.java
 │   │           │   ├── ShoppingController.java
 │   │           │   └── UserController.java
 │   │           ├── entity
@@ -66,17 +81,29 @@ The project is structured as follows:
 │   │           │   └── UserRepository.java
 │   │           └── service
 │   │               ├── OrderService.java
+│   │               ├── PasswordEncoderService.java
 │   │               ├── ProductCategoryService.java
 │   │               ├── ProductService.java
 │   │               └── UserService.java
 │   └── resources
 │       ├── application.properties
-│       ├── commands.sql
+│       ├── static
+│       │   ├── favicon.ico
+│       │   ├── filters.js
+│       │   ├── logo.png
+│       │   └── logo_navbar.png
 │       └── templates
+│           ├── admin_product_categories.html
+│           ├── admin_product_categories_edit.html
+│           ├── admin_products.html
+│           ├── admin_products_edit.html
+│           ├── admin_users.html
+│           ├── change_password.html
 │           ├── fragments
 │           │   └── base.html
 │           ├── login.html
 │           ├── orders.html
+│           ├── register.html
 │           └── shop.html
 └── test
     └── java
@@ -84,7 +111,6 @@ The project is structured as follows:
             └── sportyshoes
                 └── SportyShoes
                     └── SportyShoesApplicationTests.java
-
 ```
 
 ### Object Entities
