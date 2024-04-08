@@ -15,13 +15,13 @@
     <div class="row">
       <div class="col-sm"></div>
       <div class="col-lg-8">
-        <div class="row mb-3" th:unless="${allCategories.isEmpty()}">
+        <div class="row mb-3">
           <div class="col-5">
             <a th:href="@{/admin/product-categories/new}" class="btn btn-lg btn-primary w-100 mt-1">New
               Product Category</a>
           </div>
           <div class="col">
-            <div class="form-floating">
+            <div class="form-floating" th:unless="${allCategories.isEmpty()}">
               <input id="inputSearch" type="text" class="form-control"
                      placeholder="Search for categories..."
                      aria-label="Search"
