@@ -16,7 +16,7 @@ The user cannot access any other pages until they have logged in.
 
 The login page is shown below.
 
-![Login Page](./screenshots/login.png)
+![Login Page](./screenshots/login_first_run.png)
 
 The registration page is shown below.
 
@@ -27,6 +27,5 @@ browser detects the login form, and fills in the email address and password auto
 
 ![Login Page after registering](./screenshots/login_registered.png)
 
-Once the user has logged in, they are taken to the home page. There are no products because the
-admin user has just been created.
+Once the admin user has logged in, they are taken to the admin products page. 
 
