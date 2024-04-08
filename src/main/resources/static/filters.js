@@ -2,7 +2,9 @@ function filterTable(singular, plural) {
 
   // get the filter values and the rows
   const category = document.getElementById('inputCategory')
-      ? document.getElementById('inputCategory').value.toLowerCase() : 'none';
+      ? document.getElementById('inputCategory').value : 'none';
+  const user = document.getElementById('inputUser')
+      ? document.getElementById('inputUser').value : 'none';
   const search = document.getElementById('inputSearch')
       ? document.getElementById('inputSearch').value.toLowerCase() : '';
   const startDate = document.getElementById('inputStartDate') ? Math.floor(
@@ -21,18 +23,22 @@ function filterTable(singular, plural) {
     const row = rows[i];
     const rowCategory = row.hasAttribute('data-category') ? row.getAttribute(
         'data-category').split(', ') : null
+    const rowUser = row.hasAttribute('data-user') ? row.getAttribute(
+        'data-user') : null;
     const rowSearch = row.getAttribute('data-search');
     const rowDate = row.hasAttribute('data-date') ? Math.floor(
         Date.parse(row.getAttribute('data-date')) / 1000) : 1000000;
 
     // Ignore this row if it has no attributes
-    if (!rowCategory && !rowSearch && !row.hasAttribute('data-date')) {
+    if (!rowCategory && !rowUser && !rowSearch && !row.hasAttribute(
+        'data-date')) {
       continue;
     }
 
     // Check if the row should be displayed
     let display;
     if ((category === 'none' || rowCategory.includes(category))
+        && (user === 'none' || rowUser === user)
         && (search === '' || rowSearch.includes(search))
         && (rowDate >= startDate && rowDate <= endDate)) {
       display = '';

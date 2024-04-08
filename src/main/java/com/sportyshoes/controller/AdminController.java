@@ -32,6 +32,7 @@ public class AdminController {
     }
     model.addAttribute("allOrders", allOrders);
     model.addAttribute("allCategories", productCategoryService.getAll());
+    model.addAttribute("allUsers", userService.getAll());
     model.addAttribute("showUser", true);
     return "orders";
   }

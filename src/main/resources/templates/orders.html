@@ -26,6 +26,18 @@
               <label for="inputCategory">Product Category</label>
             </div>
           </div>
+          <div class="col"
+               th:if="${showUser == true && #authorization.expression('hasRole(''ADMIN'')')}">
+            <div class="form-floating mb-2">
+              <select class="form-select" id="inputUser" aria-label="User"
+                      onchange="filterTable('order', 'orders')">
+                <option value="none" selected>All</option>
+                <option th:each="u:${allUsers}" th:value="${u.getEmail()}"
+                        th:text="${u.getEmail()}"></option>
+              </select>
+              <label for="inputCategory">User</label>
+            </div>
+          </div>
           <div class="col">
             <div class="form-floating mb-3">
               <input type="datetime-local" class="form-control" id="inputStartDate"
@@ -87,6 +99,7 @@
               <tr class="border-dark-subtle"
                   th:data-date="${o.getCreated().toString().substring(0, 16)}"
                   th:data-category="${o.getProductCategories()}"
+                  th:data-user="${o.getUser().getEmail()}"
                   th:data-rows-above="${o.getProductsMap().size()}">
                 <td></td>
                 <td colspan="4" th:text="'Address: ' + ${o.getAddress()}"></td>
