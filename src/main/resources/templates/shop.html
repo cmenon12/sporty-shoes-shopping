@@ -81,7 +81,7 @@
         <div class="row row-cols-1 row-cols-lg-3 m-4 g-4" id="allProducts">
 
           <div class="col" th:each="p:${allProducts}"
-               th:data-category="${p.getCategory().getName()}"
+               th:data-category="${p.getCategory() != null ? p.getCategory().getName() : ''}"
                th:data-search="${p.getName().toLowerCase()} + ' ' + ${p.getDescription().toLowerCase()}">
           <div class="card h-100">
             <div class="card-body">

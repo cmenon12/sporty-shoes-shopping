@@ -64,7 +64,7 @@
             </thead>
             <tbody class="table-group-divider">
             <tr th:each="p:${allProducts}"
-                th:data-category="${p.getCategory().getName()}"
+                th:data-category="${p.getCategory() != null ? p.getCategory().getName() : ''}"
                 th:data-search="${p.getName().toLowerCase()} + ' ' + ${p.getDescription().toLowerCase()}">
               <th th:text="${p.getId()}" scope="row"></th>
               <th th:text="${p.getName()}" scope="row"></th>
