@@ -103,3 +103,15 @@ Data validation exists to ensure that the stock and the price do not fall below 
 tries to save the product with invalid data, an error message is shown.
 
 ![Admin Edit Product Page with Error](./screenshots/admin_products_edit_error.png) 
+
+Further elements of the admin dashboard are shown below.
+
+# User Account Management
+
+All users (admin and standard) can access the change password page via the `User Account` dropdown
+menu. This page prompts for the user's existing password and new password, which are checked before
+the password is updated.
+
+The user can also log out from the dropdown menu.
+
+![User Change Password Page](./screenshots/user_change_password.png)
