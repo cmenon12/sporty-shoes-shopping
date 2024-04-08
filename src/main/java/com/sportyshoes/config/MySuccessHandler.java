@@ -15,9 +15,9 @@ public class MySuccessHandler extends SavedRequestAwareAuthenticationSuccessHand
     boolean isAdmin = authentication.getAuthorities()
         .stream()
         .anyMatch(a -> a.getAuthority()
-            .equals("ADMIN"));
+            .equals("ROLE_ADMIN"));
     if (isAdmin) {
-      setDefaultTargetUrl("/admin/products");
+      setDefaultTargetUrl("/admin/products?continue");
     } else {
       setDefaultTargetUrl("/?continue");
     }
