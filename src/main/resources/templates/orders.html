@@ -41,7 +41,7 @@
                 </option>
                 <option th:each="e:${allEmails}" th:value="${e}"
                         th:text="${e}"
-                        th:selected="${!(param.user == null || param.user.isEmpty()) && #lists.contains(allEmails, param.user.toString())}"></option>
+                        th:selected="${!(param.user == null || param.user.isEmpty()) && e == param.user.toString()}"></option>
               </select>
               <label for="inputCategory">User</label>
             </div>
