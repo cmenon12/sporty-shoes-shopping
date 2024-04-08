@@ -87,8 +87,11 @@ products as they type.
 ![Admin Products Page with Search](./screenshots/admin_products_search.png)
 
 The admin user can delete the product by clicking the `Delete` button, and it will be removed
-immediately. The product is marked as 'deleted' but not deleted from the database, so that users can
+immediately with confirmation to the user. The product is marked as 'deleted' but not deleted from
+the database, so that users can
 still see the product in their order history.
+
+![Admin Products Page with Delete](./screenshots/admin_products_deletes.png)
 
 The admin user can also edit the product by clicking the `Edit` button. When the product is edited,
 the old product is marked as 'deleted' and a new one is created in its place with the new details.
