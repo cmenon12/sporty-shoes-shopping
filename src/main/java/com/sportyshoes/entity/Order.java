@@ -83,11 +83,9 @@ public class Order {
           .get(i);
       if (product.getCategory() != null
           && !productCategories.contains(product.getCategory()
-          .getName()
-          .toLowerCase())) {
+          .getName())) {
         productCategories.add(product.getCategory()
-            .getName()
-            .toLowerCase());
+            .getName());
       }
     }
     return productCategories.toArray(new String[0]);

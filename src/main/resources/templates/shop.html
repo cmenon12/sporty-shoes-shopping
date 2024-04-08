@@ -8,7 +8,7 @@
   function filterProducts() {
 
     // get the filter values and the rows
-    const category = document.getElementById('productCategory').value.toLowerCase();
+    const category = document.getElementById('productCategory').value;
     const search = document.getElementById('searchInput').value.toLowerCase();
     const cards = document.getElementById('allProducts').getElementsByClassName('col');
     let count = 0;
@@ -70,7 +70,7 @@
               <select class="form-select" id="productCategory" aria-label="Product Category"
                       onchange="filterProducts()">
                 <option value="none" selected>All</option>
-                <option th:each="c:${allCategories}" th:value="${c.getName().toLowerCase()}"
+                <option th:each="c:${allCategories}" th:value="${c.getName()}"
                         th:text="${c.getName()}"></option>
               </select>
               <label for="productCategory">Product Category</label>
@@ -81,7 +81,7 @@
         <div class="row row-cols-1 row-cols-lg-3 m-4 g-4" id="allProducts">
 
           <div class="col" th:each="p:${allProducts}"
-               th:data-category="${p.getCategory().getName().toLowerCase()}"
+               th:data-category="${p.getCategory().getName()}"
                th:data-search="${p.getName().toLowerCase()} + ' ' + ${p.getDescription().toLowerCase()}">
           <div class="card h-100">
             <div class="card-body">

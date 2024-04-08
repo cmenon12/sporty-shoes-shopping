@@ -44,10 +44,16 @@
             </tr>
             </thead>
             <tbody class="table-group-divider">
-            <tr th:each="c:${allCategories}" th:data-search="${c.getName().toLowerCase()}">
+            <tr th:each="c:${allCategories}" th:data-search="${c.getName()}">
               <th th:text="${c.getId()}" scope="row"></th>
               <th th:text="${c.getName()}" scope="row"></th>
-              <td th:text="${c.getProducts(false).size()}"></td>
+              <td>
+                <a th:if="${c.getProducts(false).size() > 0}"
+                   th:href="@{/admin/products(category=${c.getName()})}"
+                   th:text="${c.getProducts(false).size()}"></a>
+                <span th:if="${c.getProducts(false).size() == 0}"
+                      th:text="${c.getProducts(false).size()}"></span>
+              </td>
               <td>
                 <div class="btn-group btn-group-sm" role="group" aria-label="Edit action">
                   <a th:href="'/admin/product-categories/' + ${c.getId()}"
