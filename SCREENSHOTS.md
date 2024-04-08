@@ -47,7 +47,23 @@ The admin user can access other admin pages using the dropdown menu in the navig
 
 Before creating products for the site, the admin user will create categories for the products.
 
+### Product Categories
+
 The product categories management page is shown below. It is empty because no categories have been
-created yet.
+created yet. The admin user can create categories by clicking on the `New Product Category` button.
 
 ![Admin Categories Page](./screenshots/admin_categories_empty.png)
+
+The admin user can create a new category by entering the category name and clicking the `Save`
+button.
+
+![Admin New Category Page](./screenshots/admin_categories_create.png)
+
+The admin user can then see the new category in the categories list, including how many products
+each category has.
+
+![Admin Categories Page with Categories](./screenshots/admin_categories.png)
+
+The admin user can also edit the category by clicking the `Edit` button.
+
+![Admin Edit Category Page](./screenshots/admin_categories_edit.png)
