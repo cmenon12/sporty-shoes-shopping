@@ -29,3 +29,25 @@ browser detects the login form, and fills in the email address and password auto
 
 Once the admin user has logged in, they are taken to the admin products page. 
 
+# Admin Dashboard
+
+All admin pages at the `/admin/*` address have a yellow navigation bar and are only accessible to
+the admin user.
+
+## Product Management
+
+The product management page is shown below. There are no products because the
+admin user has just been created.
+
+![Admin Products Page](./screenshots/admin_products_empty.png)
+
+The admin user can access other admin pages using the dropdown menu in the navigation bar.
+
+![Admin Dropdown Menu](./screenshots/admin_products_empty_navbar.png)
+
+Before creating products for the site, the admin user will create categories for the products.
+
+The product categories management page is shown below. It is empty because no categories have been
+created yet.
+
+![Admin Categories Page](./screenshots/admin_categories_empty.png)
