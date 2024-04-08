@@ -115,3 +115,34 @@ the password is updated.
 The user can also log out from the dropdown menu.
 
 ![User Change Password Page](./screenshots/user_change_password.png)
+
+# User Shopping
+
+We will now register a standard (non-admin) user and login. All users created after the first user
+are standard users with no access to the admin pages.
+
+When a standard user logs in, they are taken to the products page. The user can see all the products
+that the admin user has created. The user can choose products by entering a quantity, and the
+product will be highlighted green. The user cannot order products that are out of stock, and cannot
+order more products than are in stock.
+
+Once the user has selected their products, they enter a delivery address and click the `Order`
+button to create an order.
+
+![Shopping Page](./screenshots/shopping.png)
+
+The user can filter products by category, and search for products using the search box. The table
+will update to only show matching products as they type. Products that they have added a quantity to
+but are not shown in the filter are greyed out, but still visible as they will be ordered.
+
+![Shopping Page with Category Filter](./screenshots/shopping_filtered.png)
+
+The user can view their orders by clicking on the `Orders` option in the navigation bar.
+
+![Orders Page](./screenshots/orders.png)
+
+The user can filter their orders by product category, or by order date & time. The table of orders
+is updated immediately as soon as the user selects a filter. The user cannot select a date & time
+before the first order, and after the last order.
+
+![Orders Page with Date Filter](./screenshots/orders_filtered.png)
