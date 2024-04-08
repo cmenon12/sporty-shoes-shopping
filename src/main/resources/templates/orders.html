@@ -20,7 +20,7 @@
               <select class="form-select" id="inputCategory" aria-label="Product Category"
                       onchange="filterTable('order', 'orders')">
                 <option value="none" selected>All</option>
-                <option th:each="c:${allCategories}" th:value="${c.getName().toLowerCase()}"
+                <option th:each="c:${allCategories}" th:value="${c.getName()}"
                         th:text="${c.getName()}"></option>
               </select>
               <label for="inputCategory">Product Category</label>

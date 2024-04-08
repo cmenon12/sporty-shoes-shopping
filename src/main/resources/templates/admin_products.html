@@ -29,7 +29,7 @@
           <select class="form-select" id="inputCategory" aria-label="Product Category"
                   onchange="filterTable('product', 'products')">
             <option value="none" selected>All</option>
-            <option th:each="c:${allCategories}" th:value="${c.getName().toLowerCase()}"
+            <option th:each="c:${allCategories}" th:value="${c.getName()}"
                     th:text="${c.getName()}"></option>
           </select>
           <label for="inputCategory">Product Category</label>
@@ -56,7 +56,7 @@
             </thead>
             <tbody class="table-group-divider">
             <tr th:each="p:${allProducts}"
-                th:data-category="${p.getCategory().getName().toLowerCase()}"
+                th:data-category="${p.getCategory().getName()}"
                 th:data-search="${p.getName().toLowerCase()} + ' ' + ${p.getDescription().toLowerCase()}">
               <th th:text="${p.getId()}" scope="row"></th>
               <th th:text="${p.getName()}" scope="row"></th>
