@@ -48,6 +48,10 @@ public class UserService implements UserDetailsService {
     return userRepository.findAll();
   }
 
+  public List<String> getAllEmails() {
+    return userRepository.findAllEmails();
+  }
+
   public Optional<User> getByEmail(String email) {
     return userRepository.findById(email);
   }
@@ -61,7 +65,7 @@ public class UserService implements UserDetailsService {
     if (validate(user) != null) {
       return validate(user);
     }
-    if (user.getEmail() != null && getByEmail(user.getEmail()).isPresent()) {
+    if (getByEmail(user.getEmail()).isPresent()) {
       return "User already exists";
     }
     user.setIsAdmin(getAll().isEmpty());
