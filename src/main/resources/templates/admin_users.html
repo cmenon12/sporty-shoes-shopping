@@ -41,7 +41,12 @@
                 <input class="form-check-input opacity-100" type="checkbox"
                        th:checked="${u.getIsAdmin()}" disabled>
               </td>
-              <td th:text="${u.getOrders().size()}"></td>
+              <td>
+                <a th:if="${u.getOrders().size() > 0}"
+                   th:href="@{/admin/orders(user=${u.getEmail()})}"
+                   th:text="${u.getOrders().size()}"></a>
+                <span th:if="${u.getOrders().size() == 0}" th:text="${u.getOrders().size()}"></span>
+              </td>
             </tr>
             </tbody>
           </table>

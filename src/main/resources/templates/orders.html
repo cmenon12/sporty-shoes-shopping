@@ -6,7 +6,11 @@
 <body class="text-bg-light">
 <header
     th:replace="~{fragments/base :: header('Sporty Shoes Shop - ' + ${showUser != null ? 'Admin - ' : ''} + 'Orders')}"></header>
-
+<script>
+  window.onload = function () {
+    filterTable('order', 'orders');
+  }
+</script>
 <main>
   <div class="container ">
     <div
@@ -31,9 +35,13 @@
             <div class="form-floating mb-2">
               <select class="form-select" id="inputUser" aria-label="User"
                       onchange="filterTable('order', 'orders')">
-                <option value="none" selected>All</option>
-                <option th:each="u:${allUsers}" th:value="${u.getEmail()}"
-                        th:text="${u.getEmail()}"></option>
+                <option value="none"
+                        th:selected="${param.user == null || param.user.isEmpty() || !#lists.contains(allEmails, param.user.toString())}">
+                  All
+                </option>
+                <option th:each="e:${allEmails}" th:value="${e}"
+                        th:text="${e}"
+                        th:selected="${!(param.user == null || param.user.isEmpty()) && #lists.contains(allEmails, param.user.toString())}"></option>
               </select>
               <label for="inputCategory">User</label>
             </div>
