@@ -4,7 +4,11 @@
 <head th:replace="~{fragments/base :: head('Sporty Shoes Shop - Admin - Products')}"></head>
 <body class="text-bg-light">
 <header th:replace="~{fragments/base :: header('Sporty Shoes Shop - Admin - Products')}"></header>
-
+<script>
+  window.onload = function () {
+    filterTable('product', 'products');
+  }
+</script>
 <main>
   <div class="container ">
     <div
@@ -28,9 +32,13 @@
         <div class="form-floating">
           <select class="form-select" id="inputCategory" aria-label="Product Category"
                   onchange="filterTable('product', 'products')">
-            <option value="none" selected>All</option>
-            <option th:each="c:${allCategories}" th:value="${c.getName()}"
-                    th:text="${c.getName()}"></option>
+            <option value="none"
+                    th:selected="${param.category == null || param.category.isEmpty() || !#lists.contains(allCategoryNames, param.category.toString())}">
+              All
+            </option>
+            <option th:each="c:${allCategoryNames}" th:value="${c}"
+                    th:text="${c}"
+                    th:selected="${!(param.category == null || param.category.isEmpty()) && c == param.category.toString()}"></option>
           </select>
           <label for="inputCategory">Product Category</label>
         </div>
