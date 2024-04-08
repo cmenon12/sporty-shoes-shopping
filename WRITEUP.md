@@ -128,4 +128,37 @@ The three entity relationships are:
   one-to-many).
 - One `Product` can be in many `Order`s, and one `Order` can have many `Product`s (many-to-many).
 
-## Development 
+### Website Structure
+
+The website has the following pages:
+
+- Registration page to create a user.
+- Login page to log in a user.
+- Shopping page to view products and create an order.
+- User dashboard to view orders.
+- Change password page to change the user's password.
+
+The admin pages are:
+
+- Admin dashboard to manage products and product categories.
+- Admin dashboard to view all orders and users.
+
+## Development History
+
+The project was created using JetBrains IntelliJ IDEA. The full development history can be found in
+the [Pull Request history of the GitHub repository](https://github.com/cmenon12/sporty-shoes-shopping/pulls?q=is%3Apr).
+
+1. I first created the Java Maven project using the Spring Initializr, and opened it in IntelliJ
+   IDE.
+2. I created the four entity classes, along with their respective repository and service classes.
+3. I then created the controllers and HTML templates for the user signup, login, and logout. I added
+   the Bootstrap CSS and JavaScript to the project for styling.
+4. I then created the shopping controllers and HTML page, and controllers for creating an order.
+5. I then created the admin dashboard to view products and orders, and the user dashboard to view
+   their own orders. I used the same HTML template for the two orders dashboards.
+6. Next I implemented the Product Categories functionality, including on the user and admin pages.
+7. I then added the Spring Security starter to the project, and migrated from managing user sessions
+   manually to using Spring Security for user authentication.
+8. I then added the ability for users to change their password, and an admin page to view all users.
+9. I then added the search boxes and filters when looking at products, product categories, users,
+   and orders, and improved the look and feel of the application.
