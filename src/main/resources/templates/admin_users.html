@@ -34,7 +34,7 @@
             </tr>
             </thead>
             <tbody class="table-group-divider">
-            <tr th:each="u:${allUsers}" th:data-search="${u.getEmail()}">
+            <tr th:each="u:${allUsers}" th:data-search="${u.getEmail().toLowerCase()}">
               <th th:text="${u.getEmail()}" scope="row"></th>
               <td>
                 <!--suppress HtmlFormInputWithoutLabel -->

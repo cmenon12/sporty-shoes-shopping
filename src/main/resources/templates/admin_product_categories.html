@@ -44,7 +44,7 @@
             </tr>
             </thead>
             <tbody class="table-group-divider">
-            <tr th:each="c:${allCategories}" th:data-search="${c.getName()}">
+            <tr th:each="c:${allCategories}" th:data-search="${c.getName().toLowerCase()}">
               <th th:text="${c.getId()}" scope="row"></th>
               <th th:text="${c.getName()}" scope="row"></th>
               <td>
