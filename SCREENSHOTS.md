@@ -104,17 +104,7 @@ tries to save the product with invalid data, an error message is shown.
 
 ![Admin Edit Product Page with Error](./screenshots/admin_products_edit_error.png) 
 
-Further elements of the admin dashboard are shown below.
-
-# User Account Management
-
-All users (admin and standard) can access the change password page via the `User Account` dropdown
-menu. This page prompts for the user's existing password and new password, which are checked before
-the password is updated.
-
-The user can also log out from the dropdown menu.
-
-![User Change Password Page](./screenshots/user_change_password.png)
+Further elements of the admin dashboard [are shown below](#admin-dashboard-continued).
 
 # User Shopping
 
@@ -137,7 +127,10 @@ but are not shown in the filter are greyed out, but still visible as they will b
 
 ![Shopping Page with Category Filter](./screenshots/shopping_filtered.png)
 
-The user can view their orders by clicking on the `Orders` option in the navigation bar.
+![Shopping Page with Search](./screenshots/shopping_search.png)
+
+The user can view their orders by clicking on the `Orders` option in the navigation bar. Each order
+shows the date, time, address, products purchased, and the total cost.
 
 ![Orders Page](./screenshots/orders.png)
 
@@ -145,4 +138,18 @@ The user can filter their orders by product category, or by order date & time. T
 is updated immediately as soon as the user selects a filter. The user cannot select a date & time
 before the first order, and after the last order.
 
-![Orders Page with Date Filter](./screenshots/orders_filtered.png)
+![Orders Page with Category Filter](./screenshots/orders_category_filtered.png)
+
+![Orders Page with Date Filter](./screenshots/orders_date_filtered.png)
+
+# User Account Management
+
+All users (admin and standard) can access the change password page via the `User Account` dropdown
+menu. This page prompts for the user's existing password and new password, which are checked before
+the password is updated.
+
+![User Change Password Page](./screenshots/user_change_password.png)
+
+The user can also log out from the dropdown menu.
+
+![User Logout Page](./screenshots/user_logout.png)
