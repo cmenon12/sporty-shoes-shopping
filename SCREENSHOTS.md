@@ -153,3 +153,25 @@ the password is updated.
 The user can also log out from the dropdown menu.
 
 ![User Logout Page](./screenshots/user_logout.png)
+
+# Admin Dashboard (continued)
+
+Further elements of the admin dashboard [are shown above](#admin-dashboard).
+
+## Orders (purchase reports)
+
+The admin user can view all the purchase reports by clicking on the `Admin -> Orders` option in the
+navigation bar. Each order
+shows the date, time, user, address, products purchased, and the total cost.
+
+![Admin Orders Page](./screenshots/admin_orders.png)
+
+The admin user can filter the orders by category, user, or by date & time. The table of orders
+is updated immediately as soon as the user selects a filter. The user cannot select a date & time
+before the first order, and after the last order.
+
+![Admin Orders Page with Category Filter](./screenshots/admin_orders_category_filtered.png)
+
+![Admin Orders Page with User Filter](./screenshots/admin_orders_user_filtered.png)
+
+![Admin Orders Page with Category and Date Filter](./screenshots/admin_orders_category_date_filtered.png)
