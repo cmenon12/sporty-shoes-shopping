@@ -1,0 +1,912 @@
+<!doctype html>
+<html>
+<head>
+  <title>IntelliJ Markdown Preview</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none';
+script-src 'self';
+style-src 'unsafe-inline';
+img-src file: *;
+connect-src 'none';
+font-src * data: *;
+object-src 'none';
+media-src 'none';
+child-src 'none';">
+  <style>/* Reworked by IntelliJ Team The MIT License (MIT) Copyright (c) JetBrains Adapted from https://github.com/sindresorhus/github-markdown-css The MIT License (MIT) Copyright (c) Sindre Sorhus &lt;sindresorhus@gmail.com&gt; (sindresorhus.com) Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
+  @font-face {
+    font-family: octicons-anchor;
+    src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+  }
+
+  body {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    font-family: Helvetica, Arial, freesans, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    word-wrap: break-word;
+    margin: 0 2em;
+  }
+
+  strong {
+    font-weight: bold;
+  }
+
+  img {
+    border: 0;
+  }
+
+  input {
+    color: inherit;
+    font: inherit;
+    margin: 0;
+    line-height: normal;
+  }
+
+  html input[disabled] {
+    cursor: default;
+  }
+
+  input[type="checkbox"] {
+    box-sizing: border-box;
+    padding: 0;
+  }
+
+  body * {
+    box-sizing: border-box;
+  }
+
+  input {
+    font: 13px/1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:hover, a:active {
+    text-decoration: underline;
+  }
+
+  hr {
+    height: 1px;
+    padding: 0;
+    margin: 20px 0;
+    border: 0 none;
+  }
+
+  hr:before {
+    display: table;
+    content: "";
+  }
+
+  hr:after {
+    display: table;
+    clear: both;
+    content: "";
+  }
+
+  blockquote {
+    margin: 0;
+  }
+
+  ul, ol {
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  ol ol, ul ol {
+    list-style-type: lower-roman;
+  }
+
+  ul ul ol, ul ol ol, ol ul ol, ol ol ol {
+    list-style-type: lower-alpha;
+  }
+
+  dd {
+    margin-left: 0;
+  }
+
+  .octicon {
+    font: normal normal normal 16px/1 octicons-anchor;
+    display: inline-block;
+    text-decoration: none;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .octicon-link:before {
+    content: '\f05c';
+  }
+
+  .markdown-body & gt
+
+  ;
+  *:first-child {
+    margin-top: 0 !important;
+  }
+
+  .markdown-body & gt
+
+  ;
+  *:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  .anchor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    padding-right: 6px;
+    padding-left: 30px;
+    margin-left: -30px;
+  }
+
+  .anchor:focus {
+    outline: none;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    position: relative;
+    margin-top: 1em;
+    margin-bottom: 16px;
+    font-weight: bold;
+    line-height: 1.4;
+  }
+
+  h1 .octicon-link, h2 .octicon-link, h3 .octicon-link, h4 .octicon-link, h5 .octicon-link, h6 .octicon-link {
+    display: none;
+    color: #000;
+    vertical-align: middle;
+  }
+
+  h1:hover .anchor, h2:hover .anchor, h3:hover .anchor, h4:hover .anchor, h5:hover .anchor, h6:hover .anchor {
+    padding-left: 8px;
+    margin-left: -30px;
+    text-decoration: none;
+  }
+
+  h1:hover .anchor .octicon-link, h2:hover .anchor .octicon-link, h3:hover .anchor .octicon-link, h4:hover .anchor .octicon-link, h5:hover .anchor .octicon-link, h6:hover .anchor .octicon-link {
+    display: inline-block;
+  }
+
+  h1 {
+    font-size: 2.2em;
+    padding-top: 0.6em;
+  }
+
+  h1 .anchor {
+    line-height: 1;
+  }
+
+  h2 {
+    font-size: 1.8em;
+    line-height: 1.2;
+    padding-top: 0.6em;
+  }
+
+  h2 .anchor {
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-size: 1.3em;
+    line-height: 1;
+    padding-top: 0.6em;
+  }
+
+  h3 .anchor {
+    line-height: 1.2;
+  }
+
+  h4 {
+    font-size: 1em;
+  }
+
+  h4 .anchor {
+    line-height: 1.2;
+  }
+
+  h5 {
+    font-size: 1em;
+  }
+
+  h5 .anchor {
+    line-height: 1.1;
+  }
+
+  h6 {
+    font-size: 1em;
+  }
+
+  h6 .anchor {
+    line-height: 1.1;
+  }
+
+  p, blockquote, ul, ol, dl, table, pre {
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+
+  pre.frontmatter-header {
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+  }
+
+  ul, ol {
+    padding-left: 2em;
+  }
+
+  ul ul, ul ol, ol ol, ol ul {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  li & gt
+
+  ;
+  p {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  dl {
+    padding: 0;
+  }
+
+  dl dt {
+    padding: 0;
+    margin-top: 16px;
+    font-size: 1em;
+    font-style: italic;
+    font-weight: bold;
+  }
+
+  dl dd {
+    padding: 0 16px;
+    margin-bottom: 16px;
+  }
+
+  blockquote {
+    padding: 10px 10px 10px 16px;
+    border-left: 2px solid;
+    border-radius: 0 3px 3px 0;
+  }
+
+  blockquote & gt
+
+  ;
+  :first-child {
+    margin-top: 0;
+  }
+
+  blockquote & gt
+
+  ;
+  :last-child {
+    margin-bottom: 0;
+  }
+
+  table {
+    display: block;
+    width: 100%;
+    overflow: auto;
+    word-break: normal;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 1em;
+  }
+
+  table th {
+    font-weight: bold;
+  }
+
+  table th, table td {
+    padding: 6px 13px;
+    background: transparent;
+  }
+
+  table tr {
+    border-top: 1px solid;
+  }
+
+  img {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  code {
+    font: 0.9em "JetBrains Mono", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    padding: 0.2em 0.4em;
+    margin: 2px;
+    border-radius: 3px;
+  }
+
+  pre & gt
+
+  ;
+  code {
+    padding: 0;
+    margin: 0;
+    font-size: 100%;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0;
+  }
+
+  .highlight {
+    margin-bottom: 16px;
+  }
+
+  .highlight pre, pre {
+    font: 0.85em "JetBrains Mono", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    padding: 16px;
+    overflow: auto;
+    line-height: 1.45;
+    border-radius: 3px;
+  }
+
+  pre code {
+    display: inline;
+    max-width: initial;
+    padding: 0;
+    margin: 0;
+    overflow: initial;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+  }
+
+  pre code:before, pre code:after {
+    content: normal;
+  }
+
+  kbd {
+    font: 0.9em "JetBrains Mono", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    padding: 0.2em 0.4em;
+    margin: 2px;
+    border-radius: 3px;
+  }
+
+  .task-list-item {
+    list-style-type: none;
+  }
+
+  .task-list-item + .task-list-item {
+    margin-top: 3px;
+  }
+
+  .task-list-item input {
+    margin: 0 0.35em 0.25em -0.6em;
+    vertical-align: middle;
+  }
+
+  :checked + .radio-label {
+    z-index: 1;
+    position: relative;
+  }
+
+  span.user-del {
+    text-decoration: line-through;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-track:vertical {
+    -webkit-box-shadow: -1px 0 0 #ededed;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }</style>
+  <style>:root {
+    --default-font-size: 12px;
+  }
+
+  body {
+    background-color: rgba(255, 255, 255, 255.0);
+    font-size: var(--default-font-size) !important;
+  }
+
+  body, p, blockquote, ul, ol, dl, table, pre, code, tr {
+    color: rgba(8, 8, 8, 255.0);
+  }
+
+  a {
+    color: rgba(49, 95, 189, 255.0);
+  }
+
+  table td, table th {
+    border: 1px solid rgba(235, 236, 240, 255.0);
+  }
+
+  hr {
+    background-color: rgba(235, 236, 240, 255.0);
+  }
+
+  kbd, tr {
+    border: 1px solid rgba(235, 236, 240, 255.0);
+  }
+
+  h6 {
+    color: rgba(129, 133, 148, 255.0);
+  }
+
+  blockquote {
+    border-left: 2px solid rgba(49, 95, 189, 0.4);
+  }
+
+  blockquote, code, pre {
+    background-color: rgba(212, 222, 231, 0.24705882352941178);
+  }
+
+  ::-webkit-scrollbar {
+    width: 17px;
+    height: 17px;
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  ::-webkit-scrollbar-track:hover {
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.200000);
+    border-radius: 8px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    outline: 1px solid rgba(0, 0, 0, 0.0);
+    outline-offset: -3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.501961);
+    border-radius: 8px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    outline: 1px solid rgba(0, 0, 0, 0.0);
+    outline-offset: -3px;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  ::-webkit-scrollbar-button {
+    display: none;
+  }</style>
+  <style>/* Copyright 2000-2021 JetBrains s.r.o. and contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file. */
+  .code-fence-highlighter-copy-button {
+    display: flex;
+    position: absolute;
+    float: left;
+    margin-left: -1em;
+    margin-top: -1em;
+  }
+
+  .code-fence-highlighter-copy-button-icon {
+    visibility: hidden;
+    max-width: 1em;
+  }
+
+  .code-fence:hover .code-fence-highlighter-copy-button-icon {
+    visibility: visible; /*noinspection CssUnknownTarget*/
+    content: url("copy-button-copy-icon.png");
+  }
+
+  .code-fence:hover .code-fence-highlighter-copy-button:hover .code-fence-highlighter-copy-button-icon { /*noinspection CssUnknownTarget*/
+    content: url("copy-button-copy-icon-hovered.png");
+    cursor: pointer;
+  }
+
+  .code-fence-highlighter-copy-button .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: rgba(85, 85, 85, 0.4);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 2px 0;
+    position: absolute;
+    font-size: 10px;
+    z-index: 1;
+    top: -4px;
+    left: 120%;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .code-fence-highlighter-copy-button:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }</style>
+  <style>/* Copyright 2000-2021 JetBrains s.r.o. and contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file. */
+  .run-icon & gt
+
+  ;
+  img {
+    max-width: 1em;
+    vertical-align: text-top;
+    margin-right: 0.3em;
+  }
+
+  .code-block {
+    position: absolute;
+    left: 1em;
+  }
+
+  .hidden {
+    display: none;
+  }</style>
+</head>
+<body>
+<div md-src-pos="0..9053">
+  <h1 id="sporty-shoes-shopping-screenshots" md-src-pos="0..35">Sporty Shoes Shopping
+    Screenshots</h1>
+  <p md-src-pos="37..302"><span md-src-pos="37..99">This is the screenshots for the Sporty Shoes Shopping project.</span>
+    <span md-src-pos="100..137">The project is a web application that</span> <span
+        md-src-pos="138..180">allows users to browse and purchase shoes.</span> <span
+        md-src-pos="181..237">The application is built using the Spring Boot framework</span> <span
+        md-src-pos="238..274">and the Thymeleaf templating engine,</span> <span
+        md-src-pos="275..302">with a Bootstrap front-end.</span></p>
+  <p md-src-pos="304..353"><span md-src-pos="304..353">Writeup of the application is in a separate file.</span>
+  </p>
+  <ul md-src-pos="369..964">
+    <li md-src-pos="369..964"><a href="#sporty-shoes-shopping-screenshots" md-src-pos="371..442">Sporty
+      Shoes Shopping Screenshots</a>
+      <ul md-src-pos="445..964">
+        <li md-src-pos="445..508"><a href="#user-registration-and-login" md-src-pos="449..508">User
+          Registration and Login</a></li>
+        <li md-src-pos="511..694"><a href="#admin-dashboard" md-src-pos="515..550">Admin
+          Dashboard</a>
+          <ul md-src-pos="557..694">
+            <li md-src-pos="557..694"><a href="#product-management" md-src-pos="561..602">Product
+              Management</a>
+              <ul md-src-pos="613..694">
+                <li md-src-pos="613..658"><a href="#product-categories" md-src-pos="617..658">Product
+                  Categories</a></li>
+                <li md-src-pos="669..694"><a href="#products" md-src-pos="673..694">Products</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li md-src-pos="697..732"><a href="#user-shopping" md-src-pos="701..732">User Shopping</a>
+        </li>
+        <li md-src-pos="735..790"><a href="#user-account-management" md-src-pos="739..790">User
+          Account Management</a></li>
+        <li md-src-pos="793..964"><a href="#admin-dashboard-continued" md-src-pos="797..854">Admin
+          Dashboard (continued)</a>
+          <ul md-src-pos="861..964">
+            <li md-src-pos="861..918"><a href="#orders-purchase-reports" md-src-pos="865..918">Orders
+              (purchase reports)</a></li>
+            <li md-src-pos="925..964"><a href="#user-management" md-src-pos="929..964">User
+              Management</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <h2 id="user-registration-and-login" md-src-pos="980..1010">User Registration and Login</h2>
+  <p md-src-pos="1012..1298"><span md-src-pos="1012..1057">When the application is first run and opened,</span>
+    <span md-src-pos="1058..1098">the user is greeted with the login page.</span> <span
+        md-src-pos="1099..1110">If the user</span> <span md-src-pos="1111..1136">does not have an account,</span>
+    <span md-src-pos="1137..1158">they can click on the</span> "<span md-src-pos="1160..1168">Register</span>"
+    <span md-src-pos="1170..1196">link to create an account.</span> <span md-src-pos="1197..1211">If no user has</span>
+    <span md-src-pos="1212..1225">been created,</span> <span md-src-pos="1226..1298">a banner is shown asking the user to create the admin user for the site.</span>
+  </p>
+  <p md-src-pos="1300..1365"><span md-src-pos="1300..1365">The user cannot access any other pages until they have logged in.</span>
+  </p>
+  <p md-src-pos="1367..1397"><span md-src-pos="1367..1397">The login page is shown below.</span></p>
+  <p md-src-pos="1399..1447"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/login_first_run.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Login Page" __idea-generated="true" md-src-pos="1399..1447"
+      data-original-src="screenshots/login_first_run.png"></p>
+  <p md-src-pos="1449..1486"><span
+      md-src-pos="1449..1486">The registration page is shown below.</span></p>
+  <p md-src-pos="1488..1536"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/register.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Registration Page" __idea-generated="true" md-src-pos="1488..1536"
+      data-original-src="screenshots/register.png"></p>
+  <p md-src-pos="1538..1728"><span md-src-pos="1538..1570">Once a user has been registered,</span>
+    <span md-src-pos="1571..1629">the user can log in with their email address and password.</span>
+    <span md-src-pos="1630..1637">The web</span> <span md-src-pos="1638..1669">browser detects the login form,</span>
+    <span md-src-pos="1670..1728">and fills in the email address and password automatically.</span>
+  </p>
+  <p md-src-pos="1730..1797"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/login_registered.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Login Page after registering" __idea-generated="true" md-src-pos="1730..1797"
+      data-original-src="screenshots/login_registered.png"></p>
+  <p md-src-pos="1799..1877"><span md-src-pos="1799..1833">Once the admin user has logged in,</span>
+    <span md-src-pos="1834..1876">they are taken to the admin products page.</span></p>
+  <h2 id="admin-dashboard" md-src-pos="1879..1897">Admin Dashboard</h2>
+  <p md-src-pos="1899..2012"><span md-src-pos="1899..1921">All admin pages at the</span> <code
+      md-src-pos="1922..1932">/admin/*</code> <span md-src-pos="1933..1996">address have a yellow navigation bar and are only accessible to</span>
+    <span md-src-pos="1997..2012">the admin user.</span></p>
+  <h3 id="product-management" md-src-pos="2014..2036">Product Management</h3>
+  <p md-src-pos="2038..2149"><span md-src-pos="2038..2081">The product management page is shown below.</span>
+    <span md-src-pos="2082..2115">There are no products because the</span> <span
+        md-src-pos="2116..2149">admin user has just been created.</span></p>
+  <p md-src-pos="2151..2213"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/admin_products_empty.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Admin Products Page" __idea-generated="true" md-src-pos="2151..2213"
+      data-original-src="screenshots/admin_products_empty.png"></p>
+  <p md-src-pos="2215..2305"><span md-src-pos="2215..2305">The admin user can access other admin pages using the dropdown menu in the navigation bar.</span>
+  </p>
+  <p md-src-pos="2307..2376"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/admin_products_empty_navbar.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Admin Dropdown Menu" __idea-generated="true" md-src-pos="2307..2376"
+      data-original-src="screenshots/admin_products_empty_navbar.png"></p>
+  <p md-src-pos="2378..2472"><span
+      md-src-pos="2378..2416">Before creating products for the site,</span> <span
+      md-src-pos="2417..2472">the admin user will create categories for the products.</span></p>
+  <h4 id="product-categories" md-src-pos="2474..2497">Product Categories</h4>
+  <p md-src-pos="2499..2697"><span md-src-pos="2499..2553">The product categories management page is shown below.</span>
+    <span md-src-pos="2554..2597">It is empty because no categories have been</span> <span
+        md-src-pos="2598..2610">created yet.</span> <span md-src-pos="2611..2666">The admin user can create categories by clicking on the</span>
+    <code md-src-pos="2667..2689">New Product Category</code> <span
+        md-src-pos="2690..2697">button.</span></p>
+  <p md-src-pos="2699..2765"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/admin_categories_empty.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Admin Categories Page" __idea-generated="true" md-src-pos="2699..2765"
+      data-original-src="screenshots/admin_categories_empty.png"></p>
+  <p md-src-pos="2767..2869"><span md-src-pos="2767..2854">The admin user can create a new category by entering the category name and clicking the</span>
+    <code md-src-pos="2855..2861">Save</code> <span md-src-pos="2862..2869">button.</span></p>
+  <p md-src-pos="2871..2940"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/admin_categories_create.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Admin New Category Page" __idea-generated="true" md-src-pos="2871..2940"
+      data-original-src="screenshots/admin_categories_create.png"></p>
+  <p md-src-pos="2942..3188"><span md-src-pos="2942..3010">The admin user can then see the new category in the categories list,</span>
+    <span md-src-pos="3011..3038">including how many products</span> <span md-src-pos="3039..3057">each category has.</span>
+    <span md-src-pos="3058..3115">They can also search for categories using the search box,</span>
+    <span md-src-pos="3116..3134">and the table will</span> <span md-src-pos="3135..3188">update to only show matching categories as they type.</span>
+  </p>
+  <p md-src-pos="3190..3266"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/admin_categories.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Admin Categories Page with Categories" __idea-generated="true" md-src-pos="3190..3266"
+      data-original-src="screenshots/admin_categories.png"></p>
+  <p md-src-pos="3268..3340"><span md-src-pos="3268..3325">The admin user can also edit the category by clicking the</span>
+    <code md-src-pos="3326..3332">Edit</code> <span md-src-pos="3333..3340">button.</span></p>
+  <p md-src-pos="3342..3410"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/admin_categories_edit.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Admin Edit Category Page" __idea-generated="true" md-src-pos="3342..3410"
+      data-original-src="screenshots/admin_categories_edit.png"></p>
+  <h4 id="products" md-src-pos="3412..3425">Products</h4>
+  <p md-src-pos="3427..3612"><span md-src-pos="3427..3448">On the products page,</span> <span
+      md-src-pos="3449..3503">the admin user can create new products by clicking the</span> <code
+      md-src-pos="3504..3517">New Product</code> <span md-src-pos="3518..3525">button.</span> <span
+      md-src-pos="3526..3561">The user is prompted to add a name,</span> <span
+      md-src-pos="3562..3574">description,</span> <span md-src-pos="3575..3584">category,</span>
+    <span md-src-pos="3585..3591">price,</span> <span
+        md-src-pos="3592..3612">and number in stock.</span></p>
+  <p md-src-pos="3614..3680"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/admin_products_create.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Admin New Product Page" __idea-generated="true" md-src-pos="3614..3680"
+      data-original-src="screenshots/admin_products_create.png"></p>
+  <p md-src-pos="3682..3898"><span md-src-pos="3682..3742">The admin user can see the new product in the products list,</span>
+    <span md-src-pos="3743..3771">and filter them by category.</span> <span md-src-pos="3772..3780">They can</span>
+    <span md-src-pos="3781..3827">also search for products using the search box,</span> <span
+        md-src-pos="3828..3875">and the table will update to only show matching</span> <span
+        md-src-pos="3876..3898">products as they type.</span></p>
+  <p md-src-pos="3900..3970"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/admin_products.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Admin Products Page with Products" __idea-generated="true" md-src-pos="3900..3970"
+      data-original-src="screenshots/admin_products.png"></p>
+  <p md-src-pos="3972..4058"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/admin_products_filtered.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Admin Products Page with Category Filter" __idea-generated="true" md-src-pos="3972..4058"
+      data-original-src="screenshots/admin_products_filtered.png"></p>
+  <p md-src-pos="4060..4135"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/admin_products_search.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Admin Products Page with Search" __idea-generated="true" md-src-pos="4060..4135"
+      data-original-src="screenshots/admin_products_search.png"></p>
+  <p md-src-pos="4137..4407"><span md-src-pos="4137..4190">The admin user can delete the product by clicking the</span>
+    <code md-src-pos="4191..4199">Delete</code> <span md-src-pos="4200..4207">button,</span> <span
+        md-src-pos="4208..4230">and it will be removed</span> <span md-src-pos="4231..4273">immediately with confirmation to the user.</span>
+    <span md-src-pos="4274..4298">The product is marked as</span> '<span md-src-pos="4300..4307">deleted</span>'
+    <span md-src-pos="4309..4329">but not deleted from</span> <span md-src-pos="4330..4343">the database,</span>
+    <span md-src-pos="4344..4361">so that users can</span> <span md-src-pos="4362..4407">still see the product in their order history.</span>
+  </p>
+  <p md-src-pos="4409..4485"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/admin_products_deletes.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Admin Products Page with Delete" __idea-generated="true" md-src-pos="4409..4485"
+      data-original-src="screenshots/admin_products_deletes.png"></p>
+  <p md-src-pos="4487..4771"><span md-src-pos="4487..4543">The admin user can also edit the product by clicking the</span>
+    <code md-src-pos="4544..4550">Edit</code> <span md-src-pos="4551..4558">button.</span> <span
+        md-src-pos="4559..4586">When the product is edited,</span> <span md-src-pos="4587..4615">the old product is marked as</span>
+    '<span md-src-pos="4617..4624">deleted</span>' <span md-src-pos="4626..4685">and a new one is created in its place with the new details.</span>
+    <span md-src-pos="4686..4771">This allows users to see the product in their order history with the correct details.</span>
+  </p>
+  <p md-src-pos="4773..4838"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/admin_products_edit.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Admin Edit Product Page" __idea-generated="true" md-src-pos="4773..4838"
+      data-original-src="screenshots/admin_products_edit.png"></p>
+  <p md-src-pos="4840..5012"><span md-src-pos="4840..4922">Data validation exists to ensure that the stock and the price do not fall below 0.</span>
+    <span md-src-pos="4923..4940">If the admin user</span> <span md-src-pos="4941..4985">tries to save the product with invalid data,</span>
+    <span md-src-pos="4986..5012">an error message is shown.</span></p>
+  <p md-src-pos="5014..5097"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/admin_products_edit_error.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Admin Edit Product Page with Error" __idea-generated="true" md-src-pos="5014..5096"
+      data-original-src="screenshots/admin_products_edit_error.png"></p>
+  <p md-src-pos="5099..5185"><span
+      md-src-pos="5099..5138">Further elements of the admin dashboard</span> <a
+      href="#admin-dashboard-continued" md-src-pos="5139..5184">are shown below</a><span
+      md-src-pos="5184..5185">.</span></p>
+  <h2 id="user-shopping" md-src-pos="5187..5203">User Shopping</h2>
+  <p md-src-pos="5205..5357"><span md-src-pos="5205..5236">We will now register a standard</span>
+    (<span md-src-pos="5238..5247">non-admin</span>) <span
+        md-src-pos="5249..5264">user and login.</span> <span md-src-pos="5265..5303">All users created after the first user</span>
+    <span md-src-pos="5304..5357">are standard users with no access to the admin pages.</span></p>
+  <p md-src-pos="5359..5692"><span md-src-pos="5359..5388">When a standard user logs in,</span>
+    <span md-src-pos="5389..5425">they are taken to the products page.</span> <span
+        md-src-pos="5426..5459">The user can see all the products</span> <span
+        md-src-pos="5460..5492">that the admin user has created.</span> <span
+        md-src-pos="5493..5545">The user can choose products by entering a quantity,</span> <span
+        md-src-pos="5546..5553">and the</span> <span md-src-pos="5554..5588">product will be highlighted green.</span>
+    <span md-src-pos="5589..5642">The user cannot order products that are out of stock,</span> <span
+        md-src-pos="5643..5653">and cannot</span> <span md-src-pos="5654..5692">order more products than are in stock.</span>
+  </p>
+  <p md-src-pos="5694..5815"><span md-src-pos="5694..5736">Once the user has selected their products,</span>
+    <span md-src-pos="5737..5780">they enter a delivery address and click the</span> <code
+        md-src-pos="5781..5788">Order</code> <span md-src-pos="5789..5815">button to create an order.</span>
+  </p>
+  <p md-src-pos="5817..5861"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/shopping.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Shopping Page" __idea-generated="true" md-src-pos="5817..5861"
+      data-original-src="screenshots/shopping.png"></p>
+  <p md-src-pos="5863..6152"><span
+      md-src-pos="5863..5904">The user can filter products by category,</span> <span
+      md-src-pos="5905..5950">and search for products using the search box.</span> <span
+      md-src-pos="5951..5960">The table</span> <span md-src-pos="5961..6017">will update to only show matching products as they type.</span>
+    <span md-src-pos="6018..6061">Products that they have added a quantity to</span> <span
+        md-src-pos="6062..6109">but are not shown in the filter are greyed out,</span> <span
+        md-src-pos="6110..6152">but still visible as they will be ordered.</span></p>
+  <p md-src-pos="6154..6228"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/shopping_filtered.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Shopping Page with Category Filter" __idea-generated="true" md-src-pos="6154..6228"
+      data-original-src="screenshots/shopping_filtered.png"></p>
+  <p md-src-pos="6230..6293"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/shopping_search.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Shopping Page with Search" __idea-generated="true" md-src-pos="6230..6293"
+      data-original-src="screenshots/shopping_search.png"></p>
+  <p md-src-pos="6295..6465"><span md-src-pos="6295..6344">The user can view their orders by clicking on the</span>
+    <code md-src-pos="6345..6353">Orders</code> <span md-src-pos="6354..6383">option in the navigation bar.</span>
+    <span md-src-pos="6384..6394">Each order</span> <span
+        md-src-pos="6395..6410">shows the date,</span> <span md-src-pos="6411..6416">time,</span>
+    <span md-src-pos="6417..6425">address,</span> <span
+        md-src-pos="6426..6445">products purchased,</span> <span md-src-pos="6446..6465">and the total cost.</span>
+  </p>
+  <p md-src-pos="6467..6507"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/orders.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Orders Page" __idea-generated="true" md-src-pos="6467..6507"
+      data-original-src="screenshots/orders.png"></p>
+  <p md-src-pos="6509..6755"><span md-src-pos="6509..6562">The user can filter their orders by product category,</span>
+    <span md-src-pos="6563..6579">or by order date</span> <span md-src-pos="6580..6581">&amp;</span>
+    <span md-src-pos="6582..6587">time.</span> <span
+        md-src-pos="6588..6607">The table of orders</span> <span md-src-pos="6608..6668">is updated immediately as soon as the user selects a filter.</span>
+    <span md-src-pos="6669..6698">The user cannot select a date</span> <span
+        md-src-pos="6699..6700">&amp;</span> <span md-src-pos="6701..6705">time</span> <span
+        md-src-pos="6706..6729">before the first order,</span> <span md-src-pos="6730..6755">and after the last order.</span>
+  </p>
+  <p md-src-pos="6757..6836"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/orders_category_filtered.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Orders Page with Category Filter" __idea-generated="true" md-src-pos="6757..6836"
+      data-original-src="screenshots/orders_category_filtered.png"></p>
+  <p md-src-pos="6838..6909"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/orders_date_filtered.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Orders Page with Date Filter" __idea-generated="true" md-src-pos="6838..6909"
+      data-original-src="screenshots/orders_date_filtered.png"></p>
+  <h2 id="user-account-management" md-src-pos="6911..6937">User Account Management</h2>
+  <p md-src-pos="6939..7162"><span md-src-pos="6939..6948">All users</span> (<span
+      md-src-pos="6950..6968">admin and standard</span>) <span md-src-pos="6970..7013">can access the change password page via the</span>
+    <code md-src-pos="7014..7028">User Account</code> <span md-src-pos="7029..7037">dropdown</span>
+    <span md-src-pos="7038..7043">menu.</span> <span md-src-pos="7044..7074">This page prompts for the user</span>'<span
+        md-src-pos="7075..7112">s existing password and new password,</span> <span
+        md-src-pos="7113..7137">which are checked before</span> <span md-src-pos="7138..7162">the password is updated.</span>
+  </p>
+  <p md-src-pos="7164..7232"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/user_change_password.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="User Change Password Page" __idea-generated="true" md-src-pos="7164..7232"
+      data-original-src="screenshots/user_change_password.png"></p>
+  <p md-src-pos="7234..7283"><span md-src-pos="7234..7283">The user can also log out from the dropdown menu.</span>
+  </p>
+  <p md-src-pos="7285..7335"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/user_logout.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="User Logout Page" __idea-generated="true" md-src-pos="7285..7335"
+      data-original-src="screenshots/user_logout.png"></p>
+  <h2 id="admin-dashboard-continued" md-src-pos="7337..7367">Admin Dashboard (continued)</h2>
+  <p md-src-pos="7369..7445"><span
+      md-src-pos="7369..7408">Further elements of the admin dashboard</span> <a
+      href="#admin-dashboard" md-src-pos="7409..7444">are shown above</a><span
+      md-src-pos="7444..7445">.</span></p>
+  <h3 id="orders-purchase-reports" md-src-pos="7447..7476">Orders (purchase reports)</h3>
+  <p md-src-pos="7478..7681"><span md-src-pos="7478..7545">The admin user can view all the purchase reports by clicking on the</span>
+    <code md-src-pos="7546..7563">Admin -&gt; Orders</code> <span md-src-pos="7564..7577">option in the</span>
+    <span md-src-pos="7578..7593">navigation bar.</span> <span
+        md-src-pos="7594..7604">Each order</span> <span
+        md-src-pos="7605..7620">shows the date,</span> <span md-src-pos="7621..7626">time,</span>
+    <span md-src-pos="7627..7632">user,</span> <span md-src-pos="7633..7641">address,</span> <span
+        md-src-pos="7642..7661">products purchased,</span> <span md-src-pos="7662..7681">and the total cost.</span>
+  </p>
+  <p md-src-pos="7683..7735"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/admin_orders.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Admin Orders Page" __idea-generated="true" md-src-pos="7683..7735"
+      data-original-src="screenshots/admin_orders.png"></p>
+  <p md-src-pos="7737..7979"><span md-src-pos="7737..7786">The admin user can filter the orders by category,</span>
+    <span md-src-pos="7787..7792">user,</span> <span md-src-pos="7793..7803">or by date</span> <span
+        md-src-pos="7804..7805">&amp;</span> <span md-src-pos="7806..7811">time.</span> <span
+        md-src-pos="7812..7831">The table of orders</span> <span md-src-pos="7832..7892">is updated immediately as soon as the user selects a filter.</span>
+    <span md-src-pos="7893..7922">The user cannot select a date</span> <span
+        md-src-pos="7923..7924">&amp;</span> <span md-src-pos="7925..7929">time</span> <span
+        md-src-pos="7930..7953">before the first order,</span> <span md-src-pos="7954..7979">and after the last order.</span>
+  </p>
+  <p md-src-pos="7981..8072"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/admin_orders_category_filtered.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Admin Orders Page with Category Filter" __idea-generated="true" md-src-pos="7981..8072"
+      data-original-src="screenshots/admin_orders_category_filtered.png"></p>
+  <p md-src-pos="8074..8157"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/admin_orders_user_filtered.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Admin Orders Page with User Filter" __idea-generated="true" md-src-pos="8074..8157"
+      data-original-src="screenshots/admin_orders_user_filtered.png"></p>
+  <p md-src-pos="8159..8264"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/admin_orders_category_date_filtered.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Admin Orders Page with Category and Date Filter" __idea-generated="true"
+      md-src-pos="8159..8264"
+      data-original-src="screenshots/admin_orders_category_date_filtered.png"></p>
+  <h3 id="user-management" md-src-pos="8266..8285">User Management</h3>
+  <p md-src-pos="8287..8481"><span
+      md-src-pos="8287..8327">The user management page is shown below.</span> <span
+      md-src-pos="8328..8354">As well as the admin user,</span> <span md-src-pos="8355..8381">there are also three other</span>
+    <span md-src-pos="8382..8388">users.</span> <span md-src-pos="8389..8481">All users created after the first user are standard users with no access to the admin pages.</span>
+  </p>
+  <p md-src-pos="8483..8533"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/admin_users.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Admin Users Page" __idea-generated="true" md-src-pos="8483..8533"
+      data-original-src="screenshots/admin_users.png"></p>
+  <p md-src-pos="8535..8660"><span md-src-pos="8535..8592">The admin user can search for users using the search box,</span>
+    <span md-src-pos="8593..8631">and the table will update to only show</span> <span
+        md-src-pos="8632..8660">matching users as they type.</span></p>
+  <p md-src-pos="8662..8731"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/admin_users_search.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Admin Users Page with Search" __idea-generated="true" md-src-pos="8662..8731"
+      data-original-src="screenshots/admin_users_search.png"></p>
+  <p md-src-pos="8733..8975"><span md-src-pos="8733..8765">The admin user can see the users</span>'
+    <span md-src-pos="8767..8825">email addresses and the number of orders they have placed.</span>
+    <span md-src-pos="8826..8830">They</span> <span md-src-pos="8831..8885">can click on the blue number of orders to see the user</span>'<span
+        md-src-pos="8886..8927">s order history on the admin Orders page.</span> <span
+        md-src-pos="8928..8975">This is done using query parameters in the URL.</span></p>
+  <p md-src-pos="8977..9052"><img
+      src="http://localhost:63342/markdownPreview/1337132439/screenshots/admin_orders_query_param.png?_ijt=viulkbfs913d73ugvvplv7j2mh"
+      alt="Admin Users Page with Orders" __idea-generated="true" md-src-pos="8977..9052"
+      data-original-src="screenshots/admin_orders_query_param.png"></p>
+</div>
+</body>
+</html>
