@@ -14,7 +14,7 @@ at [https://github.com/cmenon12/sporty-shoes-shopping](https://github.com/cmenon
 This application runs on Java 17 and Maven.
 
 The MySQL database is required to run this application. The database configuration can be found in
-the [`application.properties`](./src/main/resources/application.properties) file.
+the `src/main/resources/application.properties` file.
 
 The default database configuration is as follows:
 
@@ -32,21 +32,21 @@ The database `SportyShoes` is created when the application is first run.
 The project is structured as follows:
 
 - The main application class
-  is [`SportyShoesApplication.java`](./src/main/java/com/sportyshoes/SportyShoes/SportyShoesApplication.java).
+  is `SportyShoesApplication.java`.
   This is the entry point for the application.
-- The entities are in the [`entity`](./src/main/java/com/sportyshoes/SportyShoes/entity) package.
+- The entities are in the `entity` package.
   These are the objects that are stored in the database.
-- The repositories are in the [`repository`](./src/main/java/com/sportyshoes/SportyShoes/repository)
+- The repositories are in the `repository`
   package. These are the classes that interact with the database.
-- The services are in the [`service`](./src/main/java/com/sportyshoes/SportyShoes/service) package.
+- The services are in the `service` package.
   These are the classes that handle the business logic of the application.
-- The controllers are in the [`controller`](./src/main/java/com/sportyshoes/SportyShoes/controller)
+- The controllers are in the `controller`
   package. The `ShoppingController` handles the shopping web requests, and the `UserController`
   handles the
   user web requests. There are also three admin controllers.
-- The [`config`](./src/main/java/com/sportyshoes/config) package contains the security and web
+- The `config` package contains the security and web
   configuration.
-- In the [`resources`](./src/main/resources) folder, the `application.properties` file contains
+- In the `resources` folder, the `application.properties` file contains
   the database configuration, and the `templates` folder contains the HTML templates for the
   application. The `static` folder contains some JavaScript and the logo.
 
