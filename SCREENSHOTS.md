@@ -175,3 +175,21 @@ before the first order, and after the last order.
 ![Admin Orders Page with User Filter](./screenshots/admin_orders_user_filtered.png)
 
 ![Admin Orders Page with Category and Date Filter](./screenshots/admin_orders_category_date_filtered.png)
+
+## User Management
+
+The user management page is shown below. As well as the admin user, there are also three other
+users. All users created after the first user are standard users with no access to the admin pages.
+
+![Admin Users Page](./screenshots/admin_users.png)
+
+The admin user can search for users using the search box, and the table will update to only show
+matching users as they type.
+
+![Admin Users Page with Search](./screenshots/admin_users_search.png)
+
+The admin user can see the users' email addresses and the number of orders they have placed. They
+can click on the blue number of orders to see the user's order history on the admin Orders page.
+This is done using query parameters in the URL.
+
+![Admin Users Page with Orders](./screenshots/admin_orders_query_param.png)
