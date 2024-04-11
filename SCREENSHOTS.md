@@ -6,7 +6,23 @@ and the Thymeleaf templating engine, with a Bootstrap front-end.
 
 Writeup of the application is in a separate file.
 
-# User Registration and Login
+<!-- TOC -->
+
+* [Sporty Shoes Shopping Screenshots](#sporty-shoes-shopping-screenshots)
+    * [User Registration and Login](#user-registration-and-login)
+    * [Admin Dashboard](#admin-dashboard)
+        * [Product Management](#product-management)
+            * [Product Categories](#product-categories)
+            * [Products](#products)
+    * [User Shopping](#user-shopping)
+    * [User Account Management](#user-account-management)
+    * [Admin Dashboard (continued)](#admin-dashboard-continued)
+        * [Orders (purchase reports)](#orders-purchase-reports)
+        * [User Management](#user-management)
+
+<!-- TOC -->
+
+## User Registration and Login
 
 When the application is first run and opened, the user is greeted with the login page. If the user
 does not have an account, they can click on the "Register" link to create an account. If no user has
@@ -29,12 +45,12 @@ browser detects the login form, and fills in the email address and password auto
 
 Once the admin user has logged in, they are taken to the admin products page. 
 
-# Admin Dashboard
+## Admin Dashboard
 
 All admin pages at the `/admin/*` address have a yellow navigation bar and are only accessible to
 the admin user.
 
-## Product Management
+### Product Management
 
 The product management page is shown below. There are no products because the
 admin user has just been created.
@@ -47,7 +63,7 @@ The admin user can access other admin pages using the dropdown menu in the navig
 
 Before creating products for the site, the admin user will create categories for the products.
 
-### Product Categories
+#### Product Categories
 
 The product categories management page is shown below. It is empty because no categories have been
 created yet. The admin user can create categories by clicking on the `New Product Category` button.
@@ -69,7 +85,7 @@ The admin user can also edit the category by clicking the `Edit` button.
 
 ![Admin Edit Category Page](./screenshots/admin_categories_edit.png)
 
-### Products
+#### Products
 
 On the products page, the admin user can create new products by clicking the `New Product` button.
 The user is prompted to add a name, description, category, price, and number in stock.
@@ -106,7 +122,7 @@ tries to save the product with invalid data, an error message is shown.
 
 Further elements of the admin dashboard [are shown below](#admin-dashboard-continued).
 
-# User Shopping
+## User Shopping
 
 We will now register a standard (non-admin) user and login. All users created after the first user
 are standard users with no access to the admin pages.
@@ -142,7 +158,7 @@ before the first order, and after the last order.
 
 ![Orders Page with Date Filter](./screenshots/orders_date_filtered.png)
 
-# User Account Management
+## User Account Management
 
 All users (admin and standard) can access the change password page via the `User Account` dropdown
 menu. This page prompts for the user's existing password and new password, which are checked before
@@ -154,11 +170,11 @@ The user can also log out from the dropdown menu.
 
 ![User Logout Page](./screenshots/user_logout.png)
 
-# Admin Dashboard (continued)
+## Admin Dashboard (continued)
 
 Further elements of the admin dashboard [are shown above](#admin-dashboard).
 
-## Orders (purchase reports)
+### Orders (purchase reports)
 
 The admin user can view all the purchase reports by clicking on the `Admin -> Orders` option in the
 navigation bar. Each order
@@ -176,7 +192,7 @@ before the first order, and after the last order.
 
 ![Admin Orders Page with Category and Date Filter](./screenshots/admin_orders_category_date_filtered.png)
 
-## User Management
+### User Management
 
 The user management page is shown below. As well as the admin user, there are also three other
 users. All users created after the first user are standard users with no access to the admin pages.
