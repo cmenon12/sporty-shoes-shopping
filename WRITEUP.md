@@ -139,6 +139,37 @@ The admin pages are:
 - Admin dashboard to manage products and product categories.
 - Admin dashboard to view all orders and users.
 
+## Product Capabilities
+
+End-user capabilities include:
+
+- User registration, login, and logout using an email address and password.
+- Viewing the products in the store, including filtering them by category and searching them.
+- Creating an order of one or more products with an address.
+- Viewing the user's own orders.
+- Changing the user's password.
+
+Admin capabilities include:
+
+- Viewing the products in the store, including filtering them by category and searching them.
+- Managing the products in the store (creating, editing, deleting) including categorising them.
+- Viewing the product categories in the store, including searching them and listing how many
+  products each category has.
+- Managing the product categories in the store (creating and editing).
+- Viewing all purchase reports (orders) in the store, including filtering them by user, category,
+  and date & time.
+- Viewing all users who have signed up, including searching them and listing how many orders each
+  user has.
+
+Application security capabilities include:
+
+- Only the admin user can access the admin pages.
+- The user must log in to access the shopping pages.
+- Passwords are encoded using the BCrypt strong hashing function.
+- The user must enter their existing password to change their password.
+- CSRF protection is enabled on all forms to prevent cross-site request forgery attacks.
+- The latest versions of Spring Boot and Spring Security are used.
+
 ## Development History
 
 The project was created using JetBrains IntelliJ IDEA. The full development history can be found in
