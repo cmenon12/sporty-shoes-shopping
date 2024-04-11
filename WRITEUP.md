@@ -1,5 +1,7 @@
 # Sporty Shoes Shopping Writeup
 
+*By Christopher Menon*
+
 This is the writeup for the Sporty Shoes Shopping project. The project is a web application that
 allows users to browse and purchase shoes. The application is built using the Spring Boot framework
 and the Thymeleaf templating engine, with a Bootstrap front-end.
@@ -11,12 +13,12 @@ Screenshots of the application are in a separate file.
 All the source code can be found on GitHub
 at [https://github.com/cmenon12/sporty-shoes-shopping](https://github.com/cmenon12/sporty-shoes-shopping).
 
+[![GitHub repo](./screenshots/github_repo.png)](https://github.com/cmenon12/sporty-shoes-shopping)
+
 This application runs on Java 17 and Maven.
 
 The MySQL database is required to run this application. The database configuration can be found in
-the `src/main/resources/application.properties` file.
-
-The default database configuration is as follows:
+the `src/main/resources/application.properties` file. The default database configuration is:
 
 ```properties
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
@@ -31,20 +33,20 @@ The database `SportyShoes` is created when the application is first run.
 
 The project is structured as follows:
 
-- The main application class
-  is `SportyShoesApplication.java`.
-  This is the entry point for the application.
-- The entities are in the `entity` package.
+- All Java source code is in the `com.sportyshoes` package, with several sub-packages.
+    - The main application class
+      is `SportyShoesApplication.java`, which is the entry point for the application.
+    - The entities are in the `entity` package.
   These are the objects that are stored in the database.
-- The repositories are in the `repository`
+    - The repositories are in the `repository`
   package. These are the classes that interact with the database.
-- The services are in the `service` package.
+    - The services are in the `service` package.
   These are the classes that handle the business logic of the application.
-- The controllers are in the `controller`
+    - The controllers are in the `controller`
   package. The `ShoppingController` handles the shopping web requests, and the `UserController`
   handles the
   user web requests. There are also three admin controllers.
-- The `config` package contains the security and web
+    - The `config` package contains the security and web
   configuration.
 - In the `resources` folder, the `application.properties` file contains
   the database configuration, and the `templates` folder contains the HTML templates for the
@@ -111,9 +113,8 @@ A tree diagram of the project structure is below.
 
 ### Object Entities
 
-The application has four entities: `User`, `Product`, `ProductCategory`, and `Order`.
-
-The diagram below shows the entities and their relationships.
+The application has four entities: `User`, `Product`, `ProductCategory`, and `Order`. The diagram
+below shows the entities, their attributes, and their relationships.
 
 ![./screenshots/entity_diagram.png](./screenshots/entity_diagram.png)
 
@@ -134,10 +135,12 @@ The website has the following pages:
 - User dashboard to view orders.
 - Change password page to change the user's password.
 
-The admin pages are:
+Four admin pages exist to:
 
-- Admin dashboard to manage products and product categories.
-- Admin dashboard to view all orders and users.
+- Manage products.
+- Manage product categories.
+- View all orders.
+- View all users.
 
 ## Product Capabilities
 
@@ -172,8 +175,8 @@ Application security capabilities include:
 
 ## Development History
 
-The project was created using JetBrains IntelliJ IDEA. The full development history can be found in
-the [pull request history of the GitHub repository](https://github.com/cmenon12/sporty-shoes-shopping/pulls?q=is%3Apr).
+The project was created using JetBrains IntelliJ IDE. The full development history can be found in
+the [commit history of the GitHub repository](https://github.com/cmenon12/sporty-shoes-shopping/commits/main/).
 
 1. I first created the Java Maven project using the Spring Initializr, and opened it in IntelliJ
    IDE.
@@ -189,5 +192,5 @@ the [pull request history of the GitHub repository](https://github.com/cmenon12/
 8. I then added the ability for users to change their password, and an admin page to view all users.
 9. I then added the search boxes and filters when looking at products, product categories, users,
    and orders, and improved the look and feel of the application.
-10. Finally, I tested that the application fully met the requirements, and removed the development
-    dependencies.
+10. Finally, I tested that the application fully met the requirements, removed the development
+    dependencies, and applied several small fixes whilst creating the writeup and screenshots.
