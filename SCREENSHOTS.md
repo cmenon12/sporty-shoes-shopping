@@ -1,5 +1,7 @@
 # Sporty Shoes Shopping Screenshots
 
+*By Christopher Menon*
+
 This is the screenshots for the Sporty Shoes Shopping project. The project is a web application that
 allows users to browse and purchase shoes. The application is built using the Spring Boot framework
 and the Thymeleaf templating engine, with a Bootstrap front-end.
@@ -7,7 +9,6 @@ and the Thymeleaf templating engine, with a Bootstrap front-end.
 Writeup of the application is in a separate file.
 
 <!-- TOC -->
-
 * [Sporty Shoes Shopping Screenshots](#sporty-shoes-shopping-screenshots)
     * [User Registration and Login](#user-registration-and-login)
     * [Admin Dashboard](#admin-dashboard)
@@ -19,7 +20,6 @@ Writeup of the application is in a separate file.
     * [Admin Dashboard (continued)](#admin-dashboard-continued)
         * [Orders (purchase reports)](#orders-purchase-reports)
         * [User Management](#user-management)
-
 <!-- TOC -->
 
 ## User Registration and Login
@@ -52,7 +52,7 @@ the admin user.
 
 ### Product Management
 
-The product management page is shown below. There are no products because the
+The admin products page is shown below. There are no products because the
 admin user has just been created.
 
 ![Admin Products Page](./screenshots/admin_products_empty.png)
@@ -65,7 +65,7 @@ Before creating products for the site, the admin user will create categories for
 
 #### Product Categories
 
-The product categories management page is shown below. It is empty because no categories have been
+The admin product categories page is shown below. It is empty because no categories have been
 created yet. The admin user can create categories by clicking on the `New Product Category` button.
 
 ![Admin Categories Page](./screenshots/admin_categories_empty.png)
@@ -81,13 +81,16 @@ update to only show matching categories as they type.
 
 ![Admin Categories Page with Categories](./screenshots/admin_categories.png)
 
-The admin user can also edit the category by clicking the `Edit` button.
+![Admin Categories Page with Search](./screenshots/admin_categories_search.png)
+
+The admin user can also edit a category by clicking the `Edit` button.
 
 ![Admin Edit Category Page](./screenshots/admin_categories_edit.png)
 
 #### Products
 
-On the products page, the admin user can create new products by clicking the `New Product` button.
+On the admin products page, the admin user can create new products by clicking the `New Product`
+button.
 The user is prompted to add a name, description, category, price, and number in stock.
 
 ![Admin New Product Page](./screenshots/admin_products_create.png)
